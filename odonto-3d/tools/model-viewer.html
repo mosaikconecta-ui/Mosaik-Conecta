@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Inspeção do modelo 3D</title>
+    <style>
+      html,body{margin:0;height:100%;background:#092F27;color:#fff;font:14px system-ui}
+      #ui{position:fixed;left:16px;top:16px;background:rgba(0,0,0,.35);padding:12px 14px;border-radius:12px;line-height:1.6}
+      label{display:block}
+    </style>
+  </head>
+  <body>
+    <div id="ui">
+      <strong>Inspeção do modelo</strong> — arraste para orbitar, role para zoom
+      <label><input type="checkbox" id="wire" /> wireframe</label>
+      <label><input type="checkbox" id="flat" /> sem cores de vértice</label>
+      <div id="stats"></div>
+    </div>
+    <script type="module" src="./model-viewer.ts"></script>
+  </body>
+</html>
