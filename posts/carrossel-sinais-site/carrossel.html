@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Carrossel Sinais do Site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e11d2e;--ink:#141416;--muted:#6b6b73}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0f;font-family:Sora,system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;gap:40px;padding:40px 0}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;flex:none;
+  background:radial-gradient(ellipse 85% 65% at 50% 46%,#fcfcfd 0%,#f1f1f3 55%,#e2e2e6 100%)}
+.s.dark{background:#0a0a0c}
+.s.red{background:radial-gradient(ellipse 90% 70% at 50% 38%,#ff3a4a 0%,#e11d2e 42%,#a30e1b 100%)}
+.a{position:absolute}
+.glass{background:radial-gradient(circle at 30% 22%,#fff 0%,#f6f6f8 55%,#e9e9ed 100%);
+  box-shadow:0 28px 56px rgba(20,20,22,.12),inset 0 -6px 16px rgba(0,0,0,.04),inset 0 4px 10px #fff,0 0 0 2px rgba(255,255,255,.85)}
+.card{background:linear-gradient(180deg,#fff,#f5f5f7);border-radius:34px;box-shadow:0 26px 54px rgba(20,20,22,.11),0 0 0 2px rgba(255,255,255,.95)}
+.clay{background:radial-gradient(circle at 32% 26%,#ff7480 0%,#ef3040 30%,#d8192a 58%,#8f0c18 100%);
+  box-shadow:inset -10px -14px 24px rgba(60,0,8,.35),inset 8px 10px 20px rgba(255,255,255,.35),0 22px 44px rgba(225,29,46,.35)}
+/* cabeçalho */
+.hd{position:absolute;left:70px;right:70px;top:62px;display:flex;align-items:center;gap:18px}
+.av{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:800 27px Sora;letter-spacing:-.06em;color:#fff;
+  background:radial-gradient(circle at 30% 25%,#ff5a66,#c8121f 55%,#6e0710);box-shadow:0 10px 24px rgba(225,29,46,.35)}
+.nm{font:700 28px Sora;color:var(--ink);letter-spacing:-.02em;line-height:1.2}
+.hn{font:500 23px Sora;color:#8a8a92}
+.ct{margin-left:auto;font:600 22px Sora;color:#8a8a92;padding:10px 20px;border-radius:24px;background:rgba(20,20,22,.05)}
+.dark .nm,.red .nm{color:#fff}.dark .hn{color:#8a8a92}.red .hn{color:rgba(255,255,255,.75)}
+.dark .ct{background:rgba(255,255,255,.08);color:#a4a4ac}.red .ct{background:rgba(255,255,255,.16);color:#fff}
+.red .av{background:#fff;color:var(--red);box-shadow:0 10px 24px rgba(90,0,10,.3)}
+/* rodapé */
+.ft{position:absolute;left:70px;right:70px;bottom:60px;display:flex;align-items:center;gap:8px}
+.ft i{height:6px;flex:1;border-radius:3px;background:rgba(20,20,22,.1)}
+.ft i.on{background:var(--red)}
+.dark .ft i{background:rgba(255,255,255,.12)}.dark .ft i.on{background:var(--red)}
+.red .ft i{background:rgba(255,255,255,.25)}.red .ft i.on{background:#fff}
+.sw{margin-left:28px;font:700 26px Sora;color:var(--red);white-space:nowrap;display:flex;align-items:center;gap:10px}
+.dark .sw{color:#fff}
+/* conteúdo dos sinais */
+.lb{position:absolute;left:76px;top:190px;font:700 26px Sora;letter-spacing:.3em;color:var(--red)}
+.big{position:absolute;right:60px;top:150px;font:800 230px/1 Sora;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:3px rgba(225,29,46,.16)}
+.tt{position:absolute;left:72px;top:236px;width:940px;font:800 78px/1.04 Sora;letter-spacing:-.05em;color:var(--ink)}
+.tt em{font-style:normal;color:var(--red)}
+.fix{position:absolute;left:70px;right:70px;top:992px;height:212px;border-radius:34px;padding:34px 40px 34px 150px;
+  background:#141416;color:#fff;box-shadow:0 30px 60px rgba(20,20,22,.25)}
+.fix .ck{position:absolute;left:38px;top:50%;margin-top:-40px;width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.fix small{display:block;font:700 21px Sora;letter-spacing:.24em;color:#ff5a66}
+.fix p{font:500 32px/1.32 Sora;letter-spacing:-.015em;margin-top:10px}
+.ln{height:14px;border-radius:7px;background:#ececef}
+.bar{position:absolute;left:0;right:0;top:0;height:52px;background:#f5f5f6;border-bottom:2px solid #ececef}
+.bar i{position:absolute;top:19px;width:14px;height:14px;border-radius:50%}
+.tag{position:absolute;padding:10px 20px;border-radius:22px;font:700 22px Sora;letter-spacing:.06em}
+#hint{color:#8a8a92;font:500 14px sans-serif}
+.render #hint{display:none}
+</style>
+</head>
+<body>
+<div id="hint">Carrossel 4:5 — 9 lâminas (1080×1350)</div>
+<div id="deck"></div>
+<script>
+const N=9, HANDLE='@mosaikconecta', LINK='mosaik-conecta.vercel.app';
+const I={
+ check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+ x:'<line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>',
+ search:'<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/>',
+ lock:'<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+ alert:'<path d="M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+ chat:'<path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 8.6 8.6 0 0 1-3.9-.9L3 21l1.9-5.1A8.4 8.4 0 1 1 21 11.5z"/>',
+ arrow:'<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+ phone:'<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
+ bookmark:'<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>',
+ clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
+};
+const ic=(n,c='#e11d2e',sz=40,w=2.4)=>`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${I[n]}</svg>`;
+const head=i=>`<div class="hd"><div class="av">MK</div><div><div class="nm">Mosaik Conecta</div><div class="hn">${HANDLE}</div></div><div class="ct">${String(i).padStart(2,'0')} / ${String(N).padStart(2,'0')}</div></div>`;
+const foot=(i,swipe=true)=>`<div class="ft">${Array.from({length:N},(_,k)=>`<i class="${k<i?'on':''}"></i>`).join('')}${swipe?`<span class="sw">Arrasta ${ic('arrow',i===1?'#fff':'#e11d2e',30,2.6)}</span>`:''}</div>`;
+const fix=txt=>`<div class="fix"><div class="ck clay">${ic('check','#fff',40,3)}</div><small>COMO RESOLVER</small><p>${txt}</p></div>`;
+const sinal=(i,n,title,visual,sol)=>`<section class="s" id="s${i}">${head(i)}<div class="lb">SINAL 0${n}</div><div class="tt">${title}</div>${visual}${fix(sol)}${foot(i)}</section>`;
+const miniSite=(css)=>`<div class="a card" style="${css};overflow:hidden;border-radius:26px">
+  <div class="bar"><i style="left:20px;background:#e11d2e"></i><i style="left:42px;background:#f2a1a8"></i><i style="left:64px;background:#d6d6db"></i></div>`;
+
+const S=[];
+/* 1 — capa (escura) */
+S.push(`<section class="s dark" id="s1">
+  <div class="a" style="left:-260px;top:250px;width:1600px;height:1600px;border-radius:50%;background:radial-gradient(circle,rgba(225,29,46,.45) 0%,rgba(225,29,46,.12) 35%,transparent 65%)"></div>
+  ${[760,1150,1540].map(d=>`<div class="a" style="left:${540-d/2}px;top:${1000-d/2}px;width:${d}px;height:${d}px;border-radius:50%;border:2px solid rgba(255,255,255,.05)"></div>`).join('')}
+  ${head(1)}
+  <div class="a" style="left:76px;top:200px;font:700 26px Sora;letter-spacing:.3em;color:#ff5a66">CHECKLIST RÁPIDO</div>
+  <div class="a" style="left:70px;top:246px;width:960px;font:800 104px/1.0 Sora;letter-spacing:-.055em;color:#fff">Seu site está<br><span style="color:#ff3a4a">espantando</span><br>clientes?</div>
+  <svg class="a" style="left:70px;top:560px" width="600" height="60" viewBox="0 0 600 60"><path d="M8 24 C 160 10, 380 8, 590 18 C 450 24, 260 32, 100 46 C 260 40, 420 38, 560 42" fill="none" stroke="#ff3a4a" stroke-width="7" stroke-linecap="round"/></svg>
+  <div class="a" style="left:76px;top:640px;font:400 38px/1.35 Sora;color:rgba(255,255,255,.8);letter-spacing:-.01em">6 sinais de que sim<br><b style="color:#fff;font-weight:700">(e como resolver cada um)</b></div>
+  <div class="a" style="left:0;top:0;width:1080px;height:1350px;perspective:1600px">
+    <div class="a" style="left:300px;top:760px;width:640px;height:420px;border-radius:28px;background:#fff;overflow:hidden;transform:rotateX(14deg) rotateY(-22deg) rotateZ(-6deg);box-shadow:0 50px 100px rgba(0,0,0,.6),0 0 90px rgba(225,29,46,.25)">
+      <div class="bar"><i style="left:20px;background:#e11d2e"></i><i style="left:42px;background:#f2a1a8"></i><i style="left:64px;background:#d6d6db"></i></div>
+      <div class="a" style="left:30px;right:30px;top:80px;height:180px;border-radius:18px;background:#ececef"></div>
+      <div class="a" style="left:30px;top:286px;width:300px" ><div class="ln"></div><div class="ln" style="margin-top:14px;width:70%"></div></div>
+      <div class="a" style="left:0;top:52px;right:0;bottom:0;background:rgba(10,10,12,.55);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px">
+        <div class="clay" style="width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center">${ic('x','#fff',64,3)}</div>
+        <div style="font:700 30px Sora;color:#fff">O cliente foi embora.</div></div>
+    </div>
+  </div>
+  <div class="a" style="left:70px;top:820px;display:flex;align-items:center;gap:14px;height:84px;padding:0 30px 0 16px;border-radius:42px;background:#fff;font:700 30px Sora;color:#141416;transform:rotate(-5deg);box-shadow:0 20px 40px rgba(0,0,0,.4)"><span class="clay" style="width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center">${ic('clock','#fff',30,2.6)}</span>Lento</div>
+  <div class="a" style="left:120px;top:1080px;display:flex;align-items:center;gap:14px;height:84px;padding:0 30px 0 16px;border-radius:42px;background:#1c1c20;border:2px solid rgba(255,255,255,.12);font:700 30px Sora;color:#fff;transform:rotate(4deg);box-shadow:0 20px 40px rgba(0,0,0,.5)"><span class="clay" style="width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center">${ic('alert','#fff',30,2.4)}</span>Não seguro</div>
+  ${foot(1)}
+</section>`);
+
+/* 2 — lento */
+S.push(sinal(2,1,'Demora mais de <em>3 segundos</em> pra abrir',
+ `<div class="a card" style="left:70px;top:520px;width:440px;height:420px;padding:44px">
+    <div style="font:800 140px/1 Sora;letter-spacing:-.06em;color:#e11d2e">53%</div>
+    <div style="font:500 26px/1.35 Sora;color:#2a2a30;margin-top:14px">das visitas no celular são abandonadas quando o site leva mais de 3s pra carregar.</div>
+    <div style="font:500 20px Sora;color:#9a9aa2;margin-top:14px">Fonte: Google</div></div>
+  <div class="a card" style="left:540px;top:520px;width:470px;height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px">
+    <svg width="230" height="230" viewBox="0 0 230 230"><circle cx="115" cy="115" r="92" fill="none" stroke="#ececef" stroke-width="18"/><circle cx="115" cy="115" r="92" fill="none" stroke="#e11d2e" stroke-width="18" stroke-linecap="round" stroke-dasharray="578" stroke-dashoffset="410" transform="rotate(-90 115 115)"/><text x="115" y="132" text-anchor="middle" font-family="Sora" font-weight="800" font-size="56" fill="#141416">8,4s</text></svg>
+    <div style="font:600 28px Sora;color:#6b6b73">Carregando…</div></div>`,
+ 'Imagens otimizadas, código leve e uma boa hospedagem. Site rápido é cliente que fica.'));
+
+/* 3 — celular */
+const phone=(x,ok)=>`<div class="a" style="left:${x}px;top:520px;width:250px;height:440px;border-radius:40px;background:#141416;padding:12px;box-shadow:0 30px 60px rgba(20,20,22,.22);transform:rotate(${ok?4:-4}deg)">
+  <div style="position:relative;width:100%;height:100%;border-radius:30px;background:#fff;overflow:hidden">
+   <div style="position:absolute;left:50%;top:10px;width:80px;height:20px;margin-left:-40px;border-radius:10px;background:#141416"></div>
+   ${ok?`<div style="position:absolute;left:16px;right:16px;top:50px;height:150px;border-radius:16px;background:linear-gradient(150deg,#e11d2e,#9a1420);padding:16px;font:800 24px/1.05 Sora;color:#fff">Sua marca no topo.</div>
+     <div style="position:absolute;left:16px;right:16px;top:212px;height:44px;border-radius:22px;background:#e11d2e;color:#fff;font:700 15px/44px Sora;text-align:center">Pedir orçamento</div>
+     <div style="position:absolute;left:16px;right:16px;top:272px" class="ln"></div><div style="position:absolute;left:16px;width:60%;top:298px" class="ln"></div>
+     <div style="position:absolute;left:16px;right:16px;top:330px;height:70px;border-radius:14px;border:2px solid #ececef"></div>`
+   :`<div style="position:absolute;left:16px;width:380px;top:50px;font:700 30px Times New Roman;color:#1a3fbf;text-decoration:underline">Bem-vindo ao nosso site oficial</div>
+     <div style="position:absolute;left:-30px;width:320px;top:150px;height:120px;background:#d9d9de;transform:rotate(-3deg)"></div>
+     <div style="position:absolute;left:150px;top:290px;width:60px;height:22px;background:#b4b4bb;font:10px Arial;color:#fff;text-align:center;line-height:22px">clique</div>
+     <div style="position:absolute;left:16px;width:400px;top:330px;font:13px Arial;color:#555">Lorem ipsum texto cortado que vai pra fora da tela e ninguém consegue ler direito</div>`}
+  </div>
+  <div class="a ${ok?'clay':''}" style="right:-26px;top:-26px;width:76px;height:76px;border-radius:50%;display:flex;align-items:center;justify-content:center;${ok?'':'background:#141416;box-shadow:0 12px 24px rgba(0,0,0,.3)'}">${ic(ok?'check':'x','#fff',38,3)}</div>
+ </div>`;
+S.push(sinal(3,2,'Quebra no <em>celular</em>',
+ `${phone(170,false)}${phone(640,true)}
+  <div class="a" style="left:510px;top:700px">${ic('arrow','#e11d2e',70,2.6)}</div>`,
+ 'Layout responsivo, pensado primeiro pro celular — onde a maioria dos clientes está.'));
+
+/* 4 — Google */
+S.push(sinal(4,3,'Ninguém te encontra no <em>Google</em>',
+ `<div class="a card" style="left:70px;top:520px;width:940px;height:110px;border-radius:55px;display:flex;align-items:center;gap:22px;padding:0 40px">${ic('search','#9a9aa2',44,2.4)}<span style="font:500 36px Sora;color:#2a2a30">site de dentista perto de mim</span></div>
+  <div class="a card" style="left:70px;top:660px;width:940px;height:150px;padding:30px 40px;border:0;box-shadow:0 26px 54px rgba(225,29,46,.18),0 0 0 4px #e11d2e">
+    <div style="font:500 22px Sora;color:#2f8f4e">suaempresa.com.br</div>
+    <div style="font:700 34px Sora;color:#1a3fbf;margin-top:6px">Sua Empresa — Atendimento na sua região</div>
+    <div class="tag clay" style="right:30px;top:-24px;color:#fff">1º LUGAR</div></div>
+  <div class="a card" style="left:70px;top:832px;width:940px;height:130px;padding:34px 40px;opacity:.55"><div class="ln" style="width:35%"></div><div class="ln" style="width:70%;margin-top:18px;height:20px"></div></div>`,
+ 'SEO de verdade: títulos certos, site rápido, Google Meu Negócio e conteúdo que responde o cliente.'));
+
+/* 5 — sem chamada */
+S.push(sinal(5,4,'O cliente não sabe <em>o que fazer</em>',
+ `${miniSite('left:70px;top:520px;width:440px;height:440px')}
+    <div class="a" style="left:28px;right:28px;top:80px"><div class="ln" style="height:22px;width:80%"></div><div class="ln" style="margin-top:16px"></div><div class="ln" style="margin-top:12px;width:85%"></div><div class="ln" style="margin-top:12px;width:60%"></div><div class="ln" style="margin-top:30px"></div><div class="ln" style="margin-top:12px;width:75%"></div></div>
+    <div class="a" style="left:0;right:0;bottom:30px;text-align:center;font:600 26px Sora;color:#9a9aa2">E agora? 🤔</div></div>
+  ${miniSite('left:540px;top:520px;width:470px;height:440px')}
+    <div class="a" style="left:30px;right:30px;top:80px"><div class="ln" style="height:22px;width:80%"></div><div class="ln" style="margin-top:16px;width:90%"></div></div>
+    <div class="a clay" style="left:30px;right:30px;top:170px;height:96px;border-radius:48px;display:flex;align-items:center;justify-content:center;gap:14px;font:700 28px Sora;color:#fff">${ic('chat','#fff',36,2.4)}Pedir orçamento</div>
+    <div class="a" style="left:30px;right:30px;top:300px"><div class="ln"></div><div class="ln" style="margin-top:12px;width:70%"></div></div>
+    <div class="a clay" style="right:24px;bottom:24px;width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center">${ic('chat','#fff',40,2.4)}</div>
+    <svg class="a" style="left:300px;top:230px" width="54" height="54" viewBox="0 0 24 24"><path d="M4 2.5l15 9.2-6.6 1.4 3.9 7.4-3 1.5-3.8-7.4L4.6 19z" fill="#141416" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg></div>`,
+ 'Botão claro de orçamento e WhatsApp sempre visível. Quem chega precisa saber o próximo passo.'));
+
+/* 6 — desatualizado */
+S.push(sinal(6,5,'Parece que parou em <em>2010</em>',
+ `<div class="a" style="left:70px;top:520px;width:440px;height:440px;background:#c9c9cf;border:4px outset #e6e6e9;padding:20px;transform:rotate(-3deg);box-shadow:0 20px 40px rgba(0,0,0,.15)">
+    <div style="background:linear-gradient(#1a3fbf,#0a1f7a);color:#ff0;font:700 30px Times New Roman;text-align:center;padding:14px">★ BEM VINDO!!! ★</div>
+    <div style="font:18px Times New Roman;color:#1a3fbf;text-decoration:underline;margin-top:20px;line-height:1.8">» Home<br>» Quem Somos<br>» Fotos da Empresa<br>» Contato (clique aqui)</div>
+    <div style="margin-top:16px;font:15px Comic Sans MS,cursive;color:#c00">Site em construção... 🚧</div>
+    <div style="position:absolute;right:20px;bottom:20px;font:12px Arial;color:#555;background:#eee;border:2px inset #ccc;padding:4px 8px">Visitas: 000127</div></div>
+  ${miniSite('left:540px;top:520px;width:470px;height:440px;transform:rotate(3deg)')}
+    <div class="a" style="left:28px;right:28px;top:72px;height:200px;border-radius:20px;background:linear-gradient(135deg,#e11d2e,#9a1420);padding:28px;font:800 40px/1.02 Sora;letter-spacing:-.04em;color:#fff">Sua marca<br>de hoje.</div>
+    <div class="a" style="left:28px;right:28px;top:296px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">${'<div style="height:110px;border-radius:16px;border:2px solid #ececef;padding:14px"><div style="width:30px;height:30px;border-radius:9px;background:#fdeceb"></div><div class="ln" style="margin-top:14px;height:10px"></div></div>'.repeat(3)}</div></div>`,
+ 'Design atual, fotos reais e identidade consistente. Visual desatualizado passa desconfiança.'));
+
+/* 7 — https */
+const url=(top,ok)=>`<div class="a card" style="left:70px;top:${top}px;width:940px;height:150px;display:flex;align-items:center;gap:22px;padding:0 40px;${ok?'box-shadow:0 26px 54px rgba(20,20,22,.11),0 0 0 4px #e11d2e':''}">
+  <span style="display:flex;align-items:center;gap:12px;height:66px;padding:0 22px;border-radius:33px;background:${ok?'#fdeceb':'#f1f1f3'};font:700 26px Sora;color:${ok?'#e11d2e':'#6b6b73'}">${ic(ok?'lock':'alert',ok?'#e11d2e':'#6b6b73',32,2.4)}${ok?'Seguro':'Não seguro'}</span>
+  <span style="font:500 34px Sora;color:#2a2a30">${ok?'<b style="color:#2f8f4e">https://</b>':'http://'}suaempresa.com.br</span>
+  <div class="a ${ok?'clay':''}" style="right:-22px;top:-22px;width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;${ok?'':'background:#141416'}">${ic(ok?'check':'x','#fff',32,3)}</div></div>`;
+S.push(sinal(7,6,'O navegador avisa: <em>“Não seguro”</em>',
+ `${url(560,false)}${url(770,true)}`,
+ 'Certificado SSL (o cadeado) é simples e barato. Sem ele, o cliente desconfia — e o Google também.'));
+
+/* 8 — checklist */
+const items=['Abre em menos de 3 segundos','Funciona bem no celular','Aparece no Google','Tem botão claro de contato','Visual moderno e confiável','Tem o cadeado de segurança'];
+S.push(`<section class="s" id="s8">${head(8)}
+  <div class="lb">SALVA ESSE POST</div>
+  <div class="tt">Checklist do site<br>que <em>vende</em></div>
+  <div class="a card" style="left:70px;top:470px;width:940px;height:690px;padding:30px 44px">
+   ${items.map((t,k)=>`<div style="display:flex;align-items:center;gap:28px;height:105px;${k?'border-top:2px solid #f0f0f2':''}">
+     <span class="clay" style="width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none">${ic('check','#fff',32,3)}</span>
+     <span style="font:600 36px Sora;letter-spacing:-.02em;color:#141416">${t}</span></div>`).join('')}
+  </div>
+  <div class="a glass" style="right:70px;top:196px;width:96px;height:96px;border-radius:30px;display:flex;align-items:center;justify-content:center">${ic('bookmark','#e11d2e',50,2.2)}</div>
+  ${foot(8)}</section>`);
+
+/* 9 — CTA (vermelho) */
+S.push(`<section class="s red" id="s9">${head(9)}
+  ${[[860,300,130,'lock'],[890,1110,120,'phone']].map(([x,y,s,n])=>`<div class="a" style="left:${x}px;top:${y}px;width:${s}px;height:${s}px;border-radius:34%;background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.38);display:flex;align-items:center;justify-content:center;filter:blur(2px)">${ic(n,'#fff',s*.44,2)}</div>`).join('')}
+  <div class="a" style="left:76px;top:200px;font:700 26px Sora;letter-spacing:.3em;color:rgba(255,255,255,.85)">E AÍ?</div>
+  <div class="a" style="left:70px;top:246px;width:960px;font:800 100px/1.0 Sora;letter-spacing:-.055em;color:#fff">Marcou 2 ou<br>mais sinais?</div>
+  <svg class="a" style="left:70px;top:458px" width="520" height="56" viewBox="0 0 520 56"><path d="M8 22 C 140 10, 330 8, 510 16 C 390 22, 220 30, 90 42 C 230 36, 370 34, 490 38" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg>
+  <div class="a" style="left:76px;top:560px;width:900px;font:400 44px/1.3 Sora;color:rgba(255,255,255,.92);letter-spacing:-.02em">A <b style="font-weight:800;color:#fff">Mosaik Conecta</b> cria sites rápidos, bonitos e prontos pra vender.</div>
+  <div class="a" style="left:76px;top:800px;height:116px;padding:0 50px;border-radius:58px;background:#fff;color:#e11d2e;font:700 40px/116px Sora;letter-spacing:-.02em;white-space:nowrap;box-shadow:0 26px 50px rgba(80,0,10,.35)">Solicite seu orçamento →</div>
+  <div class="a" style="left:76px;top:965px;font:500 32px/1.5 Sora;color:rgba(255,255,255,.9)">💬 Comenta <b style="color:#fff">SITE</b> que a gente te chama no direct.</div>
+  <div class="a" style="left:76px;right:76px;top:1085px;height:2px;background:rgba(255,255,255,.3)"></div>
+  <div class="a" style="left:76px;top:1120px;font:500 30px Sora;color:#fff;display:flex;gap:40px"><span>${HANDLE}</span><span style="opacity:.8">${LINK}</span></div>
+  ${foot(9,false)}</section>`);
+
+document.getElementById('deck').innerHTML=S.join('');
+if(new URLSearchParams(location.search).has('render'))document.body.classList.add('render');
+window.__ready=document.fonts.ready;
+</script>
+</body>
+</html>
