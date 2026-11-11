@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion Criação de Sites</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e11d2e;--red2:#c9182a;--red3:#b9121f;--ink:#141416;--gray:#ececef;--gray2:#e0e0e4;--white:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0d0d0f;overflow:hidden}
+body{display:flex;align-items:center;justify-content:center;font-family:Sora,Inter,system-ui,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#fff;transform-origin:center center;flex:none}
+.layer{position:absolute;inset:0;overflow:hidden}
+.red{background:var(--red)}
+.abs{position:absolute}
+
+/* ---------- cena 1 ---------- */
+#dot{left:520px;top:940px;width:40px;height:40px;border-radius:50%;background:#fff}
+#logo1{top:900px;left:0;font:800 96px/120px Sora,sans-serif;letter-spacing:-.04em;color:#fff;white-space:nowrap}
+#logo1 span{font-weight:300}
+#tag1{top:1060px;left:0;width:1080px;text-align:center;font:400 34px Sora;color:#fff;letter-spacing:.18em;text-transform:uppercase;opacity:.9}
+
+/* ---------- cena 2 ---------- */
+#s2{background:#fff}
+.dots{background-image:radial-gradient(#d9d9de 2.2px,transparent 2.4px);background-size:44px 44px;opacity:.55}
+.ln{position:absolute;left:90px;overflow:hidden;padding:0 10px 14px 0}
+.ln span{display:inline-block;font:800 132px/1.02 Sora;letter-spacing:-.045em;color:var(--ink);white-space:nowrap;position:relative}
+#hl{position:absolute;left:-14px;right:-18px;top:14px;bottom:-4px;background:var(--red);transform-origin:left center;z-index:-1;border-radius:10px}
+#w4{position:relative;z-index:0}
+#sub2{left:100px;top:1340px;font:600 40px Sora;color:#6b6b73;letter-spacing:-.01em}
+#sub2 b{color:var(--red)}
+#bar2{left:100px;top:560px;width:120px;height:14px;background:var(--red);border-radius:7px;transform-origin:left}
+
+/* ---------- cena 3 ---------- */
+#s3{background:#fff}
+#lbl3{left:100px;top:190px;font:700 30px Sora;letter-spacing:.24em;color:var(--red)}
+.h3{left:100px;top:236px;font:800 88px/1.05 Sora;letter-spacing:-.04em;color:var(--ink);white-space:nowrap}
+.h3 i{font-style:normal;color:var(--red)}
+#win{left:100px;top:420px;width:880px;height:1060px;background:#fff;border-radius:28px;box-shadow:0 40px 90px rgba(20,20,22,.18),0 0 0 2px #ececef;overflow:hidden}
+#top{position:absolute;left:0;right:0;top:0;height:76px;background:#f5f5f6;border-bottom:2px solid #ececef}
+#top .d{position:absolute;top:28px;width:20px;height:20px;border-radius:50%}
+#url{position:absolute;left:150px;right:40px;top:16px;height:44px;border-radius:22px;background:#fff;border:2px solid #e6e6e9;font:500 24px/40px Sora;color:#55555c;padding-left:58px}
+#url:before{content:"";position:absolute;left:24px;top:12px;width:14px;height:12px;border:3px solid #9b9ba3;border-radius:3px;border-top-width:3px}
+#caret{display:inline-block;width:2px;height:26px;background:var(--red);vertical-align:-5px;margin-left:2px}
+#notch{position:absolute;left:50%;top:22px;width:150px;height:34px;margin-left:-75px;border-radius:17px;background:var(--ink);opacity:0}
+.body{position:absolute;left:0;right:0;top:76px;bottom:0}
+.sk{position:absolute;background:var(--gray);border-radius:14px;transform-origin:left center}
+#real{clip-path:inset(0 0 100% 0);background:#fff}
+#scan{position:absolute;left:0;right:0;height:6px;background:var(--red);box-shadow:0 0 30px 6px rgba(225,29,46,.45);opacity:0}
+/* conteúdo desenhado (desktop) */
+.r-nav{position:absolute;left:44px;right:44px;top:30px;height:44px;display:flex;align-items:center;justify-content:space-between}
+.r-logo{font:800 30px Sora;letter-spacing:-.04em;color:var(--ink)}
+.r-logo:before{content:"";display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--red);margin-right:10px;vertical-align:3px}
+.r-links{display:flex;gap:26px;font:600 20px Sora;color:#6b6b73}
+.r-hero{position:absolute;left:44px;right:44px;top:110px;height:440px;border-radius:24px;background:linear-gradient(135deg,#e11d2e,#9a1420);overflow:hidden;padding:52px}
+.r-hero h4{font:800 64px/1.02 Sora;letter-spacing:-.04em;color:#fff;max-width:520px}
+.r-hero p{font:400 24px/1.4 Sora;color:rgba(255,255,255,.85);margin-top:20px;max-width:440px}
+.r-btn{position:absolute;left:52px;bottom:48px;height:68px;padding:0 36px;border-radius:34px;background:#fff;color:var(--red);font:700 24px/68px Sora;overflow:hidden}
+.r-ripple{position:absolute;width:40px;height:40px;border-radius:50%;background:rgba(225,29,46,.25);left:50%;top:50%;margin:-20px 0 0 -20px;transform:scale(0)}
+.r-tiles{position:absolute;right:40px;top:60px;width:250px;height:250px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;transform:rotate(8deg)}
+.r-tiles b{border-radius:14px;background:rgba(255,255,255,.18)}
+.r-tiles b:nth-child(2),.r-tiles b:nth-child(4),.r-tiles b:nth-child(9){background:#fff}
+.r-cards{position:absolute;left:44px;right:44px;top:584px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.r-card{height:300px;border-radius:22px;background:#fff;border:2px solid #ececef;padding:28px}
+.r-ic{width:64px;height:64px;border-radius:18px;background:#fdeceb;display:flex;align-items:center;justify-content:center}
+.r-card h5{font:700 26px Sora;color:var(--ink);margin-top:26px;letter-spacing:-.02em}
+.r-card i{display:block;height:12px;border-radius:6px;background:#efeff1;margin-top:16px}
+.r-card i+i{width:70%}
+/* mobile */
+#mob{opacity:0}
+.m-hero{position:absolute;left:24px;right:24px;top:96px;height:470px;border-radius:24px;background:linear-gradient(160deg,#e11d2e,#9a1420);padding:36px 30px;overflow:hidden}
+.m-hero h4{font:800 48px/1.04 Sora;letter-spacing:-.04em;color:#fff}
+.m-hero p{font:400 20px/1.4 Sora;color:rgba(255,255,255,.85);margin-top:16px}
+.m-btn{position:absolute;left:30px;right:30px;bottom:32px;height:62px;border-radius:31px;background:#fff;color:var(--red);font:700 22px/62px Sora;text-align:center}
+.m-card{position:absolute;left:24px;right:24px;height:120px;border-radius:20px;border:2px solid #ececef;display:flex;align-items:center;gap:20px;padding:0 24px;font:700 24px Sora;color:var(--ink)}
+.m-nav{position:absolute;left:30px;right:30px;top:30px;display:flex;justify-content:space-between;align-items:center}
+.m-burger{width:34px;height:22px;border-top:4px solid var(--ink);border-bottom:4px solid var(--ink);position:relative}
+.m-burger:after{content:"";position:absolute;left:0;right:0;top:5px;height:4px;background:var(--ink)}
+
+.chip{position:absolute;display:flex;align-items:center;gap:14px;height:84px;padding:0 32px 0 18px;border-radius:42px;background:#fff;box-shadow:0 18px 44px rgba(20,20,22,.16);font:700 30px Sora;color:var(--ink);white-space:nowrap}
+.chip u{width:52px;height:52px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;text-decoration:none}
+.chip.dark{background:var(--ink);color:#fff}
+#cursor{left:0;top:0;width:54px;height:54px;filter:drop-shadow(0 6px 10px rgba(0,0,0,.25))}
+#sub3{left:100px;top:1560px;font:600 40px Sora;color:#6b6b73}
+#sub3 b{color:var(--red)}
+.chk{position:absolute;left:150px;display:flex;align-items:center;gap:28px;font:700 50px Sora;letter-spacing:-.03em;color:var(--ink)}
+.chk u{width:72px;height:72px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;flex:none}
+.chk path{stroke-dasharray:40;stroke-dashoffset:40}
+
+/* ---------- cena final ---------- */
+#s5{background:transparent}
+#tiles{position:absolute;inset:0}
+#tiles b{position:absolute;width:182px;height:182px;transform:scale(0)}
+#fin{position:absolute;inset:0;background:var(--red);opacity:0}
+.f-ln{position:absolute;left:90px;overflow:hidden;padding-bottom:12px}
+.f-ln span{display:inline-block;color:#fff;white-space:nowrap}
+#f1 span{font:300 120px/1 Sora;letter-spacing:-.04em}
+#f2 span{font:800 250px/.95 Sora;letter-spacing:-.06em}
+#f3{left:96px;top:1010px;font:400 50px/1.3 Sora;color:rgba(255,255,255,.9);letter-spacing:-.01em}
+#cta{left:96px;top:1230px;height:120px;padding:0 54px;border-radius:60px;background:#fff;color:var(--red);font:700 44px/120px Sora;letter-spacing:-.02em;transform-origin:left center;box-shadow:0 24px 50px rgba(80,0,10,.3)}
+#flogo{left:96px;top:1640px;font:800 64px Sora;letter-spacing:-.04em;color:#fff;display:flex;align-items:center;gap:20px}
+#flogo span{font-weight:300}
+#flogo i{width:30px;height:30px;border-radius:50%;background:#fff}
+#fig{left:96px;top:1740px;font:500 34px Sora;color:rgba(255,255,255,.8)}
+#fline{left:96px;top:1590px;width:888px;height:2px;background:rgba(255,255,255,.35);transform-origin:left}
+#ftiles{right:60px;top:150px;width:300px;height:300px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;transform:rotate(12deg)}
+#ftiles b{border-radius:20px;background:rgba(255,255,255,.16)}
+
+#hint{position:fixed;bottom:14px;left:0;right:0;text-align:center;font:500 13px Inter,sans-serif;color:#8a8a92;pointer-events:none}
+body.render #hint{display:none}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- CENA 3: site sendo criado -->
+  <div id="s3" class="layer">
+    <div class="layer dots"></div>
+    <div id="lbl3" class="abs">CRIAÇÃO DE SITES</div>
+    <div id="h3a" class="abs h3">Do zero ao <i>online.</i></div>
+    <div id="h3b" class="abs h3">Lindo em <i>toda tela.</i></div>
+    <div id="win" class="abs">
+      <div id="top">
+        <span class="d" style="left:30px;background:#e11d2e"></span>
+        <span class="d" style="left:62px;background:#f2a1a8"></span>
+        <span class="d" style="left:94px;background:#d6d6db"></span>
+        <div id="url"><span id="urlt"></span><span id="caret"></span></div>
+        <div id="notch"></div>
+      </div>
+      <div id="desk" class="body">
+        <div id="skel">
+          <div class="sk" style="left:44px;top:34px;width:180px;height:36px"></div>
+          <div class="sk" style="left:520px;top:40px;width:316px;height:24px"></div>
+          <div class="sk" style="left:44px;top:110px;width:792px;height:440px;background:#f3f3f5"></div>
+          <div class="sk" style="left:96px;top:162px;width:420px;height:54px;background:#e2e2e6"></div>
+          <div class="sk" style="left:96px;top:232px;width:340px;height:54px;background:#e2e2e6"></div>
+          <div class="sk" style="left:96px;top:320px;width:400px;height:22px;background:#e2e2e6"></div>
+          <div class="sk" style="left:96px;top:434px;width:250px;height:68px;border-radius:34px;background:#e2e2e6"></div>
+          <div class="sk" style="left:44px;top:584px;width:249px;height:300px;border-radius:22px"></div>
+          <div class="sk" style="left:315px;top:584px;width:249px;height:300px;border-radius:22px"></div>
+          <div class="sk" style="left:587px;top:584px;width:249px;height:300px;border-radius:22px"></div>
+        </div>
+        <div id="real" class="layer">
+          <div class="r-nav"><div class="r-logo">SuaMarca</div><div class="r-links"><span>Início</span><span>Serviços</span><span>Contato</span></div></div>
+          <div class="r-hero">
+            <div class="r-tiles"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+            <h4>Sua marca no topo.</h4>
+            <p>Um site rápido, bonito e feito para gerar clientes.</p>
+            <div class="r-btn" id="rbtn">Fale conosco →<span class="r-ripple" id="ripple"></span></div>
+          </div>
+          <div class="r-cards">
+            <div class="r-card"><div class="r-ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#e11d2e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg></div><h5>Design</h5><i></i><i></i></div>
+            <div class="r-card"><div class="r-ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#e11d2e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div><h5>Código</h5><i></i><i></i></div>
+            <div class="r-card"><div class="r-ic"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#e11d2e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg></div><h5>SEO</h5><i></i><i></i></div>
+          </div>
+        </div>
+        <div id="scan"></div>
+      </div>
+      <div id="mob" class="body">
+        <div class="m-nav"><div class="r-logo" style="font-size:26px">SuaMarca</div><div class="m-burger"></div></div>
+        <div class="m-hero"><h4>Sua marca no topo.</h4><p>Um site rápido, bonito e feito para gerar clientes.</p><div class="m-btn">Fale conosco →</div></div>
+        <div class="m-card" style="top:596px"><div class="r-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#e11d2e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg></div>Design</div>
+        <div class="m-card" style="top:736px"><div class="r-ic"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#e11d2e" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>Código</div>
+      </div>
+    </div>
+    <div class="chip" id="c1" style="left:640px;top:360px"><u><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/></svg></u>UX/UI Design</div>
+    <div class="chip dark" id="c2" style="left:30px;top:1090px"><u><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></u>Código limpo</div>
+    <div class="chip" id="c3" style="left:720px;top:1330px"><u><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/></svg></u>SEO</div>
+    <div class="chip" id="c4" style="left:60px;top:1420px"><u><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></u>Alta performance</div>
+    <div id="sub3" class="abs">Design <b>+</b> Código <b>+</b> Estratégia</div>
+    <div class="chk" id="k1" style="top:1420px"><u><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></u>100% responsivo</div>
+    <div class="chk" id="k2" style="top:1530px"><u><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></u>Carregamento rápido</div>
+    <div class="chk" id="k3" style="top:1640px"><u><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></u>Pronto para o Google</div>
+    <svg id="cursor" class="abs" viewBox="0 0 24 24"><path d="M4 2.5l15 9.2-6.6 1.4 3.9 7.4-3 1.5-3.8-7.4L4.6 19z" fill="#141416" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- CENA 2: frase -->
+  <div id="s2" class="layer">
+    <div class="layer dots"></div>
+    <div id="bar2" class="abs"></div>
+    <div class="ln" style="top:640px"><span id="w1">Seu negócio</span></div>
+    <div class="ln" style="top:800px"><span id="w2">merece um</span></div>
+    <div class="ln" style="top:960px"><span id="w3">site que</span></div>
+    <div class="ln" style="top:1120px;padding-left:16px;margin-left:-16px"><span id="w4"><em id="hl"></em><b id="w4t" style="font-weight:800">vende.</b></span></div>
+    <div id="sub2" class="abs">Criação de sites <b>profissionais</b></div>
+  </div>
+
+  <!-- CENA 1: abertura -->
+  <div id="s1" class="layer red">
+    <div id="logo1" class="abs">Mosaik<span>Conecta</span></div>
+    <div id="tag1" class="abs">apresenta</div>
+    <div id="dot" class="abs"></div>
+  </div>
+
+  <!-- CENA FINAL -->
+  <div id="s5" class="layer">
+    <div id="tiles"></div>
+    <div id="fin">
+      <div id="ftiles" class="abs"><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+      <div class="f-ln" id="f1" style="top:560px"><span>Criação de</span></div>
+      <div class="f-ln" id="f2" style="top:700px"><span>Sites</span></div>
+      <div id="f3" class="abs">que conectam sua marca<br>a novos clientes.</div>
+      <div id="cta" class="abs">Solicite seu orçamento →</div>
+      <div id="fline" class="abs"></div>
+      <div id="flogo" class="abs"><i></i><div>Mosaik<span>Conecta</span></div></div>
+      <div id="fig" class="abs">@mosaikconecta</div>
+    </div>
+  </div>
+</div>
+<div id="hint">Clique para reiniciar</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const DUR=17.5;
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>clamp((t-a)/(b-a));
+const lerp=(a,b,k)=>a+(b-a)*k;
+const eo=k=>1-Math.pow(1-k,3);                       // ease out cubic
+const eo5=k=>1-Math.pow(1-k,5);
+const eio=k=>k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;     // ease in-out
+const ei=k=>k*k*k;
+const back=k=>{const c=1.70158,c3=c+1;return k<=0?0:1+c3*Math.pow(k-1,3)+c*Math.pow(k-1,2)};
+function S(el,o){ // set style
+  const s=el.style;
+  if(o.o!==undefined)s.opacity=o.o;
+  const x=o.x||0,y=o.y||0,sc=o.s===undefined?1:o.s,r=o.r||0,sx=o.sx===undefined?1:o.sx;
+  s.transform=`translate(${x}px,${y}px) scale(${sc*sx},${sc}) rotate(${r}deg)`;
+}
+const vis=(el,on)=>el.style.visibility=on?'visible':'hidden';
+
+/* tiles finais (mosaico) */
+const COLS=6,ROWS=11,tileShades=['#e11d2e','#d41a2b','#c9182a','#e11d2e','#b9121f','#e8303f'];
+const tiles=[];
+for(let r=0;r<ROWS;r++)for(let c=0;c<COLS;c++){
+  const b=document.createElement('b');
+  b.style.left=(c*180-1)+'px';b.style.top=(r*180-30)+'px';
+  b.style.background=tileShades[(r*7+c*3)%tileShades.length];
+  $('tiles').appendChild(b);tiles.push({b,d:(c+(ROWS-1-r))*0.035});
+}
+
+let L={};
+function measure(){
+  const tw=$('logo1').offsetWidth,dw=40,gap=26,total=dw+gap+tw;
+  L.dotX=540-total/2;            // posição final da bolinha (esquerda)
+  L.textX=L.dotX+dw+gap;
+  $('logo1').style.left=L.textX+'px';
+}
+
+const URL_TXT='www.suaempresa.com.br';
+const DESK={x:100,y:420,w:880,h:1060,r:28}, PHONE={x:305,y:390,w:470,h:960,r:60};
+
+function render(t){
+  /* ---------- CENA 1 (0 – 2.7) ---------- */
+  vis($('s1'),t<2.75);
+  if(t<2.75){
+    const pop=back(P(t,.1,.55));
+    const toLeft=eio(P(t,.65,1.15)), back2=eio(P(t,1.95,2.3));
+    const dx=lerp(0,L.dotX-520,toLeft*(1-back2));
+    const grow=ei(P(t,2.25,2.75));
+    S($('dot'),{x:dx,s:pop*(1+grow*70)});
+    const rv=eo5(P(t,.8,1.45)), out=P(t,1.85,2.1);
+    $('logo1').style.clipPath=`inset(0 ${(1-rv)*100}% 0 0)`;
+    S($('logo1'),{x:-50*(1-rv),o:1-out});
+    const tg=eo(P(t,1.25,1.65));
+    S($('tag1'),{y:30*(1-tg),o:tg*(1-out)});
+  }
+
+  /* ---------- CENA 2 (2.6 – 5.5) ---------- */
+  vis($('s2'),t>2.5&&t<5.6);
+  if(t>2.5&&t<5.6){
+    ['w1','w2','w3','w4'].forEach((id,i)=>{
+      const a=eo5(P(t,2.6+i*.13,3.25+i*.13));
+      const z=ei(P(t,5.0+i*.06,5.4+i*.06));
+      S($(id),{y:(1-a)*170-z*190});
+    });
+    S($('bar2'),{sx:eo5(P(t,2.55,3.0))*(1-eio(P(t,5.0,5.3)))});
+    const h=eo5(P(t,3.55,4.0));
+    S($('hl'),{sx:h});
+    $('w4t').style.color=h>.45?'#fff':'#141416';
+    const sb=eo(P(t,3.95,4.4)), so=P(t,4.95,5.2);
+    S($('sub2'),{y:30*(1-sb),o:sb*(1-so)});
+  }
+
+  /* ---------- CENA 3 (5.3 – 14) ---------- */
+  vis($('s3'),t>5.3&&t<14.1);
+  if(t>5.3&&t<14.1){
+    const lb=eo(P(t,5.4,5.85));
+    S($('lbl3'),{y:20*(1-lb),o:lb});
+    const ha=eo5(P(t,5.5,6.0)), haOut=eio(P(t,10.2,10.55));
+    S($('h3a'),{y:40*(1-ha)-40*haOut,o:ha*(1-haOut)});
+    const hb=eo5(P(t,10.45,10.95));
+    S($('h3b'),{y:40*(1-hb),o:hb});
+
+    // janela -> celular
+    const m=eio(P(t,10.25,11.0));
+    const w=$('win').style;
+    w.left=lerp(DESK.x,PHONE.x,m)+'px';w.top=lerp(DESK.y,PHONE.y,m)+'px';
+    w.width=lerp(DESK.w,PHONE.w,m)+'px';w.height=lerp(DESK.h,PHONE.h,m)+'px';
+    w.borderRadius=lerp(DESK.r,PHONE.r,m)+'px';
+    const wi=eo5(P(t,5.55,6.15));
+    S($('win'),{y:120*(1-wi),s:.92+.08*wi,o:clamp(wi*1.6)});
+    w.boxShadow=m>0?`0 40px 90px rgba(20,20,22,.18),0 0 0 ${2+m*12}px #141416`:'';
+
+    // barra superior
+    const topFade=1-P(t,10.25,10.5);
+    [...$('top').querySelectorAll('.d'),$('url')].forEach(e=>e.style.opacity=topFade);
+    $('top').style.background=m>.5?'#fff':'#f5f5f6';
+    $('top').style.borderBottomColor=m>.5?'#fff':'#ececef';
+    $('notch').style.opacity=P(t,10.75,11.0);
+    const n=Math.floor(URL_TXT.length*P(t,6.0,6.75));
+    $('urlt').textContent=URL_TXT.slice(0,n);
+    $('caret').style.opacity=(t<6.8||Math.floor(t*2.5)%2===0)&&t<7.6?1:0;
+
+    // esqueleto
+    [...$('skel').children].forEach((e,i)=>{
+      const k=eo5(P(t,6.45+i*.08,6.95+i*.08));
+      S(e,{sx:k,o:k});
+    });
+    // revelação com scanner
+    const sc=eio(P(t,7.5,8.6));
+    $('real').style.clipPath=`inset(0 0 ${(1-sc)*100}% 0)`;
+    $('scan').style.top=(sc*984-3)+'px';
+    $('scan').style.opacity=(sc>0&&sc<1)?1:0;
+    $('desk').style.opacity=1-P(t,10.25,10.5);
+    $('mob').style.opacity=P(t,10.7,11.05);
+    S($('mob'),{y:30*(1-eo(P(t,10.7,11.1)))});
+
+    // cursor + clique
+    const cIn=eo(P(t,8.7,9.0)), mv=eio(P(t,8.75,9.35)), cOut=P(t,9.9,10.15);
+    const click=P(t,9.4,9.5)-P(t,9.5,9.65);
+    const cx=lerp(950,330,mv), cy=lerp(1620,945,mv);
+    S($('cursor'),{x:cx,y:cy,s:1-click*.2,o:cIn*(1-cOut)});
+    const rp=eo(P(t,9.45,10.0));
+    S($('ripple'),{s:rp*14,o:rp>0?1-rp:0});
+    S($('rbtn'),{s:1-click*.06});
+
+    // chips
+    [['c1',6.9,-6],['c2',7.35,4],['c3',7.8,-4],['c4',8.25,3]].forEach(([id,st,r],i)=>{
+      const k=back(P(t,st,st+.45)), o=P(t,10.0+i*.04,10.25+i*.04);
+      const fl=Math.sin((t-st)*2.2+i)*6;
+      S($(id),{s:k*(1-o*.4),r:r*(1-k)+r*.3,y:fl,o:clamp(k*2)*(1-o)});
+    });
+    const s3=eo(P(t,8.6,9.0)), s3o=P(t,10.0,10.25);
+    S($('sub3'),{y:30*(1-s3),o:s3*(1-s3o)});
+
+    // checklist
+    ['k1','k2','k3'].forEach((id,i)=>{
+      const st=11.1+i*.3, k=eo5(P(t,st,st+.45));
+      S($(id),{x:-60*(1-k),o:k});
+      S($(id).querySelector('u'),{s:back(P(t,st+.1,st+.5))});
+      $(id).querySelector('path').style.strokeDashoffset=40*(1-eo(P(t,st+.3,st+.65)));
+    });
+  }
+
+  /* ---------- CENA FINAL (13.2 – 17.5) ---------- */
+  vis($('s5'),t>13.1);
+  if(t>13.1){
+    tiles.forEach(({b,d})=>{
+      const k=eo(P(t,13.2+d,13.6+d));
+      S(b,{s:k*1.01,r:(1-k)*30});
+    });
+    $('fin').style.opacity=t>14.05?1:0;
+    const ft=t-14.05;
+    if(t>14.05){
+      const f1=eo5(P(t,14.1,14.7)), f2=eo5(P(t,14.25,14.9));
+      S($('f1').firstChild,{y:(1-f1)*150});
+      S($('f2').firstChild,{y:(1-f2)*270});
+      const f3=eo(P(t,14.75,15.25));
+      S($('f3'),{y:40*(1-f3),o:f3});
+      const c=back(P(t,15.1,15.6)), pulse=t>15.9?Math.sin((t-15.9)*4.2)*.025:0;
+      S($('cta'),{s:c*(1+pulse),o:clamp(c*2)});
+      S($('fline'),{sx:eo5(P(t,15.4,16.0))});
+      const lg=eo(P(t,15.6,16.1));
+      S($('flogo'),{y:30*(1-lg),o:lg});
+      const ig=eo(P(t,15.85,16.3));
+      S($('fig'),{y:20*(1-ig),o:ig});
+      [...$('ftiles').children].forEach((e,i)=>{
+        const k=back(P(t,14.2+i*.06,14.6+i*.06));
+        S(e,{s:k});
+      });
+      S($('ftiles'),{r:12+ft*4});
+    }
+  }
+}
+
+/* ---------- execução ---------- */
+const params=new URLSearchParams(location.search);
+const renderMode=params.has('render');
+function fit(){
+  if(renderMode)return;
+  const k=Math.min(innerWidth/1080,innerHeight/1920);
+  $('stage').style.transform=`scale(${k})`;
+}
+addEventListener('resize',fit);fit();
+
+let start=performance.now();
+document.addEventListener('click',()=>start=performance.now());
+window.__ready=(document.fonts?document.fonts.ready:Promise.resolve()).then(()=>{
+  measure();
+  window.render=render;
+  if(renderMode){document.body.classList.add('render');render(0);return;}
+  (function loop(){
+    const t=((performance.now()-start)/1000)%DUR;
+    render(t);requestAnimationFrame(loop);
+  })();
+});
+</script>
+</body>
+</html>
