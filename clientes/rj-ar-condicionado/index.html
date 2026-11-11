@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RJ Ar Condicionado | Instalação, manutenção e limpeza</title>
+<meta name="description" content="RJ Ar Condicionado: instalação, manutenção e limpeza de ar-condicionado. Conforto, bem-estar e qualidade do ar. Orçamento pelo WhatsApp (15) 99783-9909.">
+<meta name="theme-color" content="#040a16">
+<meta property="og:title" content="RJ Ar Condicionado · Conforto que você sente">
+<meta property="og:description" content="Instalação, manutenção e limpeza de ar-condicionado. Orçamento no WhatsApp.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="logo.png">
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#040a16;--bg2:#071226;--panel:#0b1a33;--line-d:rgba(255,255,255,.09);
+  --ice:#62d8ff;--ice2:#bdefff;--blue:#1f7bff;--blue2:#0d5be0;
+  --paper:#f3f7fb;--ink:#07142a;--mute:#5a6a80;--line:#dde6f0;
+  --wa:#25d366;--heat:#ff7a2f;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+body{margin:0;background:var(--bg);color:#fff;font:16px/1.65 Inter,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:Archivo,Inter,sans-serif;font-variation-settings:"wdth" 112;line-height:1;margin:0;letter-spacing:-.025em;font-weight:800}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+img,svg{display:block;max-width:100%}
+::selection{background:var(--ice);color:var(--bg)}
+.w{max-width:1320px;margin:0 auto;padding:0 40px}
+@media(max-width:700px){.w{padding:0 18px}}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
+
+/* grain */
+.grain{position:fixed;inset:-50%;z-index:90;pointer-events:none;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain 1s steps(4) infinite}
+@keyframes grain{25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}}
+
+/* ---------- preloader ---------- */
+.loader{position:fixed;inset:0;z-index:100;background:#02060e;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;clip-path:inset(0 0 0 0)}
+.loader .mk{font:900 clamp(64px,12vw,140px)/1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 125;letter-spacing:-.04em;background:linear-gradient(180deg,#fff 20%,var(--ice));-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;transform:translateY(20px);animation:lin .9s var(--ease) .1s forwards}
+@keyframes lin{to{opacity:1;transform:none}}
+.loader .bar{width:min(320px,60vw);height:2px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.loader .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--ice));transition:width .3s}
+.loader .row{display:flex;justify-content:space-between;width:min(320px,60vw);color:#7f93b1}
+
+/* ---------- cursor ---------- */
+.cur,.cur-dot{position:fixed;left:0;top:0;z-index:95;pointer-events:none;border-radius:50%;display:none}
+.cur{width:38px;height:38px;border:1px solid rgba(98,216,255,.6);transition:width .35s var(--ease),height .35s var(--ease),background .35s,border-color .35s;align-items:center;justify-content:center;font:600 10px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.1em;color:var(--bg)}
+.cur-dot{width:6px;height:6px;background:var(--ice)}
+.cur.big{width:84px;height:84px;background:rgba(98,216,255,.92);border-color:transparent}
+.cur.link{width:60px;height:60px;background:rgba(98,216,255,.15)}
+@media(pointer:fine){.cur{display:flex}.cur-dot{display:block}}
+
+/* ---------- buttons ---------- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:12px;height:58px;padding:0 30px;border-radius:999px;font:700 15px/1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 108;letter-spacing:.02em;text-transform:uppercase;transition:background .3s,color .3s,box-shadow .3s;white-space:nowrap;cursor:pointer;border:0;overflow:hidden;isolation:isolate}
+.btn svg{width:20px;height:20px;flex:none}
+.btn-wa{background:var(--wa);color:#03200d;box-shadow:0 18px 40px -14px rgba(37,211,102,.7)}
+.btn-wa::before{content:"";position:absolute;inset:0;z-index:-1;background:#fff;transform:translateY(101%);transition:transform .5s var(--ease);border-radius:inherit}
+.btn-wa:hover::before{transform:none}
+.btn-line{color:#fff;border:1px solid rgba(255,255,255,.25)}
+.btn-line::before{content:"";position:absolute;inset:0;z-index:-1;background:#fff;transform:translateY(101%);transition:transform .5s var(--ease)}
+.btn-line:hover{color:var(--bg)}
+.btn-line:hover::before{transform:none}
+.btn .arr{width:16px;height:16px;transition:transform .4s var(--ease)}
+.btn:hover .arr{transform:translate(3px,-3px)}
+
+/* ---------- header ---------- */
+.top{position:fixed;inset:0 0 auto;z-index:80;transition:transform .5s var(--ease),background .4s,backdrop-filter .4s}
+.top.solid{background:rgba(4,10,22,.72);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);border-bottom:1px solid var(--line-d)}
+.top.hide{transform:translateY(-100%)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:84px}
+.logo{display:flex;align-items:center;gap:14px}
+.logo-mk img{width:100%;height:100%;object-fit:cover}
+.logo-mk{position:relative;width:48px;height:48px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#fff;font:900 17px/1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 120;box-shadow:0 10px 26px -8px rgba(98,216,255,.65),inset 0 1px 0 rgba(255,255,255,.4)}
+.logo b{display:block;font:800 18px/1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 110;letter-spacing:-.01em}
+.logo span.mono{display:block;font-size:10px;color:#7f93b1;margin-top:5px}
+.menu{display:flex;gap:6px;padding:6px;border-radius:999px;background:rgba(255,255,255,.04);border:1px solid var(--line-d)}
+.menu a{padding:10px 18px;border-radius:999px;font:500 14px/1 Inter,system-ui,sans-serif;color:#c6d4e8;transition:background .3s,color .3s}
+.menu a:hover{background:rgba(255,255,255,.08);color:#fff}
+.nav .btn{height:48px;padding:0 22px;font-size:13px}
+@media(max-width:1020px){.menu{display:none}}
+@media(max-width:480px){.nav .btn .t{display:none}.nav .btn{width:48px;padding:0}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;height:100svh;min-height:680px;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#0d2550 0%,#071631 38%,var(--bg) 72%)}
+.hero .heat{position:absolute;inset:0;background:radial-gradient(60% 50% at 50% 26%,rgba(255,122,47,.45),transparent 70%),radial-gradient(40% 40% at 15% 90%,rgba(255,80,40,.18),transparent 70%);transition:opacity 3s ease}
+.hero.cool .heat{opacity:0}
+.hero .cold{position:absolute;inset:0;background:radial-gradient(55% 45% at 50% 30%,rgba(98,216,255,.28),transparent 70%);opacity:0;transition:opacity 3s ease}
+.hero.cool .cold{opacity:1}
+.hero .lines{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:80px 80px;-webkit-mask-image:radial-gradient(70% 60% at 50% 35%,#000,transparent);mask-image:radial-gradient(70% 60% at 50% 35%,#000,transparent)}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block}
+.fallback{position:absolute;left:50%;top:28%;width:min(760px,86vw);transform:translate(-50%,-50%);display:none}
+.no-gl .fallback{display:block}
+.hud{position:absolute;inset:0;pointer-events:none;z-index:2}
+.hud .mono{color:#8aa0c0}
+.hud-l,.hud-r{position:absolute;top:118px;display:grid;gap:14px}
+.hud-l{left:40px}
+.hud-r{right:40px;text-align:right}
+.hud .k{display:block;font-size:10px;color:#5d7396;margin-bottom:5px}
+.hud .v{display:flex;align-items:center;gap:8px;font:600 13px/1 "JetBrains Mono",ui-monospace,monospace;color:#dbe8f8;letter-spacing:.06em}
+.hud-r .v{justify-content:flex-end}
+.dot{width:8px;height:8px;border-radius:50%;background:#ff5a5a;box-shadow:0 0 12px #ff5a5a;transition:all .4s}
+.hero.on .dot{background:#3dffa0;box-shadow:0 0 12px #3dffa0}
+.big-t{font:600 34px/1 "JetBrains Mono"!important;letter-spacing:-.02em!important;color:var(--heat)!important;transition:color 2s}
+.hero.cool .big-t{color:var(--ice)!important}
+.hero-copy{position:absolute;left:0;right:0;bottom:0;z-index:3;padding-bottom:48px}
+.hero h1{font-size:clamp(46px,8.4vw,138px);font-variation-settings:"wdth" 118;line-height:.9;letter-spacing:-.045em}
+.hero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 .ln>span{display:inline-block}
+.hero h1 .ice{background:linear-gradient(90deg,#fff 0%,var(--ice) 40%,#9ae7ff 70%,#fff 100%);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:-200% 0}}
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-top:34px;padding-top:28px;border-top:1px solid var(--line-d)}
+.hero-row p{max-width:520px;color:#b3c4dc;font-size:17px}
+.hero-row .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.power{pointer-events:auto;display:flex;align-items:center;gap:12px;border:1px solid var(--line-d);background:rgba(255,255,255,.04);color:#dbe8f8;border-radius:999px;padding:6px 18px 6px 6px;cursor:pointer;backdrop-filter:blur(10px)}
+.power i{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#183764,#0b2045);color:#ff6b6b;transition:color .3s}
+.hero.on .power i{color:#3dffa0}
+.power i svg{width:18px;height:18px}
+.power .mono{font-size:11px}
+.scroll-ind{position:absolute;left:50%;bottom:16px;z-index:3;transform:translateX(-50%);color:#5d7396;font-size:10px}
+@media(max-width:1020px){
+  .hero-row{flex-direction:column;align-items:flex-start;gap:22px}
+  .hud-l{left:18px;top:100px}.hud-r{right:18px;top:100px}
+  .hud .hide-m{display:none}
+}
+@media(max-width:700px){
+  .hero{min-height:640px}
+  .hero-copy{padding-bottom:28px}
+  .hero-row{margin-top:20px;padding-top:20px}
+  .hero-row p{font-size:15.5px}
+  .hero-row .ctas{width:100%}
+  .hero-row .ctas .btn{flex:1;height:56px;padding:0 18px}
+  .big-t{font-size:24px!important}
+  .scroll-ind{display:none}
+}
+
+/* ---------- marquee ---------- */
+.mq{position:relative;z-index:2;background:var(--ice);color:var(--bg);overflow:hidden;padding:22px 0;transform:rotate(-1.5deg) scale(1.04);margin:-10px 0}
+.mq .tr{display:flex;width:max-content;animation:mq 26s linear infinite}
+.mq span{display:flex;align-items:center;gap:36px;padding-right:36px;font:900 clamp(22px,3vw,40px)/1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 120;text-transform:uppercase;letter-spacing:-.02em;white-space:nowrap}
+.mq span svg{width:28px;height:28px}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ---------- generic ---------- */
+section{position:relative}
+main{overflow-x:clip}
+.pad{padding:150px 0}
+@media(max-width:700px){.pad{padding:96px 0}}
+.eyb{display:inline-flex;align-items:center;gap:12px;color:var(--ice)}
+.eyb::before{content:"";width:28px;height:1px;background:currentColor}
+.h2{font-size:clamp(38px,5.6vw,88px);letter-spacing:-.04em;line-height:.95}
+.light{background:var(--paper);color:var(--ink)}
+.light .eyb{color:var(--blue)}
+.split .wd{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em}
+.split .wd>span{display:inline-block}
+
+/* statement */
+.stmt{padding:170px 0 150px}
+.stmt p{font:700 clamp(30px,4.4vw,68px)/1.08 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 108;letter-spacing:-.035em;max-width:1180px}
+.stmt p .w2{opacity:.14}
+.stmt p .hl{color:var(--ice)}
+.stmt .meta{display:flex;justify-content:space-between;margin-bottom:48px;color:#5d7396}
+@media(max-width:700px){.stmt{padding:110px 0 90px}}
+
+/* ---------- services (horizontal) ---------- */
+.svc-sec{overflow:hidden}
+.svc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;margin-bottom:64px}
+.svc-head p{max-width:420px;color:var(--mute);font-size:17px}
+@media(max-width:800px){.svc-head{flex-direction:column;align-items:flex-start;gap:24px;margin-bottom:44px}}
+.hs{display:flex;gap:24px;width:max-content;padding:0 40px}
+.card{position:relative;width:min(560px,82vw);min-height:580px;border-radius:30px;padding:40px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;transition:box-shadow .5s var(--ease)}
+.card:hover{box-shadow:0 50px 90px -50px rgba(7,40,100,.45)}
+.card .no{font:900 120px/.8 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 125;letter-spacing:-.06em;color:transparent;-webkit-text-stroke:1.5px #c9d7e8;position:absolute;right:30px;top:34px;z-index:1}
+.card .ill{height:200px;margin:-40px -40px 30px;background:linear-gradient(160deg,#e8f4ff,#f8fbff);display:grid;place-items:center;border-bottom:1px solid var(--line);overflow:hidden;position:relative}
+.card .ill svg{height:150px;width:auto}
+.card h3{font-size:clamp(30px,3vw,42px);letter-spacing:-.035em;margin-bottom:14px}
+.card p{color:var(--mute);font-size:16.5px;max-width:440px}
+.card ul{list-style:none;padding:0;margin:26px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.card li{padding:9px 14px;border-radius:999px;background:var(--paper);border:1px solid var(--line);font:500 13.5px/1 Inter,system-ui,sans-serif;color:#30425c}
+.card .go{margin-top:auto;padding-top:30px;display:flex;align-items:center;justify-content:space-between;font:700 14px/1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 108;text-transform:uppercase;letter-spacing:.04em;color:var(--blue)}
+.card .go i{width:52px;height:52px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;transition:transform .5s var(--ease),background .3s}
+.card .go i svg{width:18px;height:18px}
+.card:hover .go i{transform:rotate(-45deg);background:var(--blue)}
+.card.dark{background:var(--ink);color:#fff;border-color:var(--ink)}
+.card.dark p{color:#9fb2cc}
+.card.dark .ill{background:linear-gradient(160deg,#10284f,#081733);border-color:rgba(255,255,255,.08)}
+.card.dark li{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1);color:#cfe0f5}
+.card.dark .no{-webkit-text-stroke-color:rgba(255,255,255,.18)}
+.card.dark .go{color:var(--ice)}
+.card.dark .go i{background:var(--ice);color:var(--ink)}
+.card.sun .ill{background:linear-gradient(160deg,#fff4e0,#fffaf2)}
+.card.end{background:linear-gradient(150deg,var(--blue2),var(--blue) 50%,#38b8ff);color:#fff;border:0;justify-content:space-between}
+.card.end h3{font-size:clamp(36px,3.6vw,54px)}
+.card.end p{color:#dcecff}
+@media(max-width:1023px){
+  .hs{flex-direction:column;width:auto;padding:0 40px}
+  .card{width:100%;min-height:0}
+  .card .no{font-size:90px}
+  .card.end{gap:30px}
+}
+@media(max-width:700px){.hs{padding:0 18px}.card{padding:30px}.card .ill{margin:-30px -30px 26px}}
+
+/* ---------- before/after ---------- */
+.ba-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}
+@media(max-width:1000px){.ba-wrap{grid-template-columns:1fr;gap:48px}}
+.ba-txt p{color:#9fb2cc;font-size:17.5px;margin-top:24px;max-width:460px}
+.ba-list{margin-top:34px;display:grid;border-top:1px solid var(--line-d)}
+.ba-list div{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;border-bottom:1px solid var(--line-d);font:600 17px/1.3 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 105}
+.ba-list span.mono{color:var(--ice);font-size:11px;white-space:nowrap}
+.ba{position:relative;aspect-ratio:16/11;border-radius:28px;overflow:hidden;border:1px solid var(--line-d);user-select:none;-webkit-user-select:none;touch-action:pan-y;box-shadow:0 60px 120px -60px rgba(0,0,0,.8)}
+.ba svg{position:absolute;inset:0;width:100%;height:100%}
+.ba .after{clip-path:inset(0 0 0 var(--p,50%))}
+.ba .handle{position:absolute;top:0;bottom:0;left:var(--p,50%);width:2px;background:#fff;transform:translateX(-1px);pointer-events:none}
+.ba .handle i{position:absolute;top:50%;left:50%;width:62px;height:62px;margin:-31px 0 0 -31px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.ba .handle svg{width:26px;height:26px}
+.ba .tag{position:absolute;top:20px;padding:8px 14px;border-radius:999px;background:rgba(4,10,22,.7);backdrop-filter:blur(8px);color:#fff;pointer-events:none}
+.ba .tag.l{left:20px}.ba .tag.r{right:20px;background:rgba(98,216,255,.9);color:var(--ink)}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.ba-note{margin-top:14px;color:#5d7396;font-size:10px}
+
+/* ---------- bento ---------- */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(230px,auto);gap:20px;margin-top:70px}
+.bx{position:relative;border-radius:28px;padding:34px;background:#fff;border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
+.bx h4{font-size:26px;letter-spacing:-.03em;margin-bottom:10px}
+.bx p{color:var(--mute);font-size:15.5px;max-width:420px}
+.bx .mono{color:var(--blue);margin-bottom:auto;padding-bottom:28px}
+.b1{grid-column:span 4;grid-row:span 2;background:var(--ink);color:#fff;border-color:var(--ink)}
+.b1 p{color:#9fb2cc}
+.b1 .mono{color:var(--ice)}
+.b2{grid-column:span 2;grid-row:span 2}
+.b3,.b4,.b5{grid-column:span 2}
+@media(max-width:1000px){.bento{grid-template-columns:1fr 1fr}.b1,.b2{grid-column:span 2;grid-row:auto}.b3,.b4{grid-column:span 1}.b5{grid-column:span 2}}
+@media(max-width:620px){.bento{grid-template-columns:1fr}.b1,.b2,.b3,.b4,.b5{grid-column:auto}.bx{padding:28px}}
+.gauge-w{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:10px 0 34px}
+@media(max-width:620px){.gauge-w{grid-template-columns:1fr}}
+.gauge{position:relative;padding:22px;border-radius:20px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.gauge svg{width:100%;height:auto}
+.gauge .lbl{display:flex;justify-content:space-between;margin-top:6px;color:#8aa0c0}
+.gauge .val{position:absolute;left:0;right:0;top:42%;text-align:center;font:800 34px/1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 115}
+.chat{display:grid;gap:10px;margin:6px 0 26px}
+.bub{max-width:88%;padding:12px 16px;border-radius:18px;font-size:14.5px;line-height:1.45;opacity:0;transform:translateY(10px) scale(.96);transition:all .6s var(--ease)}
+.bub.in{opacity:1;transform:none}
+.bub.me{justify-self:end;background:#dcf8c6;color:#0b2a12;border-bottom-right-radius:6px}
+.bub.jk{background:var(--paper);border:1px solid var(--line);border-bottom-left-radius:6px}
+.bub small{display:block;font-size:11px;opacity:.55;margin-top:4px;text-align:right}
+.typing{display:inline-flex;gap:4px;padding:14px 16px;border-radius:18px;background:var(--paper);border:1px solid var(--line);width:max-content;opacity:0;transition:opacity .3s}
+.typing.in{opacity:1}
+.typing i{width:6px;height:6px;border-radius:50%;background:#8aa0c0;animation:tp 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes tp{50%{transform:translateY(-4px);opacity:.4}}
+.air-ill{height:120px;margin-bottom:22px;position:relative;border-radius:18px;background:linear-gradient(160deg,#eaf6ff,#f8fcff);overflow:hidden}
+.air-ill i{position:absolute;bottom:-10px;width:8px;height:8px;border-radius:50%;background:var(--ice);opacity:.7;animation:up 4s linear infinite}
+@keyframes up{to{transform:translateY(-150px);opacity:0}}
+.sun-ill{height:120px;margin-bottom:22px;border-radius:18px;background:linear-gradient(160deg,#fff3dc,#fffaf1);position:relative;overflow:hidden}
+.sun-ill svg{position:absolute;inset:0;width:100%;height:100%}
+.sun-ill::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.9),transparent);animation:sweep 3.5s var(--ease) infinite}
+@keyframes sweep{to{left:120%}}
+.life-ill{height:120px;margin-bottom:22px;border-radius:18px;background:linear-gradient(160deg,#eef3ff,#f9fbff);display:grid;place-items:center}
+.life-ill svg{width:90px;height:90px}
+.life-ill .hand{transform-origin:50px 50px;animation:rot 6s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* ---------- process ---------- */
+.proc{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px}
+@media(max-width:1000px){.proc{grid-template-columns:1fr;gap:50px}}
+.proc-l{position:sticky;top:130px;align-self:start}
+@media(max-width:1000px){.proc-l{position:static}}
+.proc-l p{color:#9fb2cc;font-size:17.5px;margin-top:24px;max-width:420px}
+.steps{position:relative;padding-left:70px}
+.steps .rail{position:absolute;left:21px;top:10px;bottom:10px;width:2px;background:rgba(255,255,255,.08);border-radius:2px}
+.steps .rail i{position:absolute;inset:0 0 auto;height:0;background:linear-gradient(var(--blue),var(--ice));border-radius:inherit;box-shadow:0 0 18px var(--ice)}
+.st{position:relative;padding:0 0 70px}
+.st:last-child{padding-bottom:0}
+.st .n{position:absolute;left:-70px;top:0;width:44px;height:44px;border-radius:50%;background:var(--bg2);border:1px solid rgba(255,255,255,.15);display:grid;place-items:center;font:600 13px/1 "JetBrains Mono",ui-monospace,monospace;color:#8aa0c0;transition:all .5s var(--ease)}
+.st.act .n{background:var(--ice);color:var(--bg);border-color:var(--ice);box-shadow:0 0 0 8px rgba(98,216,255,.12)}
+.st h4{font-size:clamp(26px,2.6vw,38px);letter-spacing:-.03em;margin:4px 0 12px}
+.st p{color:#9fb2cc;font-size:16.5px;max-width:520px}
+
+/* ---------- audience rows ---------- */
+.rows{margin-top:60px;border-top:1px solid var(--line)}
+.rw{position:relative;display:grid;grid-template-columns:90px 1fr auto;align-items:center;gap:20px;padding:34px 0;border-bottom:1px solid var(--line);overflow:hidden}
+.rw::before{content:"";position:absolute;inset:0;background:var(--ink);transform:scaleY(0);transform-origin:bottom;transition:transform .6s var(--ease);z-index:0}
+.rw:hover::before{transform:none}
+.rw>*{position:relative;z-index:1;transition:color .4s,transform .6s var(--ease)}
+.rw:hover>*{color:#fff}
+.rw:hover h3{transform:translateX(20px)}
+.rw .mono{color:var(--mute)}
+.rw h3{font-size:clamp(30px,5vw,76px);letter-spacing:-.045em;font-variation-settings:"wdth" 118}
+.rw p{max-width:340px;color:var(--mute);font-size:15px;text-align:right}
+.rw:hover p,.rw:hover .mono{color:#9fb2cc}
+@media(max-width:800px){.rw{grid-template-columns:1fr;gap:8px;padding:26px 0}.rw p{text-align:left}}
+
+/* ---------- contact ---------- */
+.ct{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:stretch}
+@media(max-width:1000px){.ct{grid-template-columns:1fr}}
+.ct-list{margin-top:44px;display:grid;gap:12px}
+.ct-item{display:flex;align-items:center;gap:20px;padding:22px 24px;border-radius:22px;background:rgba(255,255,255,.035);border:1px solid var(--line-d);transition:background .4s,border-color .4s,transform .5s var(--ease)}
+a.ct-item:hover{background:rgba(255,255,255,.07);border-color:rgba(98,216,255,.35);transform:translateX(6px)}
+.ct-item .ic{flex:none;width:54px;height:54px;border-radius:16px;display:grid;place-items:center}
+.ct-item .ic svg{width:26px;height:26px}
+.ct-item .mono{display:block;color:#5d7396;font-size:10px;margin-bottom:6px}
+.ct-item b{font:700 clamp(18px,2vw,24px)/1.1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 108;letter-spacing:-.01em}
+.ct-item .ar{margin-left:auto;width:22px;height:22px;color:#5d7396;flex:none}
+@media(max-width:480px){.ct-item{padding:18px;gap:14px}.ct-item .ic{width:46px;height:46px}}
+.map{position:relative;border-radius:30px;overflow:hidden;border:1px solid var(--line-d);background:#06112a;min-height:420px}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map .pp{transform-box:fill-box;transform-origin:center;animation:ping 2.6s ease-out infinite}
+.map .pp2{animation-delay:1.3s}
+@keyframes ping{from{transform:scale(.3);opacity:.9}to{transform:scale(3);opacity:0}}
+.map.brand{display:grid;place-items:center;padding:40px 24px;background:radial-gradient(70% 60% at 50% 35%,rgba(31,123,255,.35),transparent 70%),#06112a}
+.brand-in{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.brand-in img{width:200px;height:200px;border-radius:50%;box-shadow:0 0 0 8px rgba(255,255,255,.06),0 30px 80px -20px rgba(31,123,255,.7);animation:bob 5s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.brand-in b{font:800 30px/1.1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 112;letter-spacing:-.03em;margin-top:12px}
+.brand-in .mono{color:#8aa0c0;font-size:10.5px;max-width:300px;line-height:1.6}
+.hrs{margin-top:10px;padding:14px 22px;border-radius:16px;border:1px solid var(--line-d);background:rgba(255,255,255,.04);display:flex;gap:16px;align-items:center}
+.hrs strong{font:600 18px/1 "JetBrains Mono",ui-monospace,monospace;color:var(--ice)}
+.map .cap{position:absolute;left:24px;bottom:24px;right:24px;display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.map .cap b{font:800 28px/1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 115;letter-spacing:-.03em}
+.map .cap .mono{color:#8aa0c0;font-size:10px}
+
+/* ---------- faq ---------- */
+.faq-g{display:grid;grid-template-columns:.8fr 1.2fr;gap:80px}
+@media(max-width:1000px){.faq-g{grid-template-columns:1fr;gap:40px}}
+.qa{border-top:1px solid var(--line)}
+.q{border-bottom:1px solid var(--line)}
+.q button{all:unset;box-sizing:border-box;width:100%;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:28px 0;font:700 clamp(18px,1.8vw,24px)/1.25 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 105;letter-spacing:-.015em}
+.q button:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:6px}
+.q .pl{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);position:relative;transition:background .4s,border-color .4s,transform .5s var(--ease)}
+.q .pl::before,.q .pl::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;margin:-1px 0 0 -7px;background:currentColor;transition:transform .5s var(--ease)}
+.q .pl::after{transform:rotate(90deg)}
+.q.open .pl{background:var(--ink);color:#fff;border-color:var(--ink);transform:rotate(180deg)}
+.q.open .pl::after{transform:rotate(0)}
+.q .a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .6s var(--ease)}
+.q.open .a{grid-template-rows:1fr}
+.q .a>div{overflow:hidden}
+.q .a p{padding:0 70px 28px 0;color:var(--mute);font-size:16.5px}
+@media(max-width:600px){.q .a p{padding-right:0}}
+
+/* ---------- final cta ---------- */
+.fin{position:relative;overflow:hidden;padding:180px 0 160px;text-align:center;background:radial-gradient(80% 70% at 50% 100%,rgba(31,123,255,.45),transparent 70%),var(--bg)}
+.fin .flakes{position:absolute;inset:0;pointer-events:none}
+.fin .flakes i{position:absolute;top:-30px;font-style:normal;color:rgba(189,239,255,.5);animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(900px) rotate(360deg)}}
+.fin h2{font-size:clamp(56px,12vw,200px);letter-spacing:-.06em;line-height:.85;font-variation-settings:"wdth" 122}
+.fin h2 .o{color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.55)}
+.fin p{color:#b3c4dc;font-size:19px;max-width:560px;margin:34px auto 44px}
+.fin .btn{height:76px;padding:0 44px;font-size:17px}
+@media(max-width:600px){.fin{padding:120px 0}.fin .btn{width:100%;height:66px;font-size:15px}}
+
+/* ---------- footer ---------- */
+footer{background:#02060e;padding:90px 0 30px;color:#7f93b1;overflow:hidden}
+.ft{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px}
+@media(max-width:900px){.ft{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.ft{grid-template-columns:1fr}}
+.ft h5{margin:0 0 20px;color:#fff;font:600 11px/1 "JetBrains Mono",ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}
+.ft ul{list-style:none;margin:0;padding:0;display:grid;gap:12px;font-size:15px}
+.ft a:hover{color:#fff}
+.ft .logo{margin-bottom:20px;color:#fff}
+.giant{margin-top:80px;font:900 clamp(28px,7.9vw,132px)/.8 Archivo,Inter,system-ui,sans-serif;font-variation-settings:"wdth" 125;letter-spacing:-.065em;white-space:nowrap;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 85%);-webkit-background-clip:text;background-clip:text;color:transparent;text-align:center;user-select:none;padding-bottom:.1em}
+.legal{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:26px;border-top:1px solid var(--line-d);font-size:13px}
+
+/* fab */
+.fab{position:fixed;right:22px;bottom:22px;z-index:70;width:64px;height:64px;border-radius:50%;background:var(--wa);color:#fff;display:grid;place-items:center;box-shadow:0 16px 36px -10px rgba(37,211,102,.8);transform:scale(0) rotate(-90deg);transition:transform .6s var(--ease)}
+.fab.show{transform:none}
+.fab svg{width:32px;height:32px}
+.fab::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--wa);animation:ring 2.4s infinite}
+@keyframes ring{to{transform:scale(1.7);opacity:0}}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .stmt p .w2{opacity:1}
+  .grain{display:none}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="cur" aria-hidden="true"></div><div class="cur-dot" aria-hidden="true"></div>
+
+<!-- PRELOADER -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="mk">RJ</div>
+  <div class="bar"><i id="lbar"></i></div>
+  <div class="row mono"><span>Ligando o frio</span><span id="lpct">0%</span></div>
+</div>
+
+<!-- HEADER -->
+<header class="top" id="top">
+  <div class="w nav">
+    <a href="#inicio" class="logo" aria-label="RJ Ar Condicionado, início">
+      <span class="logo-mk"><img src="logo.png" alt="" width="48" height="48"></span>
+      <span><b>RJ Ar Condicionado</b><span class="mono">Conforto que você sente</span></span>
+    </a>
+    <nav class="menu" aria-label="Principal">
+      <a href="#servicos">Serviços</a>
+      <a href="#diferenca">A diferença</a>
+      <a href="#processo">Processo</a>
+      <a href="#faq">Dúvidas</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a class="btn btn-wa mag" data-wa="Olá, RJ Ar Condicionado! Gostaria de um orçamento." href="https://wa.me/5515997839909" target="_blank" rel="noopener" aria-label="Pedir orçamento no WhatsApp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg><span class="t">Orçamento</span>
+    </a>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="heat"></div><div class="cold"></div><div class="lines"></div>
+  <canvas id="gl" aria-label="Ar-condicionado 3D ligado soltando ar gelado" role="img"></canvas>
+  <svg class="fallback" viewBox="0 0 560 180" aria-hidden="true"><rect x="10" y="10" width="540" height="140" rx="30" fill="#f1f5fa"/><rect x="420" y="50" width="100" height="40" rx="10" fill="#0b1626"/><text x="470" y="78" text-anchor="middle" font-family="JetBrains Mono" font-size="22" fill="#62d8ff">18°</text><text x="50" y="80" font-family="Archivo" font-weight="900" font-size="26" fill="#0d2a6b">RJ</text><rect x="44" y="128" width="472" height="12" rx="6" fill="#26354d"/></svg>
+
+  <div class="hud">
+    <div class="hud-l">
+      <div><span class="k mono">Status</span><span class="v"><i class="dot"></i><span id="hStatus">STANDBY</span></span></div>
+      <div class="hide-m"><span class="k mono">Modo</span><span class="v">❄ FRIO · TURBO</span></div>
+      <div class="hide-m"><span class="k mono">Modelo</span><span class="v">SPLIT HI-WALL</span></div>
+    </div>
+    <div class="hud-r">
+      <div><span class="k mono">Ambiente</span><span class="v big-t" id="hRoom">32.0°</span></div>
+      <div class="hide-m"><span class="k mono">Set point</span><span class="v">18°C</span></div>
+    </div>
+  </div>
+
+  <div class="hero-copy">
+    <div class="w">
+      <h1 aria-label="Ar gelado. Serviço impecável.">
+        <span class="ln"><span>Ar gelado.</span></span>
+        <span class="ln"><span class="ice">Serviço impecável.</span></span>
+      </h1>
+      <div class="hero-row">
+        <p>Instalação, manutenção e limpeza de ar-condicionado com segurança e qualidade. Conforto e bem-estar para sua casa ou empresa, com orçamento rápido pelo WhatsApp.</p>
+        <div class="ctas">
+          <a class="btn btn-wa mag" data-wa="Olá, RJ Ar Condicionado! Gostaria de um orçamento." href="https://wa.me/5515997839909" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Pedir orçamento</a>
+          <button class="power" id="power" aria-pressed="false" aria-label="Ligar ou desligar o ar-condicionado 3D"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v9"/><path d="M6.3 6.8a8 8 0 1 0 11.4 0"/></svg></i><span class="mono" id="pLbl">Ligar</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-ind mono">Role para descobrir ↓</div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq" aria-hidden="true"><div class="tr">
+  <span>Instalação<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg>Manutenção<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg>Limpeza<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg>Higienização<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg>Conforto<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg></span>
+  <span>Instalação<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg>Manutenção<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg>Limpeza<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg>Higienização<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg>Conforto<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><use href="#i-snow"/></svg></span>
+</div></div>
+
+<!-- STATEMENT -->
+<section class="stmt">
+  <div class="w">
+    <div class="meta mono"><span>(01) Quem somos</span><span>RJ Ar Condicionado</span></div>
+    <p id="stmt">O propósito da RJ Ar Condicionado é proporcionar <span class="hl">conforto, bem-estar e qualidade</span> para o seu ambiente. Por isso cada instalação, manutenção e limpeza é feita com técnica, segurança e o <span class="hl">capricho</span> de quem trata a sua casa como se fosse a nossa.</p>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="light svc-sec pad" id="servicos">
+  <div class="w">
+    <div class="svc-head">
+      <div>
+        <span class="eyb mono">(02) Serviços</span>
+        <h2 class="h2 split" style="margin-top:22px">Do furo na parede<br>ao ar gelando.</h2>
+      </div>
+      <p class="rv">Um único parceiro para todo o ciclo de vida do seu ar-condicionado: da instalação à limpeza periódica.</p>
+    </div>
+  </div>
+  <div class="hs" id="hs">
+    <article class="card">
+      <span class="no">01</span>
+      <div class="ill"><svg viewBox="0 0 220 150" fill="none"><rect x="20" y="18" width="180" height="56" rx="16" fill="#fff" stroke="#bfd2e8" stroke-width="2"/><rect x="40" y="58" width="140" height="6" rx="3" fill="#26354d"/><rect x="150" y="30" width="34" height="14" rx="4" fill="#0b1626"/><text x="167" y="41" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#62d8ff">18°</text><path d="M60 90v40M110 90v46M160 90v40" stroke="#1f7bff" stroke-width="3" stroke-linecap="round" stroke-dasharray="4 8"><animate attributeName="stroke-dashoffset" from="24" to="0" dur="1s" repeatCount="indefinite"/></path></svg></div>
+      <h3>Instalação</h3>
+      <p>Instalação de split com posicionamento correto, vácuo na tubulação, suporte firme para a condensadora e acabamento limpo.</p>
+      <ul><li>Split hi-wall</li><li>Ar de janela</li><li>Vácuo na linha</li><li>Teste final</li></ul>
+      <a class="go" data-wa="Olá, RJ! Quero um orçamento de INSTALAÇÃO de ar-condicionado." href="https://wa.me/5515997839909" target="_blank" rel="noopener">Orçar instalação<i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+    </article>
+    <article class="card dark">
+      <span class="no">02</span>
+      <div class="ill"><svg viewBox="0 0 220 150" fill="none"><g transform="translate(110 75)"><g><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="8s" repeatCount="indefinite"/><circle r="44" stroke="#62d8ff" stroke-width="10" stroke-dasharray="14 10"/></g><circle r="26" fill="#0b1a33" stroke="#62d8ff" stroke-width="3"/><path d="M-9 0l6 6 12-13" stroke="#3dffa0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g></svg></div>
+      <h3>Manutenção</h3>
+      <p>Diagnóstico preciso e reparo para o aparelho voltar a render e durar mais. Preventiva para evitar susto; corretiva quando já deu problema.</p>
+      <ul><li>Preventiva</li><li>Corretiva</li><li>Pressão do gás</li><li>Parte elétrica</li></ul>
+      <a class="go" data-wa="Olá, RJ! Preciso de MANUTENÇÃO no meu ar-condicionado." href="https://wa.me/5515997839909" target="_blank" rel="noopener">Orçar manutenção<i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+    </article>
+    <article class="card">
+      <span class="no">03</span>
+      <div class="ill"><svg viewBox="0 0 220 150" fill="none"><rect x="40" y="30" width="140" height="90" rx="10" fill="#fff" stroke="#bfd2e8" stroke-width="2"/><g stroke="#c9d7e8" stroke-width="2"><path d="M55 40v70M67 40v70M79 40v70M91 40v70M103 40v70M115 40v70M127 40v70M139 40v70M151 40v70M163 40v70"/></g><g fill="#62d8ff"><circle cx="70" cy="20" r="4"><animate attributeName="cy" values="0;140" dur="1.6s" repeatCount="indefinite"/></circle><circle cx="110" cy="20" r="3"><animate attributeName="cy" values="-20;140" dur="1.9s" repeatCount="indefinite"/></circle><circle cx="150" cy="20" r="4"><animate attributeName="cy" values="-40;140" dur="1.4s" repeatCount="indefinite"/></circle></g></svg></div>
+      <h3>Limpeza completa</h3>
+      <p>Higienização da evaporadora e da condensadora: serpentina, filtros, bandeja e dreno. Menos ácaro, mais frio e menos consumo.</p>
+      <ul><li>Serpentina</li><li>Filtros</li><li>Bandeja e dreno</li><li>Condensadora</li></ul>
+      <a class="go" data-wa="Olá, RJ! Quero um orçamento de LIMPEZA de ar-condicionado." href="https://wa.me/5515997839909" target="_blank" rel="noopener">Orçar limpeza<i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+    </article>
+    <article class="card end">
+      <div>
+        <span class="mono" style="opacity:.8">Não sabe o que precisa?</span>
+        <h3 style="margin-top:22px">Manda uma foto do aparelho.</h3>
+        <p style="margin-top:16px">A gente identifica o serviço certo e te passa o orçamento pelo WhatsApp.</p>
+      </div>
+      <a class="btn btn-wa" style="align-self:flex-start" data-wa="Olá, RJ! Vou mandar uma foto do meu aparelho para orçamento." href="https://wa.me/5515997839909" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>Chamar no WhatsApp</a>
+    </article>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="pad" id="diferenca" style="background:var(--bg2)">
+  <div class="w ba-wrap">
+    <div class="ba-txt">
+      <span class="eyb mono">(03) A diferença</span>
+      <h2 class="h2 split" style="margin-top:22px">Arraste e veja o que a limpeza faz.</h2>
+      <p class="rv">Com o uso, poeira, gordura e fungos se acumulam nas aletas da serpentina. O ar passa com dificuldade, o aparelho força e gela menos.</p>
+      <div class="ba-list rv">
+        <div>Ar mais frio e com mais vazão<span class="mono">+ Frio</span></div>
+        <div>Compressor trabalha menos<span class="mono">− Consumo</span></div>
+        <div>Fim do mau cheiro e dos fungos<span class="mono">+ Saúde</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="ba" id="ba">
+        <svg viewBox="0 0 800 550" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <pattern id="fins" width="14" height="550" patternUnits="userSpaceOnUse"><rect width="14" height="550" fill="#cfdbe8"/><rect x="0" width="5" height="550" fill="#eef4fa"/><rect x="5" width="2" height="550" fill="#9fb2c8"/></pattern>
+            <linearGradient id="cu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4b27a"/><stop offset=".5" stop-color="#c8743c"/><stop offset="1" stop-color="#8d4a1f"/></linearGradient>
+            <filter id="grime" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .03" numOctaves="4" seed="7"/><feColorMatrix values="0 0 0 0 .32  0 0 0 0 .25  0 0 0 0 .16  0 0 0 3.2 -1.0"/></filter>
+            <filter id="dust" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 .5  0 0 0 0 .42  0 0 0 0 .3  0 0 0 3 -1.6"/></filter>
+            <linearGradient id="gl2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".35"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          </defs>
+          <rect width="800" height="550" fill="url(#fins)"/>
+          <g fill="url(#cu)"><rect x="0" y="80" width="800" height="22" rx="11"/><rect x="0" y="200" width="800" height="22" rx="11"/><rect x="0" y="320" width="800" height="22" rx="11"/><rect x="0" y="440" width="800" height="22" rx="11"/></g>
+          <rect width="800" height="550" filter="url(#grime)"/>
+          <rect width="800" height="550" filter="url(#dust)"/>
+          <rect width="800" height="550" fill="#3a2a14" opacity=".38"/>
+        </svg>
+        <svg class="after" viewBox="0 0 800 550" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <rect width="800" height="550" fill="url(#fins)"/>
+          <g fill="url(#cu)"><rect x="0" y="80" width="800" height="22" rx="11"/><rect x="0" y="200" width="800" height="22" rx="11"/><rect x="0" y="320" width="800" height="22" rx="11"/><rect x="0" y="440" width="800" height="22" rx="11"/></g>
+          <rect width="800" height="550" fill="url(#gl2)"/>
+        </svg>
+        <span class="tag l mono">Antes</span><span class="tag r mono">Depois</span>
+        <div class="handle"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></i></div>
+        <input type="range" min="0" max="100" value="50" id="baIn" aria-label="Comparar serpentina antes e depois da limpeza">
+      </div>
+      <p class="ba-note mono">Ilustração da serpentina (evaporadora) antes e depois da higienização.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS BENTO -->
+<section class="light pad">
+  <div class="w">
+    <span class="eyb mono">(04) Por que a RJ</span>
+    <h2 class="h2 split" style="margin-top:22px;max-width:900px">Mais frio, menos conta, zero dor de cabeça.</h2>
+    <div class="bento">
+      <div class="bx b1 rv">
+        <span class="mono">Eficiência</span>
+        <div class="gauge-w">
+          <div class="gauge"><svg viewBox="0 0 200 120"><path d="M20 110a80 80 0 0 1 160 0" stroke="rgba(255,255,255,.1)" stroke-width="14" fill="none" stroke-linecap="round"/><path class="arc" data-to=".92" d="M20 110a80 80 0 0 1 160 0" stroke="#ff7a2f" stroke-width="14" fill="none" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg><span class="val" style="color:#ff9a5c">Sujo</span><div class="lbl mono"><span>Esforço</span><span>Alto</span></div></div>
+          <div class="gauge"><svg viewBox="0 0 200 120"><path d="M20 110a80 80 0 0 1 160 0" stroke="rgba(255,255,255,.1)" stroke-width="14" fill="none" stroke-linecap="round"/><path class="arc" data-to=".45" d="M20 110a80 80 0 0 1 160 0" stroke="#62d8ff" stroke-width="14" fill="none" stroke-linecap="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg><span class="val" style="color:var(--ice)">Limpo</span><div class="lbl mono"><span>Esforço</span><span>Ideal</span></div></div>
+        </div>
+        <h4>Conta de luz mais leve</h4>
+        <p>Com serpentina e filtros limpos, o compressor alcança a temperatura com menos esforço, e isso aparece no fim do mês. <span style="opacity:.6">(Ilustrativo.)</span></p>
+      </div>
+      <div class="bx b2 rv">
+        <span class="mono">Atendimento</span>
+        <div class="chat" id="chat">
+          <div class="bub me">Oi! Meu ar não está gelando 🥵<small>14:02</small></div>
+          <div class="typing"><i></i><i></i><i></i></div>
+          <div class="bub jk">Oi! Me manda uma foto do aparelho e o seu bairro que já te passo o orçamento 👍<small>14:03</small></div>
+        </div>
+        <h4>Orçamento no WhatsApp</h4>
+        <p>Rápido, direto e sem enrolação. Você fala com quem faz o serviço.</p>
+      </div>
+      <div class="bx b3 rv">
+        <div class="air-ill" aria-hidden="true"><i style="left:12%;animation-delay:0s"></i><i style="left:28%;animation-delay:1.2s"></i><i style="left:44%;animation-delay:.6s"></i><i style="left:60%;animation-delay:2s"></i><i style="left:76%;animation-delay:1.5s"></i><i style="left:88%;animation-delay:.3s"></i></div>
+        <h4>Ar mais saudável</h4>
+        <p>Menos ácaros, fungos e mau cheiro para sua família ou equipe.</p>
+      </div>
+      <div class="bx b4 rv">
+        <div class="life-ill" aria-hidden="true"><svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="40" stroke="#1f7bff" stroke-width="5"/><g class="hand"><path d="M50 50V22" stroke="#07142a" stroke-width="5" stroke-linecap="round"/></g><circle cx="50" cy="50" r="5" fill="#07142a"/></svg></div>
+        <h4>Aparelho que dura mais</h4>
+        <p>Revisão periódica evita defeitos caros e paradas no pior momento.</p>
+      </div>
+      <div class="bx b5 rv">
+        <div class="sun-ill" aria-hidden="true" style="background:linear-gradient(160deg,#e8f2ff,#f7fbff);display:grid;place-items:center"><span style="font:800 44px/1 Archivo,Inter,system-ui,sans-serif;font-variation-settings:'wdth' 118;letter-spacing:-.03em;color:#0d2a6b;position:relative;z-index:1">07h<span style="color:#1f7bff"> – </span>18h</span></div>
+        <h4>Atendimento das 07h às 18h</h4>
+        <p>Chame no WhatsApp e combine o melhor horário para o serviço.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="pad" id="processo">
+  <div class="w proc">
+    <div class="proc-l">
+      <span class="eyb mono">(05) Processo</span>
+      <h2 class="h2 split" style="margin-top:22px">Simples do começo ao fim.</h2>
+      <p class="rv">Quatro passos entre o calor e o ar gelado. Sem complicação, sem surpresa.</p>
+      <a class="btn btn-line mag" style="margin-top:36px" data-wa="Olá, RJ Ar Condicionado! Gostaria de um orçamento." href="https://wa.me/5515997839909" target="_blank" rel="noopener">Começar agora<svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg></a>
+    </div>
+    <div class="steps" id="steps">
+      <div class="rail"><i id="railFill"></i></div>
+      <div class="st"><span class="n">01</span><h4>Você chama no WhatsApp</h4><p>Conte o serviço que precisa, o modelo ou BTUs do aparelho e o bairro. Se puder, mande uma foto.</p></div>
+      <div class="st"><span class="n">02</span><h4>Recebe o orçamento</h4><p>Valor claro e combinado antes. Você escolhe o melhor dia e horário.</p></div>
+      <div class="st"><span class="n">03</span><h4>Serviço no local</h4><p>Atendimento com ferramentas adequadas, proteção do ambiente e cuidado com cada detalhe.</p></div>
+      <div class="st"><span class="n">04</span><h4>Teste e entrega</h4><p>O aparelho é testado na sua frente. Só finalizamos quando estiver gelando como deve.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="light pad">
+  <div class="w">
+    <span class="eyb mono">(06) Para quem</span>
+    <h2 class="h2 split" style="margin-top:22px">Onde tem calor, a RJ resolve.</h2>
+    <div class="rows">
+      <div class="rw rv"><span class="mono">01</span><h3>Residências</h3><p>Quartos e salas sempre frescos, instalação discreta e bem acabada.</p></div>
+      <div class="rw rv"><span class="mono">02</span><h3>Comércios</h3><p>Clientes confortáveis e equipamentos revisados para não parar.</p></div>
+      <div class="rw rv"><span class="mono">03</span><h3>Escritórios</h3><p>Equipe produtiva com manutenção programada.</p></div>
+      
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="pad" id="contato">
+  <div class="w ct">
+    <div>
+      <span class="eyb mono">(07) Contato</span>
+      <h2 class="h2 split" style="margin-top:22px">Fale direto com a RJ.</h2>
+      <div class="ct-list">
+        <a class="ct-item rv" data-wa="Olá, RJ Ar Condicionado! Gostaria de um orçamento." href="https://wa.me/5515997839909" target="_blank" rel="noopener">
+          <span class="ic" style="background:rgba(37,211,102,.14);color:var(--wa)"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg></span>
+          <span><span class="mono">WhatsApp · Orçamento</span><b>(15) 99783-9909</b></span>
+          <svg class="ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+        <a class="ct-item rv" href="tel:+5515997839909">
+          <span class="ic" style="background:rgba(98,216,255,.12);color:var(--ice)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg></span>
+          <span><span class="mono">Ligar agora</span><b>+55 15 99783-9909</b></span>
+          <svg class="ar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M9 7h8v8"/></svg>
+        </a>
+        <div class="ct-item rv">
+          <span class="ic" style="background:rgba(98,216,255,.12);color:var(--ice)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <span><span class="mono">Horário de atendimento</span><b>07:00 às 18:00</b></span>
+        </div>
+      </div>
+    </div>
+    <div class="map brand rv">
+      <div class="brand-in">
+        <img src="logo.png" alt="Logo RJ Ar Condicionado" width="220" height="220">
+        <b>RJ Ar Condicionado</b>
+        <span class="mono">Serviço de aquecimento, ventilação e ar-condicionado</span>
+        <div class="hrs"><span class="mono">Atendimento</span><strong>07:00 – 18:00</strong></div>
+      </div>
+    </div>
+</div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="light pad" id="faq">
+  <div class="w faq-g">
+    <div>
+      <span class="eyb mono">(08) Dúvidas</span>
+      <h2 class="h2 split" style="margin-top:22px">Perguntas frequentes.</h2>
+    </div>
+    <div class="qa">
+      <div class="q open"><button aria-expanded="true">De quanto em quanto tempo devo limpar o ar-condicionado?<span class="pl"></span></button><div class="a"><div><p>Em uso diário, principalmente no verão, o recomendado é uma limpeza completa a cada 6 meses. Ambientes com muita poeira ou uso comercial podem precisar de intervalos menores.</p></div></div></div>
+      <div class="q"><button aria-expanded="false">Como sei que meu aparelho precisa de manutenção?<span class="pl"></span></button><div class="a"><div><p>Sinais comuns: demora para gelar, mau cheiro, gotejamento, barulho diferente ou aumento na conta de luz. Notou algum deles? Chama no WhatsApp.</p></div></div></div>
+      <div class="q"><button aria-expanded="false">Vocês instalam aparelho comprado em loja?<span class="pl"></span></button><div class="a"><div><p>Sim. Fazemos a instalação do seu aparelho novo. Envie o modelo e a capacidade (BTUs) pelo WhatsApp para receber o orçamento.</p></div></div></div>
+      <div class="q"><button aria-expanded="false">Qual o horário de atendimento?<span class="pl"></span></button><div class="a"><div><p>Atendemos das 07:00 às 18:00. Chame no WhatsApp (15) 99783-9909 para confirmar a disponibilidade do dia e agendar.</p></div></div></div>
+      <div class="q"><button aria-expanded="false">Como peço um orçamento?<span class="pl"></span></button><div class="a"><div><p>Toque em qualquer botão de WhatsApp deste site ou chame no (15) 99783-9909. Mande uma foto do aparelho e o endereço do serviço.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="fin">
+  <div class="flakes" id="flakes" aria-hidden="true"></div>
+  <div class="w" style="position:relative">
+    <span class="eyb mono">(09) Bora gelar?</span>
+    <h2 class="split" style="margin-top:30px">Calor<br><span class="o">não espera.</span></h2>
+    <p class="rv">Chame a RJ Ar Condicionado agora e receba seu orçamento pelo WhatsApp.</p>
+    <a class="btn btn-wa mag" data-wa="Olá, RJ Ar Condicionado! Gostaria de um orçamento." href="https://wa.me/5515997839909" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg>(15) 99783-9909</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="w">
+    <div class="ft">
+      <div>
+        <div class="logo"><span class="logo-mk"><img src="logo.png" alt="" width="48" height="48"></span><span><b>RJ Ar Condicionado</b><span class="mono">Conforto que você sente</span></span></div>
+        <p style="max-width:300px">Conforto que você sente. Instalação, manutenção e limpeza de ar-condicionado.</p>
+      </div>
+      <div><h5>Serviços</h5><ul><li><a href="#servicos">Instalação</a></li><li><a href="#servicos">Manutenção</a></li><li><a href="#servicos">Limpeza</a></li></ul></div>
+      <div><h5>Navegação</h5><ul><li><a href="#diferenca">A diferença</a></li><li><a href="#processo">Processo</a></li><li><a href="#faq">Dúvidas</a></li><li><a href="#contato">Contato</a></li></ul></div>
+      <div><h5>Contato</h5><ul><li><a data-wa="Olá, RJ Ar Condicionado!" href="https://wa.me/5515997839909" target="_blank" rel="noopener">(15) 99783-9909</a></li><li><a href="tel:+5515997839909">Ligar agora</a></li><li>07:00 – 18:00</li></ul></div>
+    </div>
+    <div class="giant" aria-hidden="true">RJ AR CONDICIONADO</div>
+    <div class="legal"><span>© <span id="yr">2026</span> RJ Ar Condicionado. Todos os direitos reservados.</span><span>Site por Mosaik Conecta</span></div>
+  </div>
+</footer>
+
+<a class="fab" id="fab" data-wa="Olá, RJ Ar Condicionado! Gostaria de um orçamento." href="https://wa.me/5515997839909" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#i-wa"/></svg></a>
+
+<!-- icon sprite -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.79-1.47-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.6-.92-2.2-.24-.58-.49-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.08c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.75-.72 2-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.8h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.9-9.88a9.83 9.83 0 0 1 9.88 9.89c0 5.45-4.44 9.88-9.89 9.88m8.41-18.3A11.81 11.81 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.9 0-3.17-1.24-6.16-3.48-8.4"/></symbol>
+  <symbol id="i-snow" viewBox="0 0 24 24"><path d="M12 2v20M4 7l16 10M20 7L4 17M9 3l3 3 3-3M9 21l3-3 3 3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+'use strict';
+var RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var FINE = window.matchMedia('(pointer:fine)').matches;
+var hasG = !!(window.gsap && window.ScrollTrigger);
+if (hasG) gsap.registerPlugin(ScrollTrigger);
+function $(s,c){return (c||document).querySelector(s)}
+function $$(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))}
+$('#yr').textContent = new Date().getFullYear();
+
+/* WhatsApp links with prefilled messages */
+$$('[data-wa]').forEach(function(a){ a.href = 'https://wa.me/5515997839909?text=' + encodeURIComponent(a.getAttribute('data-wa')); });
+
+/* FAQ accordion */
+$$('.q button').forEach(function(b){
+  b.addEventListener('click', function(){
+    var q=b.parentNode, open=!q.classList.contains('open');
+    $$('.q').forEach(function(o){o.classList.remove('open'); $('button',o).setAttribute('aria-expanded','false');});
+    if(open){q.classList.add('open'); b.setAttribute('aria-expanded','true');}
+    if(hasG) setTimeout(function(){ScrollTrigger.refresh()},650);
+  });
+});
+
+/* ---------- smooth scroll ---------- */
+var lenis = null;
+if (!RM && window.Lenis){
+  lenis = new Lenis({duration:1.15, smoothWheel:true});
+  if (hasG){ lenis.on('scroll', ScrollTrigger.update); gsap.ticker.add(function(t){lenis.raf(t*1000)}); gsap.ticker.lagSmoothing(0); }
+  else { (function r(t){lenis.raf(t); requestAnimationFrame(r)})(0); }
+}
+$$('a[href^="#"]').forEach(function(a){ a.addEventListener('click', function(e){ var id=a.getAttribute('href'); if(id.length>1 && $(id)){ e.preventDefault(); if(lenis) lenis.scrollTo(id,{offset:-70}); else $(id).scrollIntoView({behavior:RM?'auto':'smooth'}); } }); });
+
+/* ---------- header ---------- */
+var top = $('#top'), fab = $('#fab'), lastY = 0;
+function onScroll(){
+  var y = window.scrollY;
+  top.classList.toggle('solid', y > 40);
+  if (y > 500 && y > lastY + 2) top.classList.add('hide');
+  else if (y < lastY - 2 || y <= 500) top.classList.remove('hide');
+  fab.classList.toggle('show', y > window.innerHeight * .8);
+  lastY = y;
+}
+window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+/* ---------- cursor + magnetic ---------- */
+if (FINE && !RM){
+  var cur=$('.cur'), dot=$('.cur-dot'), mx=-100, my=-100, cx=mx, cy=my;
+  addEventListener('mousemove', function(e){ mx=e.clientX; my=e.clientY; dot.style.transform='translate('+(mx-3)+'px,'+(my-3)+'px)'; });
+  (function loop(){ cx+=(mx-cx)*.18; cy+=(my-cy)*.18; cur.style.transform='translate('+cx+'px,'+cy+'px) translate(-50%,-50%)'; requestAnimationFrame(loop); })();
+  $$('a,button').forEach(function(el){ el.addEventListener('mouseenter',function(){cur.classList.add('link')}); el.addEventListener('mouseleave',function(){cur.classList.remove('link')}); });
+  var baBox=$('#ba'); baBox.addEventListener('mouseenter',function(){cur.classList.add('big'); cur.textContent='ARRASTE';}); baBox.addEventListener('mouseleave',function(){cur.classList.remove('big'); cur.textContent='';});
+  $$('.mag').forEach(function(el){
+    el.addEventListener('mousemove', function(e){ var r=el.getBoundingClientRect(); var x=e.clientX-r.left-r.width/2, y=e.clientY-r.top-r.height/2; el.style.transform='translate('+x*.25+'px,'+y*.35+'px)'; });
+    el.addEventListener('mouseleave', function(){ el.style.transition='transform .6s cubic-bezier(.16,1,.3,1)'; el.style.transform=''; setTimeout(function(){el.style.transition=''},600); });
+  });
+}
+
+/* ---------- before / after ---------- */
+var baEl=$('#ba'), baIn=$('#baIn');
+function setBA(v){ baEl.style.setProperty('--p', v+'%'); }
+baIn.addEventListener('input', function(){ setBA(baIn.value); });
+
+/* ---------- final snowflakes ---------- */
+var fl=$('#flakes');
+for (var i=0;i<26;i++){ var f=document.createElement('i'); f.textContent='❄'; f.style.left=Math.random()*100+'%'; f.style.fontSize=(10+Math.random()*22)+'px'; f.style.animationDuration=(9+Math.random()*12)+'s'; f.style.animationDelay=(-Math.random()*20)+'s'; f.style.opacity=(.2+Math.random()*.6); fl.appendChild(f); }
+
+/* ---------- text splitting ---------- */
+(function splitWords(el){
+  var nodes=Array.prototype.slice.call(el.childNodes); el.innerHTML='';
+  nodes.forEach(function(n){
+    var cls=n.nodeType===1?n.className:'';
+    n.textContent.split(/(\s+)/).forEach(function(t){
+      if(!t) return; if(/^\s+$/.test(t)){ el.appendChild(document.createTextNode(' ')); return; }
+      var s=document.createElement('span'); s.className='w2'+(cls?' '+cls:''); s.textContent=t; el.appendChild(s);
+    });
+  });
+})($('#stmt'));
+$$('h2.split').forEach(function(h){
+  h.innerHTML = h.innerHTML.split(/(<br\s*\/?>)/i).map(function(part){
+    if (/^<br/i.test(part)) return part;
+    var tmp=document.createElement('div'); tmp.innerHTML=part; var out='';
+    Array.prototype.slice.call(tmp.childNodes).forEach(function(n){
+      var cls=n.nodeType===1?n.className:'';
+      n.textContent.split(/\s+/).filter(Boolean).forEach(function(w){ out+='<span class="wd"><span'+(cls?' class="'+cls+'"':'')+'>'+w+'</span></span> '; });
+    });
+    return out;
+  }).join('');
+});
+
+/* ================= 3D AIR CONDITIONER ================= */
+var hero=$('.hero'), AC=null;
+var state={power:0, flap:0, emit:0, temp:24, room:32};
+
+function initAC(){
+  if(!window.THREE) throw new Error('three.js indisponível');
+  var canvas=$('#gl');
+  var renderer=new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true, powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.75));
+  renderer.setClearColor(0x000000,0);
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=1.0;
+
+  var scene=new THREE.Scene();
+  var camera=new THREE.PerspectiveCamera(30,1,.1,300);
+
+  /* studio environment for glossy reflections */
+  var pm=new THREE.PMREMGenerator(renderer);
+  var env=new THREE.Scene();
+  env.add(new THREE.Mesh(new THREE.BoxGeometry(40,24,40), new THREE.MeshBasicMaterial({color:0x1a2c4a, side:THREE.BackSide})));
+  function soft(w,h,p,r,col,k){ var m=new THREE.Mesh(new THREE.PlaneGeometry(w,h), new THREE.MeshBasicMaterial({color:new THREE.Color(col).multiplyScalar(k), side:THREE.DoubleSide})); m.position.set(p[0],p[1],p[2]); m.rotation.set(r[0],r[1],r[2]); env.add(m); }
+  soft(26,8,[0,11.5,0],[Math.PI/2,0,0],0xffffff,3);
+  soft(12,10,[-14,3,10],[0,Math.PI/3,0],0xffffff,2.4);
+  soft(8,14,[16,0,4],[0,-Math.PI/2.4,0],0x7fdcff,2.2);
+  soft(30,6,[0,-2,19],[0,0,0],0xdbefff,1.6);
+  scene.environment=pm.fromScene(env,.04).texture;
+
+  scene.add(new THREE.HemisphereLight(0xdcefff,0x0a1a33,.9));
+  var key=new THREE.DirectionalLight(0xffffff,1.4); key.position.set(-4,8,10); scene.add(key);
+  var rim=new THREE.DirectionalLight(0x62d8ff,1.6); rim.position.set(8,-2,-6); scene.add(rim);
+
+  var root=new THREE.Group(); scene.add(root);
+  var ac=new THREE.Group(); root.add(ac);
+
+  /* body: side profile extruded along the width */
+  var s=new THREE.Shape();
+  s.moveTo(0,-0.9); s.lineTo(0,1.0); s.quadraticCurveTo(0,1.15,0.18,1.15);
+  s.lineTo(1.2,1.15); s.quadraticCurveTo(1.6,1.15,1.62,0.75);
+  s.lineTo(1.64,-0.4); s.quadraticCurveTo(1.6,-0.95,1.1,-1.05);
+  s.lineTo(0.25,-1.1); s.quadraticCurveTo(0,-1.1,0,-0.9);
+  var W=8;
+  var g=new THREE.ExtrudeGeometry(s,{depth:W, bevelEnabled:true, bevelThickness:.16, bevelSize:.1, bevelSegments:10, curveSegments:28});
+  g.rotateY(-Math.PI/2); g.computeBoundingBox();
+  var c=new THREE.Vector3(); g.boundingBox.getCenter(c); g.translate(-c.x,-c.y,-c.z); g.computeVertexNormals();
+  var oz=-c.z, oy=-c.y;
+  function P(zs,ys){ return {z:zs+oz, y:ys+oy}; }
+
+  var white=new THREE.MeshPhysicalMaterial({color:0xeef2f7, roughness:.3, metalness:0, clearcoat:1, clearcoatRoughness:.15, envMapIntensity:1});
+  ac.add(new THREE.Mesh(g,white));
+
+  var darkM=new THREE.MeshStandardMaterial({color:0x0c1422, roughness:.55, metalness:.2});
+  /* air outlet on the lower front curve */
+  var slotP=P(1.38,-0.86), slotAng=-0.88;
+  var slot=new THREE.Mesh(new THREE.BoxGeometry(W-.5,.06,.5), darkM);
+  slot.position.set(0,slotP.y,slotP.z); slot.rotation.x=slotAng; ac.add(slot);
+  var vaneM=new THREE.MeshStandardMaterial({color:0x4a5a72, roughness:.6});
+  for (var v=-3.3; v<=3.31; v+=.55){ var vane=new THREE.Mesh(new THREE.BoxGeometry(.03,.14,.42), vaneM); vane.position.set(v,slotP.y-.04,slotP.z-.02); vane.rotation.x=slotAng; ac.add(vane); }
+
+  /* louver flap on a hinge */
+  var hinge=new THREE.Group(); hinge.position.set(0,slotP.y+.02,slotP.z+.06); ac.add(hinge);
+  var flap=new THREE.Mesh(new THREE.BoxGeometry(W-.4,.045,.56), white); flap.position.z=-.02; hinge.add(flap);
+  var FLAP_CLOSED=slotAng, FLAP_OPEN=0.35;
+  hinge.rotation.x=FLAP_CLOSED;
+
+  /* front seam + top grille */
+  var fz=P(1.64,0).z+.105;
+  var seam=new THREE.Mesh(new THREE.BoxGeometry(W-.2,.012,.01), new THREE.MeshStandardMaterial({color:0xb9c6d6, roughness:.5}));
+  seam.position.set(0,P(0,-0.25).y,fz-.004); ac.add(seam);
+  for (var k=0;k<5;k++){ var gb=new THREE.Mesh(new THREE.BoxGeometry(W-1.2,.01,.035), darkM); gb.position.set(0,P(0,1.15).y+.105,P(.35+k*.17,0).z); ac.add(gb); }
+
+  /* canvas textures: brand + display */
+  function tex(cw,ch){ var cv=document.createElement('canvas'); cv.width=cw; cv.height=ch; var t=new THREE.CanvasTexture(cv); t.encoding=THREE.sRGBEncoding; t.anisotropy=8; t._ctx=cv.getContext('2d'); return t; }
+  var brandT=tex(1024,256);
+  function drawBrand(){ var x=brandT._ctx; x.clearRect(0,0,1024,256); x.textBaseline='middle'; x.fillStyle='#0d2a6b'; x.font='900 150px Archivo, "Arial Black", sans-serif'; x.fillText('RJ',20,132); x.fillStyle='#1f6fd6'; x.font='700 46px Inter, Arial, sans-serif'; if('letterSpacing' in x) x.letterSpacing='10px'; x.fillText('AR CONDICIONADO',248,138); if('letterSpacing' in x) x.letterSpacing='0px'; brandT.needsUpdate=true; }
+  var brand=new THREE.Mesh(new THREE.PlaneGeometry(2.1,.525), new THREE.MeshBasicMaterial({map:brandT, transparent:true, toneMapped:false}));
+  brand.position.set(-2.55,P(0,.3).y,fz+.002); ac.add(brand);
+
+  var dispT=tex(512,200);
+  function rr(x,a,b,w,h,r){ x.beginPath(); x.moveTo(a+r,b); x.arcTo(a+w,b,a+w,b+h,r); x.arcTo(a+w,b+h,a,b+h,r); x.arcTo(a,b+h,a,b,r); x.arcTo(a,b,a+w,b,r); x.closePath(); }
+  function drawDisp(){
+    var x=dispT._ctx, on=state.power>.5;
+    x.clearRect(0,0,512,200);
+    x.fillStyle='#070d18'; rr(x,6,6,500,188,46); x.fill();
+    if (on){
+      x.shadowColor='#62d8ff'; x.shadowBlur=28; x.fillStyle='#8fe6ff';
+      x.font='600 128px "JetBrains Mono", monospace'; x.textBaseline='middle'; x.textAlign='right';
+      x.fillText(String(Math.round(state.temp)),340,108);
+      x.font='600 56px "JetBrains Mono", monospace'; x.textAlign='left'; x.fillText('°C',350,80);
+      x.shadowBlur=18; x.strokeStyle='#8fe6ff'; x.lineWidth=7; x.lineCap='round';
+      x.save(); x.translate(84,100); for(var i=0;i<3;i++){ x.beginPath(); x.moveTo(0,-36); x.lineTo(0,36); x.stroke(); x.rotate(Math.PI/3);} x.restore();
+      x.fillStyle='#3dffa0'; x.shadowColor='#3dffa0'; x.beginPath(); x.arc(460,52,11,0,7); x.fill();
+    } else {
+      x.fillStyle='#ff5a5a'; x.shadowColor='#ff5a5a'; x.shadowBlur=18; x.beginPath(); x.arc(460,52,9,0,7); x.fill();
+    }
+    x.shadowBlur=0; x.textAlign='left'; dispT.needsUpdate=true;
+  }
+  var disp=new THREE.Mesh(new THREE.PlaneGeometry(1.25,.49), new THREE.MeshBasicMaterial({map:dispT, transparent:true, toneMapped:false}));
+  disp.position.set(2.85,P(0,.32).y,fz+.003); ac.add(disp);
+  drawBrand(); drawDisp();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ drawBrand(); drawDisp(); });
+
+  /* cool glow behind the unit */
+  var glowT=tex(256,256), gx=glowT._ctx, gr=gx.createRadialGradient(128,128,0,128,128,128);
+  gr.addColorStop(0,'rgba(98,216,255,.9)'); gr.addColorStop(1,'rgba(98,216,255,0)'); gx.fillStyle=gr; gx.fillRect(0,0,256,256); glowT.needsUpdate=true;
+  var glow=new THREE.Mesh(new THREE.PlaneGeometry(18,10), new THREE.MeshBasicMaterial({map:glowT, transparent:true, blending:THREE.AdditiveBlending, depthWrite:false, opacity:0}));
+  glow.position.set(0,-1.6,-1.5); ac.add(glow);
+
+  /* cold air particles */
+  function makeParticles(N, big){
+    var geo=new THREE.BufferGeometry();
+    var pos=new Float32Array(N*3), alpha=new Float32Array(N), size=new Float32Array(N);
+    for (var i=0;i<N;i++) pos[i*3+1]=-999;
+    geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
+    geo.setAttribute('aAlpha', new THREE.BufferAttribute(alpha,1));
+    geo.setAttribute('aSize', new THREE.BufferAttribute(size,1));
+    var mat=new THREE.ShaderMaterial({
+      uniforms:{uPR:{value:1}, uColor:{value:new THREE.Color(big?0x9fe6ff:0xe0f8ff)}, uH:{value:400}},
+      vertexShader:'attribute float aAlpha;attribute float aSize;uniform float uPR;uniform float uH;varying float vA;void main(){vec4 mv=modelViewMatrix*vec4(position,1.);gl_PointSize=aSize*uPR*uH/-mv.z*.01;gl_Position=projectionMatrix*mv;vA=aAlpha;}',
+      fragmentShader:'uniform vec3 uColor;varying float vA;void main(){float d=length(gl_PointCoord-.5);float a=smoothstep(.5,.0,d);a*=a;gl_FragColor=vec4(uColor,a*vA);}',
+      transparent:true, depthWrite:false, blending:THREE.AdditiveBlending
+    });
+    var pts=new THREE.Points(geo,mat); pts.frustumCulled=false; ac.add(pts);
+    var life=new Float32Array(N); for (var j=0;j<N;j++) life[j]=-1;
+    return {N:N,big:big,geo:geo,pos:pos,alpha:alpha,size:size,vel:new Float32Array(N*3),life:life,max:new Float32Array(N),base:new Float32Array(N),mat:mat,acc:0,cursor:0};
+  }
+  var small=innerWidth<700;
+  var fine=makeParticles(small?700:1400,false), mist=makeParticles(small?90:170,true);
+  var t0=0;
+  function spawn(S){
+    for (var n=0;n<S.N;n++){ var i=(S.cursor+n)%S.N; if (S.life[i]<0){
+      S.cursor=i+1;
+      var x=(Math.random()-.5)*(W-1.0);
+      S.pos[i*3]=x; S.pos[i*3+1]=slotP.y-.14; S.pos[i*3+2]=slotP.z+.14;
+      var sp=S.big?.55:1;
+      S.vel[i*3]=x*.06+(Math.random()-.5)*.25;
+      S.vel[i*3+1]=-(0.9+Math.random()*1.1)*sp;
+      S.vel[i*3+2]=(0.9+Math.random()*1.3)*sp;
+      S.life[i]=0; S.max[i]=S.big?(3.5+Math.random()*2.5):(2.2+Math.random()*2.2);
+      S.base[i]=S.big?(260+Math.random()*420):(12+Math.random()*26);
+      return;
+    }}
+  }
+  function stepP(S,dt,rate){
+    S.acc+=rate*dt;
+    while(S.acc>=1){ spawn(S); S.acc-=1; }
+    for (var i=0;i<S.N;i++){
+      if (S.life[i]<0) continue;
+      S.life[i]+=dt; var L=S.life[i]/S.max[i];
+      if (L>=1){ S.life[i]=-1; S.alpha[i]=0; S.pos[i*3+1]=-999; continue; }
+      var j=i*3;
+      S.vel[j+1]*=(1-.35*dt); S.vel[j+2]*=(1-.25*dt);
+      S.pos[j]+=(S.vel[j]+Math.sin(t0*1.3+i)*.18)*dt;
+      S.pos[j+1]+=(S.vel[j+1]-.12)*dt;
+      S.pos[j+2]+=S.vel[j+2]*dt;
+      S.alpha[i]=Math.min(1,L*6)*(1-L)*(S.big?.07:.9);
+      S.size[i]=S.base[i]*(S.big?(.6+L*1.4):(1+L*.6));
+    }
+    S.geo.attributes.position.needsUpdate=true; S.geo.attributes.aAlpha.needsUpdate=true; S.geo.attributes.aSize.needsUpdate=true;
+  }
+
+  /* framing: keep the unit in the upper part of the hero */
+  var view={w:1,h:1,dist:20,y:0};
+  function resize(){
+    var w=hero.clientWidth, h=hero.clientHeight; view.w=w; view.h=h;
+    renderer.setSize(w,h,false); camera.aspect=w/h;
+    var tanH=Math.tan(camera.fov*Math.PI/360), mobile=w<700;
+    var frac=mobile?.9:(w<1100?.64:.48);
+    var dW=((W+.6)/frac)/2/tanH/camera.aspect;
+    var dH=(2.6/(mobile?.2:.3))/2/tanH;
+    view.dist=Math.max(dW,dH);
+    var visH=2*view.dist*tanH;
+    view.y=visH*(mobile?.25:.21);
+    camera.position.set(0,view.dist*.05,view.dist); camera.lookAt(0,0,0); camera.updateProjectionMatrix();
+    var pr=renderer.getPixelRatio();
+    fine.mat.uniforms.uH.value=mist.mat.uniforms.uH.value=h;
+    fine.mat.uniforms.uPR.value=mist.mat.uniforms.uPR.value=pr;
+  }
+  resize(); addEventListener('resize', resize);
+
+  var mouse={x:0,y:0,tx:0,ty:0}, scrollP=0, visible=true, clock=new THREE.Clock();
+  if (FINE) hero.addEventListener('mousemove', function(e){ mouse.tx=(e.clientX/view.w-.5); mouse.ty=(e.clientY/view.h-.5); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(function(en){ visible=en[0].isIntersecting; },{threshold:0}).observe(hero);
+
+  var intro={s:RM?1:0};
+  function frame(){
+    requestAnimationFrame(frame);
+    var dt=Math.min(clock.getDelta(),.05);
+    if(!visible) return;
+    t0+=dt;
+    mouse.x+=(mouse.tx-mouse.x)*.05; mouse.y+=(mouse.ty-mouse.y)*.05;
+    var e=intro.s;
+    ac.position.y=RM?0:Math.sin(t0*1.1)*.06;
+    root.rotation.y=mouse.x*.45 + (1-e)*-.9 + scrollP*.6;
+    root.rotation.x=mouse.y*.16 + scrollP*.3;
+    root.position.y=view.y + (1-e)*1.6 + scrollP*view.dist*.1;
+    var sc=.8+.2*e; root.scale.set(sc,sc,sc);
+    hinge.rotation.x=FLAP_CLOSED+(FLAP_OPEN-FLAP_CLOSED)*state.flap + (state.flap>.95&&!RM?Math.sin(t0*.8)*.08:0);
+    glow.material.opacity=.3*state.emit;
+    stepP(fine,dt,state.emit*(RM?0:fine.N/3.2));
+    stepP(mist,dt,state.emit*(RM?0:mist.N/4.5));
+    renderer.render(scene,camera);
+  }
+  frame();
+  return {intro:intro, drawDisp:drawDisp, setScroll:function(p){scrollP=p;}};
+}
+try { AC=initAC(); } catch(err){ if(window.console) console.warn('3D:',err); document.documentElement.classList.add('no-gl'); AC=null; }
+
+/* ---------- power on / off ---------- */
+var tempTween=null;
+function updTemps(){ $('#hRoom').textContent=state.room.toFixed(1)+'°'; if(AC) AC.drawDisp(); }
+function animTo(props,dur,ease,onU){ if(hasG && !RM) return gsap.to(state,Object.assign({duration:dur,ease:ease,onUpdate:onU,overwrite:'auto'},props)); Object.assign(state,props); if(onU) onU(); return null; }
+function powerOn(){
+  state.power=1; hero.classList.add('on'); $('#hStatus').textContent='LIGADO'; $('#pLbl').textContent='Desligar'; $('#power').setAttribute('aria-pressed','true');
+  animTo({flap:1},1.6,'power3.inOut');
+  animTo({emit:1},2.2,'power2.out');
+  setTimeout(function(){ hero.classList.add('cool'); }, RM?0:500);
+  if(tempTween) tempTween.kill();
+  state.temp=24; updTemps();
+  tempTween=animTo({temp:18, room:22},3.6,'power2.out',updTemps);
+}
+function powerOff(){
+  state.power=0; hero.classList.remove('on','cool'); $('#hStatus').textContent='STANDBY'; $('#pLbl').textContent='Ligar'; $('#power').setAttribute('aria-pressed','false');
+  animTo({emit:0},.6,'power2.out');
+  animTo({flap:0},1.4,'power3.inOut');
+  if(tempTween) tempTween.kill();
+  tempTween=animTo({room:32},3,'power1.inOut',updTemps);
+  if(AC) AC.drawDisp();
+}
+$('#power').addEventListener('click', function(){ state.power>.5?powerOff():powerOn(); });
+
+/* ================= INTRO ================= */
+var loader=$('#loader'), lbar=$('#lbar'), lpct=$('#lpct'), pct=0, ready=document.readyState==='complete';
+window.addEventListener('load', function(){ ready=true; });
+setTimeout(function(){ ready=true; }, 3000);
+var lt=setInterval(function(){
+  pct=Math.min(ready?100:90, pct+(ready?10:3+Math.random()*6));
+  lbar.style.width=pct+'%'; lpct.textContent=Math.round(pct)+'%';
+  if(pct>=100){ clearInterval(lt); startIntro(); }
+}, RM?10:60);
+
+function startIntro(){
+  if(!hasG || RM){
+    loader.style.display='none'; if(AC) AC.intro.s=1; powerOn(); setupScroll(); return;
+  }
+  var tl=gsap.timeline();
+  tl.to(loader,{clipPath:'inset(0 0 100% 0)',duration:1.1,ease:'expo.inOut'})
+    .set(loader,{display:'none'})
+    .from('.hero h1 .ln>span',{yPercent:110,duration:1.3,ease:'expo.out',stagger:.12},'-=.45')
+    .from('.hero-row',{opacity:0,y:30,duration:1,ease:'expo.out'},'-=.9')
+    .from('.hud-l > div, .hud-r > div',{opacity:0,y:-14,duration:.9,ease:'expo.out',stagger:.1},'-=.8')
+    .from('.nav',{opacity:0,y:-20,duration:1,ease:'expo.out'},'-=1');
+  if(AC) tl.to(AC.intro,{s:1,duration:2.2,ease:'expo.out'},.55);
+  tl.add(powerOn, 1.7);
+  setupScroll();
+}
+
+/* ================= SCROLL ANIMATIONS ================= */
+function setupScroll(){
+  if(!hasG || RM){
+    $$('.stmt .w2').forEach(function(w){w.style.opacity=1});
+    $$('.arc').forEach(function(a){a.style.strokeDashoffset=1-parseFloat(a.dataset.to)});
+    $$('.bub').forEach(function(b){b.classList.add('in')}); $('.typing').style.display='none';
+    return;
+  }
+  ScrollTrigger.create({trigger:'.hero',start:'top top',end:'bottom top',scrub:true,onUpdate:function(s){ if(AC) AC.setScroll(s.progress); }});
+  gsap.to('.hero-copy',{yPercent:-25,opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom 20%',scrub:true}});
+  gsap.to('.hud',{opacity:0,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'40% top',scrub:true}});
+
+  gsap.to('.stmt .w2',{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:'.stmt',start:'top 75%',end:'bottom 60%',scrub:true}});
+
+  $$('h2.split').forEach(function(h){
+    gsap.from($$('.wd>span',h),{yPercent:110,duration:1.2,ease:'expo.out',stagger:.06,scrollTrigger:{trigger:h,start:'top 88%'}});
+  });
+  $$('.rv').forEach(function(el){
+    gsap.from(el,{y:50,opacity:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:el,start:'top 90%'}});
+  });
+
+  var mm=gsap.matchMedia();
+  mm.add('(min-width:1024px)', function(){
+    var track=$('#hs');
+    var dist=function(){ return Math.max(0, track.scrollWidth - innerWidth); };
+    gsap.to(track,{x:function(){return -dist()},ease:'none',scrollTrigger:{trigger:'.svc-sec',start:'top top',end:function(){return '+='+dist()},pin:true,scrub:1,invalidateOnRefresh:true,anticipatePin:1}});
+  });
+  mm.add('(max-width:1023px)', function(){
+    $$('.card').forEach(function(cd){ gsap.from(cd,{y:60,opacity:0,duration:1.1,ease:'expo.out',scrollTrigger:{trigger:cd,start:'top 92%'}}); });
+  });
+
+  var o={v:50};
+  function ob(){ setBA(o.v); baIn.value=o.v; }
+  gsap.timeline({scrollTrigger:{trigger:'#ba',start:'top 70%'}})
+    .to(o,{v:15,duration:1,ease:'power2.inOut',onUpdate:ob})
+    .to(o,{v:85,duration:1.4,ease:'power2.inOut',onUpdate:ob})
+    .to(o,{v:50,duration:1,ease:'power2.inOut',onUpdate:ob});
+
+  $$('.arc').forEach(function(a){ gsap.to(a,{strokeDashoffset:1-parseFloat(a.dataset.to),duration:2.2,ease:'expo.out',scrollTrigger:{trigger:a,start:'top 88%'}}); });
+
+  ScrollTrigger.create({trigger:'#chat',start:'top 85%',once:true,onEnter:function(){
+    var b=$$('#chat .bub'), t=$('#chat .typing');
+    b[0].classList.add('in');
+    setTimeout(function(){t.classList.add('in')},700);
+    setTimeout(function(){t.style.display='none'; b[1].classList.add('in')},2100);
+  }});
+
+  var sts=$$('.st');
+  gsap.to('#railFill',{height:'100%',ease:'none',scrollTrigger:{trigger:'#steps',start:'top 60%',end:'bottom 60%',scrub:true,
+    onUpdate:function(s){ sts.forEach(function(st,i){ st.classList.toggle('act', s.progress>0 && s.progress >= i/(sts.length-1)-.05); }); }}});
+  sts.forEach(function(st){ gsap.from(st,{opacity:.25,x:30,duration:1,ease:'expo.out',scrollTrigger:{trigger:st,start:'top 80%'}}); });
+
+  gsap.from('.fin h2',{scale:.85,ease:'none',scrollTrigger:{trigger:'.fin',start:'top bottom',end:'center center',scrub:true}});
+  gsap.from('.giant',{yPercent:50,ease:'none',scrollTrigger:{trigger:'footer',start:'top bottom',end:'bottom bottom',scrub:true}});
+
+  addEventListener('load', function(){ ScrollTrigger.refresh(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ ScrollTrigger.refresh(); });
+}
+})();
+</script>
+</body>
+</html>
