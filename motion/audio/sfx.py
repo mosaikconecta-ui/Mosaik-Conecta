@@ -223,12 +223,13 @@ add(15.65, ding(1318.5, 1.2), 0.35, pan=0.2)
 mus_gain = np.ones_like(L)
 fade_in = int(0.4 * SR)
 mus_gain[:fade_in] = np.linspace(0, 1, fade_in)
-mix_L = L * 0.9 + mus_L * 0.55 * mus_gain
-mix_R = R * 0.9 + mus_R * 0.55 * mus_gain
-out = np.stack([mix_L, mix_R], 1)
+music = np.stack([mus_L, mus_R], 1) * 0.55 * mus_gain[:, None]
+fx = np.stack([L, R], 1) * 0.9
 fo = int(0.8 * SR)
-out[-fo:] *= np.linspace(1, 0, fo)[:, None]
-out = np.tanh(out * 1.1)
-out /= np.max(np.abs(out)) / 0.89
-wavfile.write(sys.argv[1] if len(sys.argv) > 1 else "trilha.wav", SR, (out * 32767).astype(np.int16))
-print("ok")
+music[-fo:] *= np.linspace(1, 0, fo)[:, None]
+
+if __name__ == "__main__":
+    out = np.tanh((music + fx) * 1.1)
+    out /= np.max(np.abs(out)) / 0.89
+    wavfile.write(sys.argv[1] if len(sys.argv) > 1 else "trilha.wav", SR, (out * 32767).astype(np.int16))
+    print("ok")
