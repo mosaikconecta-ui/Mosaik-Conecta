@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Motion Sites 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--red:#e11d2e;--ink:#141416}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#0d0d0f;overflow:hidden}
+body{display:flex;align-items:center;justify-content:center;font-family:Sora,system-ui,sans-serif}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;flex:none;transform-origin:center;
+  background:radial-gradient(ellipse 80% 60% at 50% 45%,#fbfbfc 0%,#f0f0f2 55%,#e3e3e7 100%)}
+.sc,.cam{position:absolute;inset:0}
+.sc{overflow:hidden}
+.cam{transform-origin:540px 900px}
+.a{position:absolute}
+.tx{position:absolute;left:0;width:1080px;text-align:center;white-space:nowrap}
+.w{display:inline-block}
+.glass{background:radial-gradient(circle at 30% 22%,#fff 0%,#f5f5f7 55%,#e6e6ea 100%);
+  box-shadow:0 30px 60px rgba(20,20,22,.12),inset 0 -8px 18px rgba(0,0,0,.04),inset 0 4px 10px #fff,0 0 0 2px rgba(255,255,255,.85);
+  display:flex;align-items:center;justify-content:center}
+.clay{background:radial-gradient(circle at 32% 26%,#ff7480 0%,#ef3040 30%,#d8192a 58%,#8f0c18 100%);
+  box-shadow:inset -14px -18px 30px rgba(60,0,8,.35),inset 10px 12px 24px rgba(255,255,255,.35),0 34px 60px rgba(225,29,46,.38),0 0 0 2px rgba(255,255,255,.25);
+  display:flex;align-items:center;justify-content:center}
+.card{position:absolute;border-radius:42px;background:linear-gradient(180deg,#fff,#f3f3f5);
+  box-shadow:0 26px 54px rgba(20,20,22,.11),0 0 0 2px rgba(255,255,255,.95),inset 0 -3px 0 rgba(0,0,0,.03);
+  display:flex;align-items:center;gap:30px;padding:0 34px;font:500 52px Sora;letter-spacing:-.03em;color:#1b1b1e;white-space:nowrap}
+.ib{width:92px;height:92px;border-radius:28px;background:#fdeceb;display:flex;align-items:center;justify-content:center;flex:none}
+.ptr{position:absolute;right:34px;bottom:22px}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 75% 60% at 50% 48%,transparent 55%,rgba(0,0,0,.10) 100%)}
+/* escuro */
+#E{background:#0a0a0c}
+.node{position:absolute;width:112px;height:112px;margin:-56px 0 0 -56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font:700 44px Sora}
+.nl{position:absolute;width:420px;margin-left:-210px;text-align:center}
+.nl small{display:block;font:600 22px Sora;letter-spacing:.24em;color:#8a8a92}
+.nl b{display:block;font:600 44px Sora;color:#fff;letter-spacing:-.02em;margin-top:8px}
+/* vermelho */
+#F{background:radial-gradient(ellipse 85% 65% at 50% 40%,#ff3a4a 0%,#e11d2e 42%,#a30e1b 100%)}
+.gi{position:absolute;border-radius:34%;background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.38);
+  box-shadow:0 24px 50px rgba(90,0,10,.25),inset 0 2px 8px rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center}
+/* mini sites */
+.site{position:absolute;background:#fff;overflow:hidden}
+.bar{position:absolute;left:0;right:0;top:0;height:56px;background:#f5f5f6;border-bottom:2px solid #ececef}
+.bar i{position:absolute;top:21px;width:14px;height:14px;border-radius:50%}
+.lg{font:800 26px Sora;letter-spacing:-.04em;color:#141416;display:flex;align-items:center;gap:8px}
+.lg:before{content:"";width:12px;height:12px;border-radius:50%;background:#e11d2e}
+.ln{height:12px;border-radius:6px;background:#ececef}
+#hint{position:fixed;bottom:14px;left:0;right:0;text-align:center;font:500 13px sans-serif;color:#8a8a92}
+body.render #hint{display:none}
+</style>
+</head>
+<body>
+<div id="stage"></div>
+<div id="hint">Clique para reiniciar</div>
+<script>
+/* ================= utilidades ================= */
+const DUR=28;
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>clamp((t-a)/(b-a));
+const lerp=(a,b,k)=>a+(b-a)*k;
+const eo=k=>1-Math.pow(1-k,3), eo5=k=>1-Math.pow(1-k,5), ei=k=>k*k*k;
+const eio=k=>k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
+const back=k=>{if(k<=0)return 0;const c=1.70158,c3=c+1;return 1+c3*Math.pow(k-1,3)+c*Math.pow(k-1,2)};
+function S(e,o){
+  const s=e.style;
+  if(o.o!==undefined)s.opacity=o.o;
+  s.transform=`translate3d(${o.x||0}px,${o.y||0}px,${o.z||0}px) rotateX(${o.rx||0}deg) rotateY(${o.ry||0}deg) rotateZ(${o.r||0}deg) scale(${o.s===undefined?1:o.s})`;
+  if(o.b!==undefined)s.filter=o.b>.3?`blur(${o.b.toFixed(1)}px)`:'none';
+}
+const vis=(e,on)=>e.style.visibility=on?'visible':'hidden';
+function el(p,cls,css,html){const d=document.createElement('div');if(cls)d.className=cls;if(css)d.style.cssText=css;if(html!==undefined)d.innerHTML=html;p.appendChild(d);return d}
+const I={
+ design:'<path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.6 7.6"/><circle cx="11" cy="11" r="2"/>',
+ code:'<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
+ search:'<circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.6" y2="16.6"/>',
+ server:'<rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/>',
+ globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+ headset:'<path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>',
+ phone:'<rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',
+ rocket:'<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>',
+ chart:'<path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+ x:'<line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>',
+ plus:'<line x1="12" y1="4" x2="12" y2="20"/><line x1="4" y1="12" x2="20" y2="12"/>'
+};
+const ic=(n,c='#e11d2e',sz=48,w=2)=>`<svg width="${sz}" height="${sz}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${I[n]}</svg>`;
+const PTR='<svg width="34" height="34" viewBox="0 0 24 24"><path d="M4 3l16 7-7 2.4L10.6 20z" fill="#e11d2e"/></svg>';
+function drawPath(p,k){const L=p.__L||(p.__L=p.getTotalLength());p.style.strokeDasharray=L;p.style.strokeDashoffset=L*(1-k)}
+
+const st=document.getElementById('stage');
+const sc=(id,css)=>{const s=el(st,'sc',css);s.id=id;return s};
+
+/* ================= A: frase ================= */
+const A=sc('A'), Ac=el(A,'cam');
+const fgPlus=el(Ac,'a glass',`left:-130px;top:-110px;width:440px;height:440px;border-radius:50%`,ic('plus','#cfcfd4',190,1.4));
+const fgX=el(Ac,'a glass',`left:740px;top:1480px;width:480px;height:480px;border-radius:50%`,ic('x','#cfcfd4',200,1.4));
+const xb=el(Ac,'a glass',`left:470px;top:500px;width:140px;height:140px;border-radius:50%`,ic('x','#b4b4bb',62,2));
+const mkLine=(top,css,words)=>{const d=el(Ac,'tx',`top:${top}px;${css}`);d.innerHTML=words.map(w=>`<span class="w">${w}</span>`).join(' ');return [...d.children]};
+const A1=mkLine(690,'font:600 98px/1.1 Sora;letter-spacing:-.04em;color:#141416',['Criar','um','site']);
+const A2=mkLine(812,'font:300 98px/1.1 Sora;letter-spacing:-.04em;color:#2a2a30',['não','precisa','ser']);
+const A3=mkLine(925,'font:800 160px/1.1 Sora;letter-spacing:-.055em;color:#e11d2e',['complicado.']);
+el(Ac,'a','left:170px;top:1112px;width:740px;height:110px',`<svg width="740" height="110" viewBox="0 0 740 110"><path id="scA" d="M14 40 C 200 18, 460 16, 724 28 C 560 36, 320 50, 120 76 C 320 64, 520 62, 680 70" fill="none" stroke="#e11d2e" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>`);
+const scA=document.getElementById('scA');
+
+/* ================= B: logo ================= */
+const B=sc('B'), Bc=el(B,'cam');
+const tiles=[];
+for(let i=0;i<9;i++){
+  const c=i%3,r=Math.floor(i/3), red=(i===0||i===4||i===8||i===5);
+  const t=el(Bc,'a '+(red?'clay':'glass'),`left:${540+(c-1)*112-48}px;top:${900+(r-1)*112-48}px;width:96px;height:96px;border-radius:24px`);
+  tiles.push({t,c,r,sx:(((i*397)%13)-6)*125,sy:(((i*211)%11)-5)*175,rot:(((i*73)%9)-4)*42});
+}
+const Bdot=el(Bc,'a clay','left:508px;top:868px;width:64px;height:64px;border-radius:50%');
+const Blogo=el(Bc,'a','top:836px;font:800 108px/128px Sora;letter-spacing:-.05em;color:#141416;white-space:nowrap','Mosaik<span style="font-weight:300">Conecta</span>');
+const Btag=el(Bc,'tx','top:1010px;font:500 32px Sora;letter-spacing:.2em;color:#8a8a92','AGÊNCIA DE MARKETING &amp; TECNOLOGIA');
+
+/* ================= C: cartões 3D ================= */
+const C=sc('C'), Cw=el(C,'cam','perspective:1700px;perspective-origin:50% 45%');
+const Chead=el(C,'tx','top:250px;font:700 30px Sora;letter-spacing:.3em;color:#e11d2e','O QUE ENTREGAMOS');
+const Cl=el(Cw,'a','left:190px;top:640px;width:700px;height:150px;transform-style:preserve-3d;transform-origin:350px 300px');
+const CI=[['design','Design único'],['code','Desenvolvimento'],['search','SEO'],['phone','Responsivo'],['server','Hospedagem'],['headset','Suporte']];
+const cards=CI.map(([n,l],i)=>{
+  const c=el(Cl,'card',`left:0;top:${i*184}px;width:700px;height:152px`);
+  c.innerHTML=`<div class="ib">${ic(n,'#e11d2e',50,2.2)}</div><span class="lb"></span><span class="ptr">${PTR}</span>`;
+  return {c,l,lb:c.querySelector('.lb'),p:c.querySelector('.ptr')};
+});
+
+/* ================= D: órbita ================= */
+const D=sc('D'), Dc=el(D,'cam');Dc.style.transformOrigin='540px 880px';
+el(Dc,'a','left:0;top:0;width:1080px;height:1920px',`<svg width="1080" height="1920"><circle id="ringD" cx="540" cy="880" r="330" fill="none" stroke="#d2d2d8" stroke-width="2.5" transform="rotate(-90 540 880)"/><circle id="ringD2" cx="540" cy="880" r="205" fill="none" stroke="#dcdce1" stroke-width="2" stroke-dasharray="4 14"/></svg>`);
+const ringD=document.getElementById('ringD'), ringD2=document.getElementById('ringD2');
+const DI=['design','code','search','server','globe','headset'];
+const orb=DI.map((n,i)=>el(Dc,'a glass',`left:475px;top:815px;width:130px;height:130px;border-radius:38px`,ic(n,'#e11d2e',58,2.1)));
+const Dcore=el(Dc,'a clay','left:415px;top:755px;width:250px;height:250px;border-radius:70px',
+ `<svg width="140" height="140" viewBox="0 0 140 140"><circle cx="70" cy="70" r="20" fill="#fff"/><circle cx="70" cy="70" r="46" fill="none" stroke="rgba(255,255,255,.75)" stroke-width="5"/><circle cx="116" cy="70" r="9" fill="#fff"/><circle cx="47" cy="30" r="9" fill="#fff"/><circle cx="47" cy="110" r="9" fill="#fff"/></svg>`);
+const Dt1=el(Dc,'tx','top:1320px;font:500 62px Sora;letter-spacing:-.03em;color:#2a2a30','Tudo que seu site precisa');
+const Dt2=el(Dc,'tx','top:1400px;font:800 92px Sora;letter-spacing:-.05em;color:#e11d2e','em um só lugar.');
+
+/* ================= E: escuro ================= */
+const E=sc('E'), Ec=el(E,'cam');
+const Eglow=el(Ec,'a','left:-210px;top:150px;width:1500px;height:1500px;border-radius:50%;background:radial-gradient(circle,rgba(225,29,46,.42) 0%,rgba(225,29,46,.12) 35%,transparent 65%)');
+[700,1100,1500].forEach(d=>el(Ec,'a',`left:${540-d/2}px;top:${900-d/2}px;width:${d}px;height:${d}px;border-radius:50%;border:2px solid rgba(255,255,255,.05)`));
+const Ew=el(Ec,'cam','perspective:1600px');
+const Ecards=el(Ew,'a','left:0;top:0;width:1080px;height:1920px;transform-style:preserve-3d');
+const e1=el(Ecards,'site',`left:210px;top:560px;width:660px;height:480px;border-radius:30px;box-shadow:0 40px 90px rgba(0,0,0,.6),0 0 80px rgba(225,29,46,.18)`,
+ `<div class="bar"><i style="left:24px;background:#e11d2e"></i><i style="left:46px;background:#f2a1a8"></i><i style="left:68px;background:#d6d6db"></i></div>
+  <div class="a" style="left:32px;top:78px;right:32px;display:flex;justify-content:space-between;align-items:center"><div class="lg">SuaMarca</div><div style="display:flex;gap:14px"><div class="ln" style="width:60px"></div><div class="ln" style="width:60px"></div><div class="ln" style="width:60px"></div></div></div>
+  <div class="a" style="left:32px;right:32px;top:130px;height:200px;border-radius:20px;background:linear-gradient(135deg,#e11d2e,#9a1420);padding:30px">
+   <div style="font:800 44px/1.02 Sora;letter-spacing:-.04em;color:#fff">Sua marca<br>online.</div>
+   <div style="position:absolute;left:30px;bottom:26px;height:46px;padding:0 24px;border-radius:23px;background:#fff;color:#e11d2e;font:700 18px/46px Sora">Fale conosco →</div>
+   <div style="position:absolute;right:28px;top:28px;width:150px;height:150px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;transform:rotate(8deg)">${'<b style="border-radius:10px;background:rgba(255,255,255,.2)"></b>'.repeat(4)}<b style="border-radius:10px;background:#fff"></b>${'<b style="border-radius:10px;background:rgba(255,255,255,.2)"></b>'.repeat(4)}</div>
+  </div>
+  <div class="a" style="left:32px;right:32px;top:350px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">${'<div style="height:100px;border-radius:16px;border:2px solid #ececef;padding:16px"><div style="width:32px;height:32px;border-radius:10px;background:#fdeceb"></div><div class="ln" style="margin-top:14px"></div></div>'.repeat(3)}</div>`);
+const e2=el(Ecards,'a',`left:560px;top:960px;width:420px;height:290px;border-radius:32px;padding:30px;background:linear-gradient(140deg,#ff4a58,#e11d2e 50%,#a50f1c);box-shadow:0 30px 90px rgba(225,29,46,.55),inset 0 2px 0 rgba(255,255,255,.3)`,
+ `${ic('phone','#fff',44,2.2)}<div style="font:800 112px/1 Sora;letter-spacing:-.05em;color:#fff;margin-top:14px">100%</div><div style="font:500 26px Sora;color:rgba(255,255,255,.9);margin-top:10px">responsivo em toda tela</div>`);
+const e3=el(Ecards,'a',`left:110px;top:1220px;width:470px;height:180px;border-radius:30px;padding:30px;background:rgba(28,28,32,.92);border:1.5px solid rgba(255,255,255,.12);box-shadow:0 30px 70px rgba(0,0,0,.6)`,
+ `<div style="display:flex;align-items:center;gap:18px"><div style="width:56px;height:56px;border-radius:50%;background:#e11d2e;display:flex;align-items:center;justify-content:center">${ic('search','#fff',28,2.6)}</div><div style="font:600 30px Sora;color:#fff;letter-spacing:-.02em">Otimizado p/ Google</div></div>
+  <div style="margin-top:26px;height:12px;border-radius:6px;background:rgba(255,255,255,.1);overflow:hidden"><div id="e3bar" style="height:100%;width:0;background:linear-gradient(90deg,#ff4a58,#e11d2e);border-radius:6px"></div></div>`);
+const e3bar=document.getElementById('e3bar');
+// stepper
+const Est=el(Ec,'a','left:0;top:0;width:1080px;height:1920px');
+const EsH1=el(Est,'tx','top:560px;font:700 30px Sora;letter-spacing:.3em;color:#e11d2e','COMO FUNCIONA');
+const EsH2=el(Est,'tx','top:610px;font:800 76px Sora;letter-spacing:-.045em;color:#fff','Do briefing ao lançamento.');
+const track=el(Est,'a','left:540px;top:1010px;width:0;height:0');
+el(track,'a','left:0;top:-2px;width:1280px;height:4px;border-radius:2px;background:rgba(255,255,255,.12)');
+const trackFill=el(track,'a','left:0;top:-2px;width:0;height:4px;border-radius:2px;background:#e11d2e;box-shadow:0 0 18px rgba(225,29,46,.9)');
+const STEPS=['Briefing','Design','Desenvolvimento','SEO','Lançamento'];
+const nodes=STEPS.map((n,i)=>{
+  const d=el(track,'node',`left:${i*320}px;top:0`,String(i+1));
+  const l=el(track,'nl',`left:${i*320}px;top:90px`,`<small>ETAPA 0${i+1}</small><b>${n}</b>`);
+  return {d,l};
+});
+
+/* ================= F: vermelho ================= */
+const F=sc('F'), Fc=el(F,'cam');
+const GI=[[110,240,150,0,'design'],[850,320,130,0,'code'],[60,1500,180,6,'search'],[860,1560,150,3,'server'],[140,860,110,4,'globe'],[910,960,120,2,'headset'],[460,130,100,8,'rocket'],[560,1720,120,5,'chart']];
+const gis=GI.map(([x,y,s,b,n])=>({e:el(Fc,'gi',`left:${x}px;top:${y}px;width:${s}px;height:${s}px`,ic(n,'#fff',s*.44,2)),x,y,s,b}));
+const Ftxt=el(Fc,'a','left:0;top:0;width:1080px;height:1920px');Ftxt.style.transformOrigin='540px 920px';
+const Ft1=el(Ftxt,'tx','top:845px;font:800 140px Sora;letter-spacing:-.055em;color:#fff','tudo isso');
+el(Ftxt,'a','left:150px;top:770px;width:780px;height:320px',`<svg width="780" height="320" viewBox="0 0 780 320"><path id="ovF" d="M400 26 C 650 22, 760 110, 735 180 C 700 270, 260 300, 90 230 C -10 180, 50 60, 330 30 C 420 22, 520 26, 590 44" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round"/></svg>`);
+const ovF=document.getElementById('ovF');
+const Fw=el(Fc,'cam','perspective:1500px');
+const Fsite=el(Fw,'site',`left:60px;top:700px;width:960px;height:700px;border-radius:34px;box-shadow:0 60px 120px rgba(80,0,10,.45),0 0 0 3px rgba(255,255,255,.5)`);
+Fsite.innerHTML=`<div class="bar" style="height:64px;z-index:2"><i style="left:28px;top:25px;background:#e11d2e"></i><i style="left:52px;top:25px;background:#f2a1a8"></i><i style="left:76px;top:25px;background:#d6d6db"></i><div style="position:absolute;left:130px;right:30px;top:14px;height:36px;border-radius:18px;background:#fff;border:2px solid #e6e6e9;font:500 18px/32px Sora;color:#77777f;padding-left:22px">www.suaempresa.com.br</div></div>
+ <div id="Fin" class="a" style="left:0;right:0;top:64px">
+  <div class="a" style="left:44px;right:44px;top:30px;display:flex;justify-content:space-between;align-items:center"><div class="lg" style="font-size:30px">SuaMarca</div><div style="display:flex;gap:26px;font:600 20px Sora;color:#6b6b73"><span>Início</span><span>Serviços</span><span>Sobre</span><span style="color:#e11d2e">Contato</span></div></div>
+  <div class="a" style="left:44px;top:120px;width:470px">
+   <div style="font:700 18px Sora;letter-spacing:.22em;color:#e11d2e">BEM-VINDO</div>
+   <div style="font:800 56px/1.02 Sora;letter-spacing:-.045em;color:#141416;margin-top:14px">Conectamos sua marca a novos clientes.</div>
+   <div class="ln" style="margin-top:26px;width:90%"></div><div class="ln" style="margin-top:12px;width:70%"></div>
+   <div style="margin-top:30px;display:inline-block;height:60px;padding:0 32px;border-radius:30px;background:#e11d2e;color:#fff;font:700 22px/60px Sora;box-shadow:0 14px 30px rgba(225,29,46,.35)">Começar agora →</div>
+  </div>
+  <div class="a" style="left:560px;top:110px;width:356px;height:356px;border-radius:30px;background:linear-gradient(140deg,#e11d2e,#9a1420);padding:34px">
+   <div style="width:100%;height:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;transform:rotate(-6deg)">${[1,0,1,0,1,0,0,1,0].map(v=>`<b style="border-radius:18px;background:${v?'#fff':'rgba(255,255,255,.18)'}"></b>`).join('')}</div>
+  </div>
+  <div class="a" style="left:44px;right:44px;top:510px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px">${['design','code','search'].map((n,i)=>`<div style="height:200px;border-radius:24px;border:2px solid #ececef;padding:26px"><div class="ib" style="width:64px;height:64px;border-radius:18px">${ic(n,'#e11d2e',32,2.3)}</div><div style="font:700 24px Sora;color:#141416;margin-top:20px">${['Design','Código','SEO'][i]}</div><div class="ln" style="margin-top:14px"></div></div>`).join('')}</div>
+ </div>`;
+const Fin=document.getElementById('Fin');
+const Ft2=el(Fc,'tx','top:300px;font:800 96px Sora;letter-spacing:-.05em;color:#fff','com um só parceiro.');
+
+/* ================= G: no ar ================= */
+const G=sc('G'), Gbg=el(G,'sc','background:radial-gradient(ellipse 80% 60% at 50% 45%,#fbfbfc 0%,#f0f0f2 55%,#e3e3e7 100%)'), Gc=el(G,'cam');
+const gb1=el(Gc,'a glass',`left:-60px;top:230px;width:280px;height:280px;border-radius:80px`,ic('globe','#e11d2e',120,1.6));
+const gb2=el(Gc,'a glass',`left:820px;top:1420px;width:320px;height:320px;border-radius:90px`,ic('rocket','#e11d2e',140,1.6));
+const gdots=[0,1,2,3].map(i=>el(Gc,'a clay',`left:${390+i*100-24}px;top:876px;width:48px;height:48px;border-radius:50%`));
+const glines=[0,1,2].map(i=>el(Gc,'a',`left:${390+i*100+24}px;top:898px;width:52px;height:4px;background:#e11d2e;border-radius:2px;transform-origin:left`));
+el(Gc,'a','left:0;top:0;width:1080px;height:1920px',`<svg width="1080" height="1920"><circle id="arcG" cx="540" cy="900" r="178" fill="none" stroke="#e11d2e" stroke-width="7" stroke-linecap="round" transform="rotate(-90 540 900)"/></svg>`);
+const arcG=document.getElementById('arcG');
+const gpulse=el(Gc,'a','left:415px;top:775px;width:250px;height:250px;border-radius:50%;border:5px solid #e11d2e');
+const gbtn=el(Gc,'a clay','left:415px;top:775px;width:250px;height:250px;border-radius:50%');
+const ggear=el(gbtn,'a','left:65px;top:65px;width:120px;height:120px',ic('gear','#fff',120,1.8));
+const gchk=el(gbtn,'a','left:55px;top:55px;width:140px;height:140px',`<svg width="140" height="140" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path id="chkG" d="M5 12.5l4.5 4.5L19 7.5"/></svg>`);
+const chkG=document.getElementById('chkG');
+const Gt=el(Gc,'tx','top:1150px;font:800 104px Sora;letter-spacing:-.05em;color:#141416','Seu site <span style="color:#e11d2e">no ar.</span>');
+
+/* ================= H: final ================= */
+const H=sc('H'), Hc=el(H,'cam');
+const pill=el(Hc,'a glass','top:0;height:100px;border-radius:50px;justify-content:flex-start;overflow:hidden');
+pill.innerHTML=`<div style="position:absolute;left:30px;top:32px;width:36px;height:36px;border-radius:50%;border:3px solid #e11d2e;display:flex;align-items:center;justify-content:center"><div style="width:16px;height:16px;border-radius:50%;background:#e11d2e"></div></div><span id="pt" style="position:absolute;left:88px;top:0;font:500 40px/100px Sora;letter-spacing:-.02em;color:#2a2a30;white-space:nowrap"></span>`;
+const pt=document.getElementById('pt');
+const Hlogo=el(Hc,'tx','top:800px;font:800 116px/140px Sora;letter-spacing:-.05em;color:#141416;display:flex;justify-content:center;align-items:center;gap:30px',
+ '<span class="clay" style="width:52px;height:52px;border-radius:50%;display:inline-block"></span><span>Mosaik<span style="font-weight:300">Conecta</span></span>');
+const Htag=el(Hc,'tx','top:1215px;font:500 32px Sora;letter-spacing:.06em;color:#8a8a92','Criação de sites · Marketing · Tecnologia');
+el(st,'a','',''); const vig=el(st,'','');vig.id='vig';
+
+/* ================= render ================= */
+let LB={};
+function measure(){const tw=Blogo.offsetWidth,total=64+30+tw;LB.dot=540-total/2;LB.text=LB.dot+64+30;Blogo.style.left=LB.text+'px'}
+
+function render(t){
+  /* ---- A 0–3.45 ---- */
+  vis(A,t<3.45);
+  if(t<3.45){
+    const ex=ei(P(t,3.0,3.42));
+    S(Ac,{s:(1+.07*t/3)*(1+2.4*ex),b:26*ex,o:1-ex*ex});
+    A1.forEach((w,i)=>{const s0=.12+i*.17,k=eo5(P(t,s0,s0+.6));S(w,{y:60*(1-k),s:1.3-.3*k,b:24*(1-k),o:clamp(k*1.5)})});
+    A2.forEach((w,i)=>{const s0=.95+i*.14,k=eo5(P(t,s0,s0+.6));S(w,{y:60*(1-k),s:1.3-.3*k,b:24*(1-k),o:clamp(k*1.5)})});
+    {const k=eo5(P(t,1.42,2.05));S(A3[0],{y:80*(1-k),s:1.6-.6*k,b:30*(1-k),o:clamp(k*1.5)})}
+    drawPath(scA,eio(P(t,1.85,2.45)));
+    const xk=back(P(t,.8,1.2)), xo=P(t,2.4,2.7);
+    S(xb,{s:xk*(1-xo*.5),r:-90*(1-clamp(xk)),y:Math.sin(t*2)*8-40*xo,o:clamp(xk)*(1-xo),b:xo*10});
+    S(fgPlus,{x:-40*t,y:-24*t,r:t*12,b:11,o:.95});
+    S(fgX,{x:30*t,y:30*t,r:-t*14,b:15,o:.95});
+  }
+  /* ---- B 3.2–5.7 ---- */
+  vis(B,t>3.15&&t<5.75);
+  if(t>3.15&&t<5.75){
+    const cv=eio(P(t,4.12,4.45));
+    tiles.forEach(({t:e,c,r,sx,sy,rot},i)=>{
+      const s0=3.22+i*.045,k=eo5(P(t,s0,s0+.7));
+      S(e,{x:sx*(1-k)-(c-1)*112*cv,y:sy*(1-k)-(r-1)*112*cv,r:rot*(1-k)+cv*45,s:(1.3-.3*k)*(1-.6*cv),b:20*(1-k),o:clamp(k*2)*(cv>.97?0:1)});
+      e.style.borderRadius=lerp(24,48,cv)+'px';
+    });
+    const dk=back(P(t,4.4,4.68)), mv=eio(P(t,4.62,5.0));
+    S(Bdot,{x:(LB.dot+32-540)*mv,s:dk,o:t>4.4?1:0});
+    const rv=eo5(P(t,4.72,5.2));
+    Blogo.style.clipPath=`inset(-20px ${(1-rv)*100}% -20px -10px)`;
+    S(Blogo,{x:-50*(1-rv),b:10*(1-rv)});
+    const tg=eo(P(t,5.0,5.35));S(Btag,{y:24*(1-tg),o:tg,b:8*(1-tg)});
+    const ex=ei(P(t,5.3,5.7));S(Bc,{s:1+1.6*ex,b:24*ex,o:1-ex});
+  }
+  /* ---- C 5.35–10.0 ---- */
+  vis(C,t>5.3&&t<10.0);
+  if(t>5.3&&t<10.0){
+    const p=P(t,5.3,10), scroll=-184*3.3*eio(P(t,6.55,9.75));
+    Cl.style.transform=`rotateX(${24-6*p}deg) rotateY(${-20+16*p}deg) rotateZ(${-12+8*p}deg) translateY(${scroll}px)`;
+    cards.forEach(({c,l,lb,p:pp},i)=>{
+      const s0=5.45+i*.52,k=eo5(P(t,s0,s0+.6));
+      S(c,{x:-140*(1-k),z:-320*(1-k),s:.85+.15*k,b:16*(1-k),o:clamp(k*1.6)});
+      lb.textContent=l.slice(0,Math.round(l.length*P(t,s0+.08,s0+.5)));
+      pp.style.opacity=(t>s0+.05&&t<s0+.8)?1:0;
+    });
+    const hk=eo(P(t,5.4,5.9)),ex=ei(P(t,9.45,9.95)),hx=eio(P(t,6.9,7.5));
+    S(Chead,{y:20*(1-hk)-60*hx,o:hk*(1-hx),b:10*hx});
+    S(Cw,{s:1+.5*ex,b:18*ex,o:1-ex});
+  }
+  /* ---- D 9.6–12.45 ---- */
+  vis(D,t>9.6&&t<12.45);
+  if(t>9.6&&t<12.45){
+    const rot=(t-9.6)*9;
+    orb.forEach((e,i)=>{
+      const a=(-90+i*60+rot)*Math.PI/180, ox=Math.cos(a)*330, oy=Math.sin(a)*330;
+      const sa=(-90+i*60)*Math.PI/180, sx=Math.cos(sa)*950+(((i*137)%5)-2)*120, sy=Math.sin(sa)*1100;
+      const k=eo5(P(t,9.68+i*.07,10.45+i*.07));
+      S(e,{x:lerp(sx,ox,k),y:lerp(sy,oy,k),s:1.5-.5*k,b:20*(1-k),r:(1-k)*60,o:clamp(k*2)});
+    });
+    drawPath(ringD,eio(P(t,10.1,10.9)));
+    ringD2.style.opacity=eo(P(t,10.3,10.8));
+    const ck=back(P(t,9.9,10.35));
+    S(Dcore,{s:ck*(1+.02*Math.sin(t*4)),r:(1-clamp(ck))*-30,o:clamp(ck*2)});
+    const a1=eo5(P(t,10.6,11.1)),a2=eo5(P(t,10.78,11.3));
+    S(Dt1,{y:40*(1-a1),b:14*(1-a1),o:a1});S(Dt2,{y:40*(1-a2),b:14*(1-a2),o:a2,s:1.1-.1*a2});
+    const ex=ei(P(t,11.85,12.42));
+    S(Dc,{s:1+7*ex,b:12*ex,o:1-P(t,12.2,12.42)});
+  }
+  /* ---- E 12.15–18.1 ---- */
+  vis(E,t>12.15&&t<18.1);
+  if(t>12.15&&t<18.1){
+    const en=eo5(P(t,12.15,12.6));
+    E.style.opacity=en;S(Ec,{s:1.2-.2*en,b:10*(1-en)});
+    Eglow.style.opacity=.75+.25*Math.sin(t*2.2);
+    const p=P(t,12.3,15.2);
+    {const k=eo5(P(t,12.35,13.1)),m=eo(P(t,13.4,14.0));
+     S(e1,{z:-900*(1-k),x:-90*m,y:-40*m,b:22*(1-k),o:clamp(k*1.5),ry:30-38*p,rx:12-6*p,r:-6+6*p})}
+    {const k=eo5(P(t,13.4,14.0));S(e2,{x:420*(1-k),z:-300*(1-k),b:18*(1-k),o:clamp(k*1.5),ry:-26+14*p,rx:8,r:5-3*p})}
+    {const k=eo5(P(t,13.9,14.5));S(e3,{x:-340*(1-k),z:-200*(1-k),b:18*(1-k),o:clamp(k*1.5),ry:20-12*p,rx:6,r:-3})}
+    e3bar.style.width=(92*eio(P(t,14.3,15.0)))+'%';
+    const cx=ei(P(t,14.75,15.2));S(Ecards,{y:-800*cx,b:18*cx,o:1-cx});
+    // stepper
+    const se=eo5(P(t,15.0,15.5));
+    Est.style.opacity=se;
+    S(EsH1,{y:30*(1-se),b:10*(1-se)});S(EsH2,{y:40*(1-eo5(P(t,15.1,15.6))),b:14*(1-eo5(P(t,15.1,15.6))),o:eo5(P(t,15.1,15.6))});
+    let kk=0;for(let i=0;i<4;i++)kk+=eio(P(t,15.55+i*.52,15.95+i*.52));
+    track.style.transform=`translate(${-320*kk}px,${200*(1-se)}px)`;
+    trackFill.style.width=(320*kk)+'px';
+    nodes.forEach(({d,l},i)=>{
+      const a=clamp(1-Math.abs(kk-i)), lit=kk>=i-.35;
+      d.style.background=lit?'radial-gradient(circle at 35% 30%,#ff6b77,#e11d2e 55%,#9a0f1b)':'#141417';
+      d.style.border=lit?'none':'3px solid rgba(255,255,255,.22)';
+      d.style.color=lit?'#fff':'#77777f';
+      d.style.boxShadow=lit?`0 0 ${30+50*a}px rgba(225,29,46,${.5+.4*a})`:'none';
+      S(d,{s:1+.28*a});l.style.opacity=.3+.7*a;
+    });
+  }
+  /* ---- F 17.65–22.4 ---- */
+  vis(F,t>17.65&&t<22.4);
+  if(t>17.65&&t<22.4){
+    const en=eo5(P(t,17.65,18.1));
+    F.style.opacity=en;S(Fc,{s:1.25-.25*en,b:14*(1-en)});
+    const ox=eio(P(t,19.4,19.95));
+    gis.forEach(({e,x,y,s,b},i)=>{
+      const k=back(P(t,17.8+i*.05,18.25+i*.05));
+      const cx=x+s/2-540, cy=y+s/2-920;
+      S(e,{x:Math.sin(t*.8+i)*14+cx*.5*ox,y:Math.cos(t*.7+i*1.3)*18-(t-18)*10+cy*.5*ox,r:Math.sin(t*.5+i)*10,s:k,b:b+6*ox,o:clamp(k)*(1-.3*ox)});
+    });
+    const tk=eo5(P(t,17.95,18.5));
+    S(Ft1,{s:1.3-.3*tk,b:20*(1-tk),o:tk});
+    drawPath(ovF,eio(P(t,18.35,19.05)));
+    S(Ftxt,{s:1+1.2*ox,b:22*ox,o:1-ox,r:-3*P(t,18,19.4)});
+    const fk=eo5(P(t,19.5,20.35)), pp=P(t,19.5,22.4);
+    S(Fsite,{y:720*(1-fk),z:-500*(1-fk),x:70-130*pp,b:20*(1-fk),o:clamp(fk*1.6),rx:32-6*pp,ry:10-4*pp,r:-16+6*pp});
+    Fin.style.transform=`translateY(${-90*eio(P(t,20.4,22.3))}px)`;
+    const t2=eo5(P(t,20.2,20.75));S(Ft2,{y:40*(1-t2),b:16*(1-t2),o:t2});
+  }
+  /* ---- G 21.95–24.95 ---- */
+  vis(G,t>21.95&&t<28);
+  if(t>21.95){
+    const en=eo(P(t,21.95,22.35));Gbg.style.opacity=en;
+    const on=t<24.95;vis(Gc,on);
+    if(on){
+      S(gb1,{x:20*Math.sin(t),y:-14*(t-22),r:-12+3*(t-22),b:9,o:en});
+      S(gb2,{x:-16*Math.sin(t*.8),y:-10*(t-22),r:14-3*(t-22),b:12,o:en});
+      const cv=eio(P(t,23.0,23.3));
+      gdots.forEach((d,i)=>{const k=back(P(t,22.25+i*.12,22.6+i*.12));S(d,{x:(540-(390+i*100))*cv,s:k*(1-.5*cv),o:cv>.95?0:clamp(k)})});
+      glines.forEach((l,i)=>{const k=eo(P(t,22.38+i*.12,22.62+i*.12));l.style.transform=`scaleX(${k})`;l.style.opacity=1-cv});
+      const bk=back(P(t,23.2,23.6));
+      S(gbtn,{s:bk,o:clamp(bk*2)});
+      const sw=P(t,23.95,24.12);
+      S(ggear,{r:(t-23)*120,s:1-sw,o:1-sw});
+      S(gchk,{s:back(P(t,24.0,24.35)),o:t>24?1:0});drawPath(chkG,eo(P(t,24.05,24.35)));
+      drawPath(arcG,eio(P(t,23.35,24.0)));arcG.style.opacity=1-P(t,24.0,24.3);
+      const pk=eo(P(t,24.02,24.7));S(gpulse,{s:1+.9*pk,o:t>24.02?.7*(1-pk):0});
+      const tk=eo5(P(t,24.1,24.55));S(Gt,{y:40*(1-tk),b:16*(1-tk),o:tk});
+      const ex=ei(P(t,24.6,24.95));S(Gc,{s:1-.12*ex,b:16*ex,o:1-ex});
+    }
+  }
+  /* ---- H 24.8–28 ---- */
+  vis(H,t>24.8);
+  if(t>24.8){
+    const pw=lerp(100,560,eo5(P(t,24.9,25.4))), py=lerp(950,1060,eio(P(t,25.95,26.4)));
+    pill.style.width=pw+'px';pill.style.left=(540-pw/2)+'px';pill.style.top=py+'px';
+    const pk=back(P(t,24.8,25.1));S(pill,{s:pk,o:clamp(pk*2)});
+    const txt='@mosaikconecta';pt.textContent=txt.slice(0,Math.round(txt.length*P(t,25.3,25.9)));
+    const lk=eo5(P(t,26.0,26.6));S(Hlogo,{s:1.15-.15*lk,b:22*(1-lk),o:lk,y:20*(1-lk)});
+    const tk=eo(P(t,26.6,27.0));S(Htag,{y:20*(1-tk),o:tk});
+  }
+}
+
+/* ================= execução ================= */
+const renderMode=new URLSearchParams(location.search).has('render');
+function fit(){if(renderMode)return;const k=Math.min(innerWidth/1080,innerHeight/1920);st.style.transform=`scale(${k})`}
+addEventListener('resize',fit);fit();
+let start=performance.now();document.addEventListener('click',()=>start=performance.now());
+window.__ready=(document.fonts?document.fonts.ready:Promise.resolve()).then(()=>{
+  measure();window.render=render;
+  if(renderMode){document.body.classList.add('render');render(0);return}
+  (function loop(){render(((performance.now()-start)/1000)%DUR);requestAnimationFrame(loop)})();
+});
+</script>
+</body>
+</html>
