@@ -7,7 +7,7 @@ from scipy.io import wavfile
 from scipy.signal import butter, sosfilt
 
 SR = 48000
-DUR = 17.5
+DUR = 19.0
 rng = np.random.default_rng(7)
 L = np.zeros(int(SR * DUR))
 R = np.zeros(int(SR * DUR))
