@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tclima Engenharia Térmica</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Tclima Engenharia Térmica: instalação, manutenção e higienização de ar-condicionado para residências, comércios e empresas. Atendimento das 07h às 21h pelo WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,500;0,700;0,800;1,800;1,900&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: dark "cold room" — hero is a live split unit cooling the page, then a calm vertical sales flow (serviços → oferta → calculadora → confiança → contato). */
+:root{
+  --night:#040A17;        /* fundo */
+  --deep:#081530;         /* superfícies */
+  --steel:#10234B;        /* superfícies elevadas */
+  --volt:#1F7BFF;         /* azul elétrico da marca */
+  --ice:#8BE0FF;          /* frio / destaque */
+  --frost:#EAF3FF;        /* texto */
+  --mute:#93A6C9;         /* texto secundário */
+  --heat:#FF7A45;         /* calor (só no termômetro) */
+  --wa:#25D366;           /* WhatsApp */
+  --line:rgba(139,190,255,.14);
+  --glass:rgba(16,35,75,.55);
+  --f-display:"Saira","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-data:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:22px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--night);color:var(--frost);font:16px/1.65 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--night)}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.02;letter-spacing:-.01em;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media(min-width:700px){.wrap{padding-left:max(28px,env(safe-area-inset-left,0px));padding-right:max(28px,env(safe-area-inset-right,0px))}}
+section{padding-block:104px}
+.eyebrow{font:700 12px/1 var(--f-data);letter-spacing:.18em;text-transform:uppercase;color:var(--ice);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:22px;height:2px;background:linear-gradient(90deg,var(--volt),var(--ice))}
+h2{font-size:clamp(34px,5.2vw,64px);font-weight:800;text-transform:uppercase;margin-top:18px;max-width:16ch}
+h2 em{font-style:italic;font-weight:900;background:linear-gradient(100deg,var(--volt),var(--ice));-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.08em}
+.lead{color:var(--mute);font-size:18px;max-width:56ch;margin-top:18px}
+:focus-visible{outline:3px solid var(--ice);outline-offset:3px;border-radius:6px}
+
+/* botões */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;font:700 15px/1 var(--f-body);padding:18px 26px;border-radius:999px;border:1.5px solid var(--line);color:var(--frost);background:transparent;cursor:pointer;transition:transform .25s,background .25s,border-color .25s,box-shadow .25s;overflow:hidden;isolation:isolate;white-space:nowrap}
+.btn svg{width:20px;height:20px;flex:none}
+.btn:hover{transform:translateY(-2px);border-color:var(--ice)}
+.btn-wa{background:var(--wa);border-color:var(--wa);color:#03230F;box-shadow:0 10px 40px -10px rgba(37,211,102,.6)}
+.btn-wa:hover{border-color:var(--wa);box-shadow:0 16px 50px -10px rgba(37,211,102,.75)}
+.btn-wa::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-120%);animation:shine 3.6s ease-in-out infinite}
+@keyframes shine{0%,60%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.btn-volt{background:var(--volt);border-color:var(--volt);color:#fff;box-shadow:0 10px 40px -12px rgba(31,123,255,.8)}
+
+/* header */
+header{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+header.scrolled{background:rgba(4,10,23,.82);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-color:var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;gap:20px;height:78px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#2C8CFF,#0B4FD0);box-shadow:0 0 0 1px rgba(255,255,255,.18) inset,0 8px 24px -6px rgba(31,123,255,.8)}
+.brand-mark svg{width:26px;height:26px;color:#fff;animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.brand-word{display:flex;flex-direction:column;line-height:1}
+.brand-word b{font:italic 900 25px/1 var(--f-display);letter-spacing:-.01em;text-transform:uppercase}
+.brand-word b span{color:var(--volt)}
+.brand-word small{font:600 8.5px/1 var(--f-data);letter-spacing:.28em;color:var(--mute);margin-top:5px;text-transform:uppercase}
+nav.links{display:flex;gap:30px;font-weight:600;font-size:15px;color:var(--mute)}
+nav.links a{transition:color .2s}
+nav.links a:hover{color:var(--frost)}
+.nav-cta{display:flex;align-items:center;gap:12px}
+.nav-cta .btn{padding:13px 20px;font-size:14px}
+.status{display:inline-flex;align-items:center;gap:8px;font:600 12px/1 var(--f-data);color:var(--mute);padding:9px 12px;border:1px solid var(--line);border-radius:999px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--mute)}
+.status.open i{background:var(--wa);box-shadow:0 0 0 0 rgba(37,211,102,.6);animation:ping 1.8s infinite}
+.status.open{color:var(--frost)}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.burger{display:none;width:46px;height:46px;border-radius:12px;border:1px solid var(--line);background:var(--glass);cursor:pointer;color:var(--frost)}
+.burger b{display:block;width:18px;height:2px;background:currentColor;margin:4px auto;transition:.3s}
+.drawer{display:none}
+@media(max-width:980px){
+  nav.links,.nav-cta .status{display:none}
+  .burger{display:block}
+  .drawer{position:fixed;inset:calc(78px + env(safe-area-inset-top,0px)) 0 auto;z-index:49;background:rgba(4,10,23,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding:12px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:4px;transform:translateY(-12px);opacity:0;pointer-events:none;transition:.3s}
+  .drawer.on{transform:none;opacity:1;pointer-events:auto}
+  .drawer a{font:700 22px/1 var(--f-display);text-transform:uppercase;padding:16px 0;border-bottom:1px solid var(--line)}
+  body.menu-on .burger b:nth-child(1){transform:translateY(6px) rotate(45deg)}
+  body.menu-on .burger b:nth-child(2){opacity:0}
+  body.menu-on .burger b:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+}
+@media(max-width:520px){.nav-cta .btn-wa .lbl{display:none}.nav-cta .btn{padding:13px}}
+
+/* HERO */
+.hero{position:relative;padding:150px 0 70px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-20% -10% auto;height:120%;background:radial-gradient(60% 50% at 75% 30%,rgba(31,123,255,.32),transparent 70%),radial-gradient(40% 40% at 10% 10%,rgba(139,224,255,.10),transparent 70%);pointer-events:none}
+.hero::after{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(70% 60% at 60% 30%,#000 20%,transparent 75%);-webkit-mask-image:radial-gradient(70% 60% at 60% 30%,#000 20%,transparent 75%);opacity:.5;pointer-events:none}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.02fr 1fr;gap:40px;align-items:center}
+.hero h1{font-size:clamp(42px,5.4vw,80px);font-weight:800;text-transform:uppercase;line-height:.92;letter-spacing:-.015em}
+.hero h1 .l{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .l > span{display:inline-block;animation:rise 1s cubic-bezier(.2,.8,.2,1) both}
+.hero h1 .l:nth-child(2) > span{animation-delay:.12s}
+.hero h1 .l:nth-child(3) > span{animation-delay:.24s}
+.hero h1 em{font-style:italic;font-weight:900;background:linear-gradient(100deg,var(--volt) 10%,var(--ice) 90%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.1em}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.hero .lead{font-size:19px;animation:fade 1s .45s both}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;animation:fade 1s .6s both}
+.proof{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:34px;color:var(--mute);font-size:14px;font-weight:600;animation:fade 1s .75s both}
+.proof span{display:inline-flex;align-items:center;gap:8px}
+.proof svg{width:18px;height:18px;color:var(--ice)}
+
+/* cena do ar-condicionado */
+.scene{position:relative;aspect-ratio:1/1.02;max-width:560px;width:100%;justify-self:end;animation:fade 1.2s .2s both}
+.scene canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.unit{position:absolute;top:10%;left:6%;right:6%;height:24%;border-radius:22px 22px 30px 30px;background:linear-gradient(180deg,#FFFFFF 0%,#E9EFF7 55%,#C9D4E3 100%);box-shadow:0 30px 80px -20px rgba(31,123,255,.55),0 2px 0 rgba(255,255,255,.9) inset,0 -10px 20px rgba(0,30,80,.12) inset}
+.unit::before{content:"";position:absolute;left:5%;right:5%;top:16%;height:1px;background:rgba(10,30,60,.12)}
+.unit .logo-chip{position:absolute;left:7%;top:30%;font:italic 900 14px/1 var(--f-display);color:#0B2F6E;letter-spacing:.02em;text-transform:uppercase;opacity:.75}
+.unit .display{position:absolute;right:7%;top:24%;display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:#071226;box-shadow:0 0 0 1px rgba(0,0,0,.3) inset}
+.unit .display b{font:700 clamp(16px,2.6vw,24px)/1 var(--f-data);color:var(--ice);text-shadow:0 0 12px rgba(139,224,255,.9)}
+.unit .display svg{width:16px;height:16px;color:var(--ice);filter:drop-shadow(0 0 6px rgba(139,224,255,.9));animation:spin 6s linear infinite}
+.unit .vent{position:absolute;left:4%;right:4%;bottom:7%;height:22%;border-radius:0 0 22px 22px;background:#0A1426;overflow:hidden}
+.unit .vent::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 10px,rgba(139,224,255,.08) 10px 11px)}
+.unit .flap{position:absolute;left:3%;right:3%;bottom:2%;height:13%;border-radius:4px 4px 20px 20px;background:linear-gradient(180deg,#F4F8FC,#CBD6E5);transform-origin:50% 0;transform:rotateX(0deg);animation:flap 1.4s .6s cubic-bezier(.3,1.4,.5,1) forwards;box-shadow:0 6px 10px -4px rgba(0,0,0,.35)}
+@keyframes flap{to{transform:perspective(400px) rotateX(-48deg) translateY(18%)}}
+.unit .led{position:absolute;left:7%;bottom:42%;width:6px;height:6px;border-radius:50%;background:var(--ice);box-shadow:0 0 10px var(--ice)}
+
+.airflow{position:absolute;top:34%;left:6%;right:6%;height:52%;pointer-events:none}
+.airflow path{fill:none;stroke:url(#gAir);stroke-width:2;stroke-linecap:round;stroke-dasharray:6 18;animation:flow 1.6s linear infinite}
+.airflow path:nth-child(2n){animation-duration:2.1s;stroke-width:1.4}
+.airflow path:nth-child(3n){animation-duration:1.3s;opacity:.7}
+@keyframes flow{to{stroke-dashoffset:-48}}
+
+.thermo{position:absolute;left:0;bottom:4%;width:min(250px,52%);padding:18px 18px 16px;border-radius:var(--r);background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.thermo .k{font:600 11px/1 var(--f-data);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.thermo .v{font:800 clamp(40px,6vw,58px)/1 var(--f-display);margin-top:8px;font-variant-numeric:tabular-nums;color:var(--tc,var(--heat));transition:color .4s;display:flex;align-items:flex-start;gap:2px}
+.thermo .v small{font-size:.42em;margin-top:.2em;color:var(--mute)}
+.thermo .bar{height:6px;border-radius:9px;background:rgba(255,255,255,.08);margin-top:14px;overflow:hidden}
+.thermo .bar i{display:block;height:100%;width:var(--p,100%);background:linear-gradient(90deg,var(--ice),var(--volt) 55%,var(--heat));border-radius:9px;transition:width .4s}
+.thermo .note{font-size:12.5px;color:var(--mute);margin-top:10px}
+
+.remote{position:absolute;right:0;bottom:0;width:min(200px,42%);padding:16px;border-radius:28px;background:linear-gradient(180deg,#F6F9FD,#D9E2EE);color:#0B1F45;box-shadow:0 30px 60px -20px rgba(0,0,0,.7);transform:rotate(4deg)}
+.remote .scr{background:#0A1830;border-radius:14px;padding:12px;color:var(--ice);font-family:var(--f-data)}
+.remote .scr .row{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.1em;opacity:.8}
+.remote .scr b{display:block;font:700 34px/1.1 var(--f-data);margin-top:6px;text-shadow:0 0 12px rgba(139,224,255,.7);font-variant-numeric:tabular-nums}
+.remote .keys{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.remote button{font:800 20px/1 var(--f-display);height:42px;border-radius:12px;border:0;background:#fff;color:#0B1F45;cursor:pointer;box-shadow:0 2px 0 #B7C4D6,0 4px 10px -4px rgba(0,0,0,.3);transition:transform .1s}
+.remote button:active{transform:translateY(2px);box-shadow:0 0 0 #B7C4D6}
+.remote .fan{grid-column:1/-1;font-size:12px;font-family:var(--f-data);letter-spacing:.12em;background:var(--volt);color:#fff;box-shadow:0 2px 0 #0B4FD0}
+.remote .hint{font:600 10px/1.3 var(--f-data);color:#4A5D80;text-align:center;margin-top:10px;letter-spacing:.06em}
+
+@media(max-width:900px){
+  .hero{padding-top:124px}
+  .hero-grid{grid-template-columns:1fr}
+  .scene{justify-self:center;max-width:520px}
+}
+@media(max-width:560px){.scene{aspect-ratio:1/1.3}.unit{height:19%;top:6%}.airflow{top:26%}.remote{width:46%}.thermo{width:50%}}
+
+/* faixa */
+.ticker{border-block:1px solid var(--line);background:linear-gradient(90deg,rgba(31,123,255,.08),rgba(139,224,255,.04));overflow:hidden;padding-block:20px}
+.ticker .track{display:flex;gap:44px;width:max-content;animation:tick 38s linear infinite}
+.ticker span{font:italic 800 clamp(22px,3vw,34px)/1 var(--f-display);text-transform:uppercase;white-space:nowrap;display:inline-flex;align-items:center;gap:44px;color:var(--frost)}
+.ticker span:nth-child(even){color:transparent;-webkit-text-stroke:1.2px rgba(139,224,255,.6)}
+.ticker span::after{content:"";width:16px;height:16px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -12 24 24' fill='none' stroke='%231F7BFF' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M0-10V10M-8.7-5L8.7 5M-8.7 5L8.7-5'/%3E%3C/svg%3E")}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* reveal: visível em repouso, só desliza */
+.rv{transition:transform .9s cubic-bezier(.2,.8,.2,1),filter .9s}
+.js .rv:not(.in){transform:translateY(34px)}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+
+/* serviços */
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px}
+.services{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:56px}
+.svc{position:relative;padding:30px 26px 28px;border-radius:var(--r);background:linear-gradient(180deg,var(--deep),rgba(8,21,48,.4));border:1px solid var(--line);overflow:hidden;min-width:0;transition:transform .35s,border-color .35s}
+.svc::before{content:"";position:absolute;inset:0;background:radial-gradient(220px circle at var(--mx,50%) var(--my,0%),rgba(139,224,255,.16),transparent 60%);opacity:0;transition:opacity .3s}
+.svc:hover{transform:translateY(-6px);border-color:rgba(139,224,255,.4)}
+.svc:hover::before{opacity:1}
+.svc .ic{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;background:rgba(31,123,255,.14);border:1px solid rgba(31,123,255,.35);color:var(--ice)}
+.svc .ic svg{width:28px;height:28px;transition:transform .5s}
+.svc:hover .ic svg{transform:rotate(-12deg) scale(1.1)}
+.svc h3{font-size:23px;font-weight:800;text-transform:uppercase;margin-top:24px}
+.svc p{color:var(--mute);font-size:15px;margin-top:10px}
+.svc ul{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:8px;font-size:14px;font-weight:600}
+.svc li{display:flex;gap:8px;align-items:baseline}
+.svc li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--ice);transform:translateY(-2px)}
+@media(max-width:1060px){.services{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.services{grid-template-columns:1fr}}
+
+/* oferta */
+.offer{position:relative;display:grid;grid-template-columns:1fr 1.05fr;gap:0;border-radius:32px;overflow:hidden;border:1px solid rgba(139,224,255,.25);background:linear-gradient(135deg,#0C2556,#071331 60%)}
+.offer-vis{position:relative;min-height:440px;background:radial-gradient(70% 70% at 50% 40%,rgba(31,123,255,.45),transparent 70%);display:grid;place-items:center;overflow:hidden}
+.offer-vis .ring{position:absolute;width:78%;aspect-ratio:1;border-radius:50%;border:1px dashed rgba(139,224,255,.28);animation:spin 40s linear infinite}
+.offer-vis .ring.r2{width:54%;border-style:solid;border-color:rgba(31,123,255,.35);animation-direction:reverse;animation-duration:26s}
+.mini-unit{position:relative;width:76%;height:96px;border-radius:18px 18px 26px 26px;background:linear-gradient(180deg,#fff,#DCE4EF);box-shadow:0 30px 60px -18px rgba(0,0,0,.6);animation:float 5s ease-in-out infinite;max-width:100%}
+.mini-unit::after{content:"";position:absolute;left:4%;right:4%;bottom:10%;height:20%;border-radius:0 0 16px 16px;background:#0A1426}
+.mini-unit .tag{position:absolute;left:7%;top:24%;font:800 12px/1 var(--f-data);color:#A50034;letter-spacing:.06em}
+.mini-unit .dot{position:absolute;right:8%;top:28%;width:7px;height:7px;border-radius:50%;background:var(--ice);box-shadow:0 0 10px var(--ice)}
+@keyframes float{50%{transform:translateY(-12px)}}
+.badge-btu{position:absolute;top:28px;left:28px;font:700 13px/1 var(--f-data);padding:10px 14px;border-radius:999px;background:var(--ice);color:#04223A;letter-spacing:.06em}
+.badge-inv{position:absolute;bottom:28px;right:28px;font:700 12px/1 var(--f-data);padding:10px 14px;border-radius:999px;border:1px solid rgba(139,224,255,.4);color:var(--ice);letter-spacing:.12em}
+.offer-body{padding:52px 48px;min-width:0}
+.offer-body h3{font-size:clamp(30px,3.6vw,44px);font-weight:800;text-transform:uppercase;margin-top:16px}
+.specs{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.specs span{font:600 12.5px/1 var(--f-data);padding:9px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--frost)}
+.price{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 22px;margin-top:30px}
+.price .now{font:800 clamp(48px,6vw,72px)/.9 var(--f-display);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.price .now sup{font-size:.36em;vertical-align:top;margin-right:4px;color:var(--ice);position:relative;top:.25em}
+.price .now small{font-size:.4em}
+.price .cond{font-size:14px;color:var(--mute);line-height:1.5}
+.price .cond b{color:var(--frost)}
+.offer-body .btn{margin-top:30px}
+.fine{font-size:12.5px;color:var(--mute);margin-top:16px}
+@media(max-width:900px){.offer{grid-template-columns:1fr}.offer-vis{min-height:300px}.offer-body{padding:36px 22px}}
+
+/* catálogo */
+.cat{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px}
+.cat a{display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:18px;border:1px solid var(--line);background:var(--deep);transition:border-color .3s,transform .3s;min-width:0}
+.cat a:hover{border-color:rgba(139,224,255,.45);transform:translateY(-4px)}
+.cat b{font:800 18px/1.1 var(--f-display);text-transform:uppercase}
+.cat span{font-size:14px;color:var(--mute)}
+.cat em{font:600 12px/1 var(--f-data);color:var(--ice);font-style:normal;margin-top:8px;letter-spacing:.06em}
+@media(max-width:900px){.cat{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.cat{grid-template-columns:1fr}}
+
+/* calculadora */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+.calc-in,.calc-out{border-radius:28px;border:1px solid var(--line);padding:36px;min-width:0}
+.calc-in{background:var(--deep);display:grid;gap:30px}
+.field label{display:flex;justify-content:space-between;gap:12px;font-weight:700;font-size:15px}
+.field label output{font:700 15px/1 var(--f-data);color:var(--ice)}
+.field small{display:block;color:var(--mute);font-size:13px;margin-top:4px}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:9px;background:linear-gradient(90deg,var(--volt) var(--fill,30%),rgba(255,255,255,.1) var(--fill,30%));margin-top:16px;outline-offset:6px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:#fff;border:5px solid var(--volt);box-shadow:0 0 0 6px rgba(31,123,255,.2);cursor:grab}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:5px solid var(--volt);cursor:grab}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{display:block;text-align:center;padding:13px 8px;border-radius:14px;border:1px solid var(--line);font-size:14px;font-weight:700;cursor:pointer;transition:.2s;color:var(--mute)}
+.seg input:checked + label{background:rgba(31,123,255,.18);border-color:var(--volt);color:var(--frost)}
+.seg input:focus-visible + label{outline:3px solid var(--ice);outline-offset:2px}
+.calc-out{position:relative;overflow:hidden;background:radial-gradient(90% 70% at 100% 0%,rgba(31,123,255,.35),transparent 60%),linear-gradient(180deg,#0B1F48,#071331);display:flex;flex-direction:column}
+.calc-out .k{font:700 12px/1 var(--f-data);letter-spacing:.16em;text-transform:uppercase;color:var(--ice)}
+.calc-out .big{font:800 clamp(64px,9vw,112px)/.9 var(--f-display);font-variant-numeric:tabular-nums;margin-top:18px;letter-spacing:-.02em}
+.calc-out .big small{font-size:.28em;color:var(--mute);letter-spacing:.04em;margin-left:6px}
+.calc-out .raw{font:500 13px/1.4 var(--f-data);color:var(--mute);margin-top:10px}
+.sizes{display:flex;gap:6px;margin-top:28px}
+.sizes i{flex:1;height:44px;border-radius:8px;background:rgba(255,255,255,.06);position:relative;font:700 10px/1 var(--f-data);color:var(--mute);font-style:normal;display:flex;align-items:flex-end;justify-content:center;padding-bottom:6px;transition:.35s}
+.sizes i.on{background:linear-gradient(180deg,var(--ice),var(--volt));color:#04223A;transform:translateY(-6px);box-shadow:0 10px 30px -8px rgba(139,224,255,.7)}
+.calc-out p.tip{color:var(--mute);font-size:14.5px;margin-top:22px}
+.calc-out .btn{margin-top:auto;align-self:flex-start}
+.calc-out .spacer{height:26px}
+@media(max-width:900px){.calc{grid-template-columns:1fr}.calc-in,.calc-out{padding:26px 20px}}
+@media(max-width:420px){.sizes i{font-size:8.5px}}
+
+/* diferenciais */
+.why{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pillar{padding:26px;border-radius:20px;border:1px solid var(--line);background:var(--deep);min-width:0}
+.pillar svg{width:30px;height:30px;color:var(--ice)}
+.pillar h3{font-size:21px;text-transform:uppercase;font-weight:800;margin-top:16px}
+.pillar p{font-size:14.5px;color:var(--mute);margin-top:8px}
+.steps{list-style:none;margin:40px 0 0;padding:0;display:grid;gap:0;counter-reset:s}
+.steps li{display:grid;grid-template-columns:52px 1fr;gap:18px;padding:20px 0;border-top:1px solid var(--line);counter-increment:s}
+.steps li::before{content:counter(s,decimal-leading-zero);font:700 15px/1 var(--f-data);color:var(--ice);width:52px;height:52px;border-radius:50%;border:1px solid rgba(139,224,255,.35);display:grid;place-items:center}
+.steps b{font:800 19px/1.2 var(--f-display);text-transform:uppercase;display:block;margin-top:4px}
+.steps span{color:var(--mute);font-size:15px}
+@media(max-width:960px){.why{grid-template-columns:1fr;gap:40px}}
+@media(max-width:520px){.pillars{grid-template-columns:1fr}}
+
+/* segmentos */
+.segs{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.segcard{position:relative;border-radius:24px;padding:34px 28px;min-height:260px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--line);overflow:hidden;background:var(--deep);min-width:0}
+.segcard .glyph{position:absolute;top:22px;right:22px;width:96px;height:96px;color:rgba(139,224,255,.18);transition:transform .6s,color .4s}
+.segcard:hover .glyph{transform:rotate(60deg) scale(1.15);color:rgba(139,224,255,.4)}
+.segcard small{font:700 12px/1 var(--f-data);letter-spacing:.16em;color:var(--ice);text-transform:uppercase}
+.segcard h3{font-size:30px;font-weight:800;text-transform:uppercase;margin-top:10px}
+.segcard p{color:var(--mute);font-size:15px;margin-top:10px}
+@media(max-width:900px){.segs{grid-template-columns:1fr}.segcard{min-height:0;padding-top:110px}}
+
+/* sinais de manutenção */
+.signs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px}
+.sign{display:flex;gap:14px;align-items:flex-start;padding:20px;border-radius:16px;border:1px solid var(--line);background:rgba(255,122,69,.04);min-width:0}
+.sign i{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(255,122,69,.14);color:var(--heat);font:800 15px/1 var(--f-data);font-style:normal}
+.sign b{display:block;font-weight:700}
+.sign span{font-size:14px;color:var(--mute)}
+@media(max-width:900px){.signs{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.signs{grid-template-columns:1fr}}
+
+/* faq */
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
+details{border-top:1px solid var(--line)}
+details:last-child{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;font:700 18px/1.35 var(--f-body)}
+summary::-webkit-details-marker{display:none}
+summary .pm{flex:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);position:relative;transition:.3s}
+summary .pm::before,summary .pm::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:2px;background:var(--ice);transform:translate(-50%,-50%);transition:.3s}
+summary .pm::after{transform:translate(-50%,-50%) rotate(90deg)}
+details[open] .pm{background:var(--volt);border-color:var(--volt)}
+details[open] .pm::after{transform:translate(-50%,-50%) rotate(0)}
+details p{color:var(--mute);padding:0 50px 24px 0;max-width:62ch}
+@media(max-width:900px){.faq{grid-template-columns:1fr;gap:20px}details p{padding-right:0}}
+
+/* contato final */
+.final{position:relative;border-radius:36px;overflow:hidden;padding:80px 56px;background:linear-gradient(120deg,#0B4FD0,#1F7BFF 45%,#3FB4FF);isolation:isolate}
+.final::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(rgba(255,255,255,.35) 1px,transparent 1.5px);background-size:22px 22px;mask-image:linear-gradient(90deg,transparent,#000);-webkit-mask-image:linear-gradient(90deg,transparent,#000);opacity:.6}
+.final .bigflake{position:absolute;right:-60px;top:-60px;width:380px;height:380px;color:rgba(255,255,255,.16);z-index:-1;animation:spin 50s linear infinite}
+.final h2{color:#fff;max-width:14ch;margin-top:0}
+.final .lead{color:rgba(255,255,255,.85)}
+.final-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px;align-items:center}
+.final .btn-wa{background:#fff;border-color:#fff;color:#062A66;box-shadow:0 14px 40px -10px rgba(0,0,0,.4)}
+.final .btn-wa svg{color:var(--wa)}
+.final .btn.ghost{border-color:rgba(255,255,255,.5);color:#fff}
+.final .btn.ghost:hover{border-color:#fff}
+.contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px}
+.contact-grid > div{padding:20px 22px;border-radius:18px;background:rgba(4,10,23,.22);border:1px solid rgba(255,255,255,.2);min-width:0}
+.contact-grid small{font:700 11px/1 var(--f-data);letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+.contact-grid b{display:block;font:700 20px/1.3 var(--f-data);color:#fff;margin-top:10px;user-select:all;overflow-wrap:anywhere}
+.contact-grid span{font-size:13.5px;color:rgba(255,255,255,.8)}
+@media(max-width:900px){.final{padding:56px 22px;border-radius:28px}.contact-grid{grid-template-columns:1fr}}
+
+footer{padding-block:48px 110px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:24px;align-items:center}
+
+/* flutuante */
+.float-wa{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:55;width:62px;height:62px;border-radius:50%;background:var(--wa);display:grid;place-items:center;color:#fff;box-shadow:0 12px 30px -6px rgba(37,211,102,.7);transition:transform .3s}
+.float-wa svg{width:32px;height:32px}
+.float-wa::before{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--wa);animation:halo 2.2s ease-out infinite}
+@keyframes halo{from{transform:scale(1);opacity:.9}to{transform:scale(1.7);opacity:0}}
+.float-wa:hover{transform:scale(1.08)}
+.float-wa .bubble{position:absolute;right:74px;top:50%;transform:translateY(-50%);white-space:nowrap;background:#fff;color:#062A66;font:700 13px/1 var(--f-body);padding:11px 14px;border-radius:12px 12px 4px 12px;box-shadow:0 10px 30px -10px rgba(0,0,0,.5);animation:fade .6s 2.5s both}
+@media(max-width:520px){.float-wa .bubble{display:none}}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--frost);color:var(--night);font-weight:700;font-size:14px;padding:12px 18px;border-radius:12px;opacity:0;transition:.3s;z-index:70;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .js .rv:not(.in){transform:none}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="arm"><path d="M0 0V-10.5M0-6.5L-3.2-9.4M0-6.5L3.2-9.4M0-3L-2.4-5.2M0-3L2.4-5.2"/></g>
+    <symbol id="flake" viewBox="-12 -12 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><use href="#arm"/><use href="#arm" transform="rotate(60)"/><use href="#arm" transform="rotate(120)"/><use href="#arm" transform="rotate(180)"/><use href="#arm" transform="rotate(240)"/><use href="#arm" transform="rotate(300)"/></g></symbol>
+    <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.8 14.03c-.24.68-1.42 1.3-1.95 1.35-.5.05-.97.23-3.27-.68-2.77-1.09-4.52-3.92-4.66-4.1-.13-.18-1.11-1.48-1.11-2.82 0-1.34.7-2 .95-2.27.25-.27.54-.34.72-.34l.52.01c.17.01.39-.06.61.47.23.54.77 1.88.84 2.02.07.13.11.29.02.47-.09.18-.13.29-.27.45-.13.16-.28.35-.4.47-.13.13-.27.28-.12.55.16.27.7 1.15 1.5 1.86 1.03.92 1.9 1.2 2.17 1.34.27.13.43.11.58-.07.16-.18.68-.79.86-1.06.18-.27.36-.23.61-.14.25.09 1.57.74 1.84.88.27.13.45.2.52.31.07.11.07.65-.17 1.32z"/></symbol>
+    <linearGradient id="gAir" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8BE0FF" stop-opacity=".95"/><stop offset="1" stop-color="#1F7BFF" stop-opacity="0"/></linearGradient>
+  </defs>
+</svg>
+
+<header id="top">
+  <div class="wrap nav">
+    <a href="#inicio" class="brand" aria-label="Tclima Engenharia Térmica — início">
+      <span class="brand-mark"><svg><use href="#flake"/></svg></span>
+      <span class="brand-word"><b><span>T</span>clima</b><small>Engenharia Térmica</small></span>
+    </a>
+    <nav class="links" aria-label="Principal">
+      <a href="#servicos">Serviços</a>
+      <a href="#oferta">Ofertas</a>
+      <a href="#btu">Calcular BTUs</a>
+      <a href="#como">Como funciona</a>
+      <a href="#duvidas">Dúvidas</a>
+    </nav>
+    <div class="nav-cta">
+      <span class="status" id="status"><i></i><span>07:00 – 21:00</span></span>
+      <a class="btn btn-wa" data-wa="Olá, Tclima! Vim pelo site e quero um orçamento." href="https://wa.me/5519993355533" target="_blank" rel="noopener"><svg><use href="#wa"/></svg><span class="lbl">Orçamento</span></a>
+      <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer"><b></b><b></b><b></b></button>
+    </div>
+  </div>
+</header>
+<div class="drawer" id="drawer">
+  <a href="#servicos">Serviços</a>
+  <a href="#oferta">Ofertas</a>
+  <a href="#btu">Calcular BTUs</a>
+  <a href="#como">Como funciona</a>
+  <a href="#duvidas">Dúvidas</a>
+</div>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Climatização &amp; manutenção</span>
+      <h1 style="margin-top:22px">
+        <span class="l"><span>O conforto</span></span>
+        <span class="l"><span>que você <em>sente.</em></span></span>
+        <span class="l"><span>A qualidade</span></span>
+        <span class="l"><span>que você <em>confia.</em></span></span>
+      </h1>
+      <p class="lead">Vendemos, instalamos e cuidamos do seu ar-condicionado. Split, inverter, cassete, piso-teto e VRF para casas, comércios e empresas, com técnico especializado e orçamento direto no WhatsApp.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-wa" data-wa="Olá, Tclima! Quero um orçamento de ar-condicionado." href="https://wa.me/5519993355533" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Pedir orçamento agora</a>
+        <a class="btn" href="#btu">Quantos BTUs eu preciso?</a>
+      </div>
+      <div class="proof">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>Instalação dentro das normas</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Atendimento 7h às 21h</span>
+        <span><svg viewBox="0 0 24 24"><use href="#flake"/></svg>Residencial, comercial e empresarial</span>
+      </div>
+    </div>
+
+    <div class="scene" id="scene" aria-label="Ar-condicionado Tclima em funcionamento: o controle remoto ajusta a temperatura">
+      <canvas id="air"></canvas>
+      <svg class="airflow" viewBox="0 0 400 260" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M40 0 C 30 80, 60 150, 20 260"/>
+        <path d="M90 0 C 80 90, 110 170, 70 260"/>
+        <path d="M140 0 C 130 80, 160 160, 125 260"/>
+        <path d="M200 0 C 195 90, 215 170, 190 260"/>
+        <path d="M260 0 C 265 80, 245 170, 270 260"/>
+        <path d="M310 0 C 320 90, 290 160, 325 260"/>
+        <path d="M360 0 C 370 80, 345 170, 380 260"/>
+      </svg>
+      <div class="unit" id="unit">
+        <span class="logo-chip">Tclima</span>
+        <span class="led"></span>
+        <div class="display"><svg><use href="#flake"/></svg><b id="unitTemp">22°</b></div>
+        <div class="vent"></div>
+        <div class="flap"></div>
+      </div>
+      <div class="thermo" id="thermo">
+        <div class="k">Temperatura do ambiente</div>
+        <div class="v"><span id="roomTemp">32.0</span><small>°C</small></div>
+        <div class="bar"><i id="roomBar"></i></div>
+        <div class="note" id="roomNote">Esfriando a sala…</div>
+      </div>
+      <div class="remote" role="group" aria-label="Controle remoto">
+        <div class="scr">
+          <div class="row"><span>FRIO</span><span id="fanLbl">VENT ▮▮▯</span></div>
+          <b id="setTemp">22°C</b>
+        </div>
+        <div class="keys">
+          <button type="button" id="tDown" aria-label="Diminuir temperatura">−</button>
+          <button type="button" id="tUp" aria-label="Aumentar temperatura">+</button>
+          <button type="button" class="fan" id="fanBtn">VENTILAÇÃO</button>
+        </div>
+        <div class="hint">Experimente o controle</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="track">
+    <span>Instalação</span><span>Manutenção preventiva</span><span>Higienização</span><span>Split inverter</span><span>Cassete</span><span>Piso-teto</span><span>VRF</span><span>Manutenção corretiva</span>
+    <span>Instalação</span><span>Manutenção preventiva</span><span>Higienização</span><span>Split inverter</span><span>Cassete</span><span>Piso-teto</span><span>VRF</span><span>Manutenção corretiva</span>
+  </div>
+</div>
+
+<section id="servicos">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <span class="eyebrow">O que fazemos</span>
+        <h2 class="rv">Soluções completas em <em>climatização</em></h2>
+      </div>
+      <p class="lead rv d1" style="max-width:44ch">Do primeiro furo na parede até a revisão de rotina. Um único time cuida do seu ar, com garantia e atendimento rápido.</p>
+    </div>
+    <div class="services">
+      <article class="svc rv">
+        <div class="ic"><svg><use href="#flake"/></svg></div>
+        <h3>Instalação</h3>
+        <p>Split hi-wall, inverter, cassete, piso-teto e multi-split, instalados do jeito que o fabricante pede.</p>
+        <ul><li>Vácuo na tubulação</li><li>Suporte e dreno corretos</li><li>Teste de pressão e funcionamento</li></ul>
+      </article>
+      <article class="svc rv d1">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z"/></svg></div>
+        <h3>Manutenção</h3>
+        <p>Preventiva para o aparelho durar mais e corretiva quando ele para de gelar, pinga ou faz barulho.</p>
+        <ul><li>Diagnóstico com manifold</li><li>Carga de gás</li><li>Placa, capacitor e sensores</li></ul>
+      </article>
+      <article class="svc rv d2">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h16a3 3 0 1 1-3 3"/><path d="M3 16h8"/></svg></div>
+        <h3>Limpeza e higienização</h3>
+        <p>Ar mais puro e conta de luz menor. Limpeza completa da evaporadora, filtros, serpentina e bandeja.</p>
+        <ul><li>Remoção de fungos e bactérias</li><li>Fim do mau cheiro</li><li>Recomendado a cada 6 meses</li></ul>
+      </article>
+      <article class="svc rv d3">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="12" r="4.5"/><path d="M12 7.5v9M7.5 12h9"/></svg></div>
+        <h3>Projetos e VRF</h3>
+        <p>Climatização para lojas, escritórios e indústrias: dimensionamento, condensadoras e sistemas VRF.</p>
+        <ul><li>Levantamento de carga térmica</li><li>Contratos de manutenção (PMOC)</li><li>Atendimento empresarial</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="oferta" style="padding-top:0">
+  <div class="wrap">
+    <div class="offer rv">
+      <div class="offer-vis" aria-hidden="true">
+        <span class="ring"></span><span class="ring r2"></span>
+        <span class="badge-btu">9.000 BTUs</span>
+        <div class="mini-unit"><span class="tag">LG</span><span class="dot"></span></div>
+        <span class="badge-inv">DUAL INVERTER</span>
+      </div>
+      <div class="offer-body">
+        <span class="eyebrow">Oferta do catálogo</span>
+        <h3>Split Hi-Wall LG Dual Voice + IA</h3>
+        <div class="specs"><span>9.000 BTUs</span><span>Inverter R-32</span><span>Só frio</span><span>220V</span><span>Comando de voz</span></div>
+        <div class="price">
+          <div class="now"><sup>R$</sup>1.793<small>,97</small></div>
+          <div class="cond">à vista<br>ou <b>R$ 1.929,00</b> a prazo</div>
+        </div>
+        <a class="btn btn-wa" data-wa="Olá, Tclima! Tenho interesse no Split LG Dual Voice 9.000 BTUs de R$ 1.793,97. Quero saber sobre disponibilidade e instalação." href="https://wa.me/5519993355533" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Quero esse com instalação</a>
+        <p class="fine">Preço do catálogo da Tclima no WhatsApp. Confirme estoque e condições na hora do pedido. Instalação orçada à parte.</p>
+      </div>
+    </div>
+
+    <div class="cat">
+      <a class="rv" href="https://wa.me/5519993355533" target="_blank" rel="noopener" data-wa="Olá, Tclima! Quero ver os modelos de Split Hi-Wall disponíveis."><b>Split Hi-Wall</b><span>Samsung, LG e outras marcas, de 9 a 36 mil BTUs.</span><em>VER MODELOS →</em></a>
+      <a class="rv d1" href="https://wa.me/5519993355533" target="_blank" rel="noopener" data-wa="Olá, Tclima! Quero saber sobre ar-condicionado portátil."><b>Portátil</b><span>Sem obra e sem furar a parede. Leva de um cômodo para outro.</span><em>VER MODELOS →</em></a>
+      <a class="rv d2" href="https://wa.me/5519993355533" target="_blank" rel="noopener" data-wa="Olá, Tclima! Preciso de climatização para minha empresa (cassete / piso-teto / VRF)."><b>Cassete e VRF</b><span>Para lojas, salas comerciais e prédios inteiros.</span><em>FALAR COM ENGENHARIA →</em></a>
+      <a class="rv d3" href="https://wa.me/5519993355533" target="_blank" rel="noopener" data-wa="Olá, Tclima! Quero agendar uma manutenção / higienização."><b>Manutenção</b><span>Revisão, carga de gás, limpeza e conserto.</span><em>AGENDAR →</em></a>
+    </div>
+  </div>
+</section>
+
+<section id="btu" style="background:linear-gradient(180deg,transparent,rgba(8,21,48,.7) 30%,rgba(8,21,48,.7) 70%,transparent)">
+  <div class="wrap">
+    <span class="eyebrow">Calculadora</span>
+    <h2 class="rv">Quantos <em>BTUs</em> o seu ambiente pede?</h2>
+    <p class="lead rv d1">Aparelho fraco não gela e aparelho grande demais gasta à toa. Responda quatro perguntas e veja a potência indicada. A gente confirma tudo na visita técnica.</p>
+
+    <div class="calc">
+      <form class="calc-in rv" id="calcForm" onsubmit="return false">
+        <div class="field">
+          <label for="area">Tamanho do ambiente <output id="areaOut">16 m²</output></label>
+          <small>Largura × comprimento do cômodo.</small>
+          <input type="range" id="area" min="6" max="90" step="1" value="16">
+        </div>
+        <div class="field">
+          <label for="ppl">Pessoas que costumam ficar ali <output id="pplOut">2</output></label>
+          <input type="range" id="ppl" min="1" max="12" step="1" value="2">
+        </div>
+        <div class="field">
+          <label for="elec">Eletrônicos ligados (TV, PC, geladeira) <output id="elecOut">1</output></label>
+          <input type="range" id="elec" min="0" max="8" step="1" value="1">
+        </div>
+        <div class="field">
+          <span style="font-weight:700;font-size:15px" id="sunLbl">Quando bate sol no ambiente?</span>
+          <div class="seg" role="radiogroup" aria-labelledby="sunLbl">
+            <input type="radio" name="sun" id="sun0" value="600" checked><label for="sun0">Pouco / manhã</label>
+            <input type="radio" name="sun" id="sun1" value="800"><label for="sun1">À tarde</label>
+            <input type="radio" name="sun" id="sun2" value="900"><label for="sun2">O dia todo</label>
+          </div>
+        </div>
+      </form>
+
+      <div class="calc-out rv d1" aria-live="polite">
+        <div class="k">Potência recomendada</div>
+        <div class="big"><span id="btuOut">12.000</span><small>BTUs</small></div>
+        <div class="raw" id="btuRaw">Carga estimada: 11.400 BTU/h</div>
+        <div class="sizes" id="sizes"></div>
+        <p class="tip" id="btuTip">Um split de 12.000 BTUs atende bem esse ambiente.</p>
+        <div class="spacer"></div>
+        <a class="btn btn-wa" id="btuWa" href="https://wa.me/5519993355533" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Enviar cálculo e pedir preço</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="como">
+  <div class="wrap why">
+    <div>
+      <span class="eyebrow">Por que a Tclima</span>
+      <h2 class="rv">Engenharia de verdade no seu <em>ar</em></h2>
+      <p class="lead rv d1">Ar-condicionado mal instalado perde garantia, pinga, faz barulho e gasta mais energia. Nosso trabalho é fazer certo na primeira vez.</p>
+      <ol class="steps">
+        <li class="rv"><div><b>Você chama no WhatsApp</b><span>Conta o que precisa e manda fotos do local, se quiser.</span></div></li>
+        <li class="rv d1"><div><b>Avaliação técnica</b><span>Medimos o ambiente, a rede elétrica e o caminho da tubulação.</span></div></li>
+        <li class="rv d2"><div><b>Orçamento claro</b><span>Aparelho, material e mão de obra discriminados, sem surpresa no final.</span></div></li>
+        <li class="rv d3"><div><b>Instalação e teste</b><span>Entregamos funcionando, com o local limpo e as orientações de uso.</span></div></li>
+      </ol>
+    </div>
+    <div class="pillars">
+      <div class="pillar rv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><h3>Qualidade</h3><p>Material de primeira, vácuo e solda bem-feitos. O aparelho trabalha como saiu de fábrica.</p></div>
+      <div class="pillar rv d1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg><h3>Agilidade</h3><p>Resposta rápida no WhatsApp e agenda das 7h às 21h, inclusive para urgências.</p></div>
+      <div class="pillar rv d2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c8 0 14-6 14-15-9 0-15 6-15 14z"/><path d="M5 19l7-7"/></svg><h3>Eficiência</h3><p>Dimensionamento certo e equipamentos inverter para a conta de luz não assustar.</p></div>
+      <div class="pillar rv d3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M8.5 13 7 21l5-2.5 5 2.5-1.5-8"/></svg><h3>Garantia</h3><p>Serviço com garantia e instalação que preserva a garantia do fabricante.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow">Para quem</span>
+    <h2 class="rv">Do quarto ao <em>galpão</em></h2>
+    <div class="segs">
+      <article class="segcard rv"><svg class="glyph"><use href="#flake"/></svg><small>Residencial</small><h3>Sua casa</h3><p>Quartos, salas e home office com silêncio e conforto para dormir bem.</p></article>
+      <article class="segcard rv d1"><svg class="glyph"><use href="#flake"/></svg><small>Comercial</small><h3>Seu negócio</h3><p>Lojas, clínicas, restaurantes e escritórios. Cliente confortável compra mais.</p></article>
+      <article class="segcard rv d2"><svg class="glyph"><use href="#flake"/></svg><small>Empresarial</small><h3>Sua empresa</h3><p>Projetos, VRF, centrais e contratos de manutenção com relatório técnico.</p></article>
+    </div>
+
+    <div style="margin-top:96px">
+      <span class="eyebrow">Hora de chamar o técnico?</span>
+      <h2 class="rv" style="max-width:20ch">Seu ar está dando algum <em>desses sinais?</em></h2>
+      <div class="signs">
+        <div class="sign rv"><i>!</i><div><b>Não gela como antes</b><span>Pode ser falta de gás, filtro sujo ou placa com defeito.</span></div></div>
+        <div class="sign rv d1"><i>!</i><div><b>Pinga água na parede</b><span>Dreno entupido ou instalação fora de nível.</span></div></div>
+        <div class="sign rv d2"><i>!</i><div><b>Cheiro ruim ao ligar</b><span>Fungos e bactérias na serpentina. Precisa de higienização.</span></div></div>
+        <div class="sign rv"><i>!</i><div><b>Barulho estranho</b><span>Ventilador, suporte ou compressor pedindo revisão.</span></div></div>
+        <div class="sign rv d1"><i>!</i><div><b>Conta de luz subiu</b><span>Aparelho sujo trabalha mais para entregar o mesmo frio.</span></div></div>
+        <div class="sign rv d2"><i>!</i><div><b>Pisca ou mostra erro</b><span>Código no display indica falha. A gente diagnostica.</span></div></div>
+      </div>
+      <a class="btn btn-volt rv" style="margin-top:32px" data-wa="Olá, Tclima! Meu ar-condicionado está com problema e preciso de um técnico." href="https://wa.me/5519993355533" target="_blank" rel="noopener">Chamar um técnico</a>
+    </div>
+  </div>
+</section>
+
+<section id="duvidas" style="padding-top:0">
+  <div class="wrap faq">
+    <div>
+      <span class="eyebrow">Dúvidas frequentes</span>
+      <h2 class="rv">Perguntas que todo mundo <em>faz</em></h2>
+    </div>
+    <div class="rv d1">
+      <details open><summary>Vocês vendem o aparelho e também instalam?<span class="pm"></span></summary><p>Sim. Você pode comprar o aparelho com a gente e já sair com a instalação agendada, ou só contratar a instalação de um aparelho que você já tem.</p></details>
+      <details><summary>Quanto tempo leva uma instalação de split?<span class="pm"></span></summary><p>Uma instalação padrão costuma ser feita no mesmo dia. Casos com tubulação longa, rede elétrica nova ou acesso difícil são combinados no orçamento.</p></details>
+      <details><summary>De quanto em quanto tempo preciso limpar o ar-condicionado?<span class="pm"></span></summary><p>Em casa, a higienização completa é recomendada a cada 6 meses. Os filtros você mesmo pode lavar a cada 15 a 30 dias. Em comércios e empresas o intervalo é menor e pode seguir um plano PMOC.</p></details>
+      <details><summary>Inverter compensa mesmo?<span class="pm"></span></summary><p>Para quem usa o ar todos os dias, sim. O inverter ajusta a rotação do compressor em vez de ligar e desligar, mantém a temperatura mais estável e consome menos energia.</p></details>
+      <details><summary>Vocês atendem empresas?<span class="pm"></span></summary><p>Atendemos residências, comércios e empresas, com projetos de climatização, sistemas VRF e contratos de manutenção preventiva.</p></details>
+      <details><summary>Qual o horário de atendimento?<span class="pm"></span></summary><p>Das 07:00 às 21:00. Fale direto no WhatsApp (19) 99335-5533.</p></details>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="final rv">
+      <svg class="bigflake" aria-hidden="true"><use href="#flake"/></svg>
+      <h2>Bora deixar seu ambiente <em style="background:none;-webkit-text-fill-color:#fff;color:#fff">geladinho?</em></h2>
+      <p class="lead">Mande uma mensagem agora e receba seu orçamento sem compromisso.</p>
+      <div class="final-row">
+        <a class="btn btn-wa" data-wa="Olá, Tclima! Quero um orçamento sem compromisso." href="https://wa.me/5519993355533" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Chamar no WhatsApp</a>
+        <button class="btn ghost" type="button" id="copyBtn">Copiar número</button>
+      </div>
+      <div class="contact-grid">
+        <div><small>WhatsApp e telefone</small><b id="phone">(19) 99335-5533</b><span>Ligue ou mande mensagem</span></div>
+        <div><small>Horário</small><b>07:00 – 21:00</b><span id="statusTxt">Atendimento todos os dias da semana</span></div>
+        <div><small>Atendemos</small><b>Casa · Comércio · Empresa</b><span>Instalação, manutenção e projetos</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a href="#inicio" class="brand"><span class="brand-mark"><svg><use href="#flake"/></svg></span><span class="brand-word"><b><span>T</span>clima</b><small>Engenharia Térmica</small></span></a>
+    <span>© <span id="yr">2026</span> Tclima Engenharia Térmica · Climatização &amp; Manutenção</span>
+  </div>
+</footer>
+
+<a class="float-wa" data-wa="Olá, Tclima! Vim pelo site." href="https://wa.me/5519993355533" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg><use href="#wa"/></svg><span class="bubble">Orçamento em minutos 👋</span></a>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var PHONE='5519993355533';
+  var root=document.documentElement;
+  root.classList.add('js');
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function waLink(msg){return 'https://wa.me/'+PHONE+'?text='+encodeURIComponent(msg)}
+  document.querySelectorAll('[data-wa]').forEach(function(a){a.href=waLink(a.getAttribute('data-wa'))});
+  document.getElementById('yr').textContent=new Date().getFullYear();
+
+  /* header + menu */
+  var header=document.querySelector('header');
+  function onScroll(){header.classList.toggle('scrolled',window.scrollY>20)}
+  onScroll();window.addEventListener('scroll',onScroll,{passive:true});
+  var burger=document.getElementById('burger'),drawer=document.getElementById('drawer');
+  function setMenu(on){drawer.classList.toggle('on',on);document.body.classList.toggle('menu-on',on);burger.setAttribute('aria-expanded',on)}
+  burger.addEventListener('click',function(){setMenu(!drawer.classList.contains('on'))});
+  drawer.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){setMenu(false)})});
+
+  /* aberto agora (horário de Brasília) */
+  try{
+    var parts=new Intl.DateTimeFormat('en-GB',{timeZone:'America/Sao_Paulo',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()).split(':');
+    var mins=+parts[0]*60+(+parts[1]);var open=mins>=420&&mins<1260;
+    var st=document.getElementById('status');
+    st.classList.toggle('open',open);
+    st.querySelector('span').textContent=open?'Aberto agora':'Abre às 07:00';
+    document.getElementById('statusTxt').textContent=open?'Estamos atendendo agora':'Deixe sua mensagem, respondemos às 07:00';
+  }catch(e){}
+
+  /* reveal */
+  var rvs=document.querySelectorAll('.rv');
+  if('IntersectionObserver' in window&&!reduce){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px'});
+    rvs.forEach(function(el){io.observe(el)});
+  }else rvs.forEach(function(el){el.classList.add('in')});
+
+  /* brilho que segue o cursor */
+  document.querySelectorAll('.svc').forEach(function(c){
+    c.addEventListener('pointermove',function(e){var r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')});
+  });
+
+  /* ===== HERO: ar-condicionado vivo ===== */
+  var setp=22,fan=2,room=32;
+  var elSet=document.getElementById('setTemp'),elUnit=document.getElementById('unitTemp'),elRoom=document.getElementById('roomTemp'),elBar=document.getElementById('roomBar'),elNote=document.getElementById('roomNote'),elFan=document.getElementById('fanLbl'),thermo=document.getElementById('thermo');
+  function paintSet(){elSet.textContent=setp+'°C';elUnit.textContent=setp+'°';elFan.textContent='VENT '+'▮'.repeat(fan)+'▯'.repeat(3-fan)}
+  function mix(a,b,t){return Math.round(a+(b-a)*t)}
+  function paintRoom(){
+    elRoom.textContent=room.toFixed(1);
+    var t=Math.max(0,Math.min(1,(room-16)/(34-16)));
+    // gelo (139,224,255) -> calor (255,122,69)
+    thermo.style.setProperty('--tc','rgb('+mix(139,255,t)+','+mix(224,122,t)+','+mix(255,69,t)+')');
+    elBar.style.setProperty('--p',(t*100).toFixed(1)+'%');
+    elNote.textContent=Math.abs(room-setp)<.15?'No ponto. Conforto total.':(room>setp?'Esfriando a sala…':'Ajustando…');
+  }
+  paintSet();paintRoom();
+  document.getElementById('tDown').addEventListener('click',function(){setp=Math.max(16,setp-1);paintSet()});
+  document.getElementById('tUp').addEventListener('click',function(){setp=Math.min(30,setp+1);paintSet()});
+  document.getElementById('fanBtn').addEventListener('click',function(){fan=fan%3+1;paintSet()});
+  if(reduce){room=setp;paintRoom()}else{
+    var last=performance.now();
+    (function tick(now){
+      var dt=Math.min(.1,(now-last)/1000);last=now;
+      var rate=.55+fan*.35;
+      room+=(setp-room)*Math.min(1,dt*rate*.45);
+      if(Math.abs(room-setp)<.05)room=setp;
+      paintRoom();
+      requestAnimationFrame(tick);
+    })(last);
+  }
+
+  /* partículas de ar frio */
+  var cv=document.getElementById('air'),scene=document.getElementById('scene'),unit=document.getElementById('unit');
+  var ctx=cv.getContext('2d'),W=0,H=0,dpr=1,ps=[],visible=true;
+  function size(){dpr=Math.min(2,window.devicePixelRatio||1);W=scene.clientWidth;H=scene.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+  size();window.addEventListener('resize',size);
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){visible=es[0].isIntersecting}).observe(scene)}
+  function spawn(){
+    var x0=unit.offsetLeft+unit.offsetWidth*.08,x1=unit.offsetLeft+unit.offsetWidth*.92,y=unit.offsetTop+unit.offsetHeight*.95;
+    var flake=Math.random()<.18;
+    ps.push({x:x0+Math.random()*(x1-x0),y:y,vx:(Math.random()-.5)*.5,vy:(.8+Math.random()*1.2)*(.6+fan*.35),r:flake?2.4+Math.random()*2.6:.8+Math.random()*1.6,life:0,max:120+Math.random()*120,ph:Math.random()*6.28,flake:flake,rot:Math.random()*6.28})
+  }
+  function drawFlake(p,a){
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);ctx.strokeStyle='rgba(200,240,255,'+a+')';ctx.lineWidth=1;ctx.beginPath();
+    for(var i=0;i<3;i++){var an=i*Math.PI/3;ctx.moveTo(Math.cos(an)*p.r*1.6,Math.sin(an)*p.r*1.6);ctx.lineTo(-Math.cos(an)*p.r*1.6,-Math.sin(an)*p.r*1.6)}
+    ctx.stroke();ctx.restore();
+  }
+  function loop(){
+    if(visible){
+      ctx.clearRect(0,0,W,H);
+      var n=fan+1;for(var i=0;i<n;i++)if(ps.length<260)spawn();
+      for(var j=ps.length-1;j>=0;j--){
+        var p=ps[j];p.life++;p.ph+=.05;p.rot+=.01;
+        p.x+=p.vx+Math.sin(p.ph)*.35;p.y+=p.vy;p.vy*=.996;
+        var a=Math.sin(Math.PI*p.life/p.max)*.85;
+        if(p.flake)drawFlake(p,a);else{ctx.fillStyle='rgba(139,224,255,'+a+')';ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill()}
+        if(p.life>p.max||p.y>H)ps.splice(j,1);
+      }
+    }
+    requestAnimationFrame(loop);
+  }
+  if(!reduce)loop();
+
+  /* parallax leve no mouse */
+  if(!reduce&&window.matchMedia('(pointer:fine)').matches){
+    scene.addEventListener('pointermove',function(e){var r=scene.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;unit.style.transform='translate('+(x*-10)+'px,'+(y*-6)+'px)'});
+    scene.addEventListener('pointerleave',function(){unit.style.transform=''});
+    unit.style.transition='transform .4s ease-out';
+  }
+
+  /* ===== calculadora de BTU ===== */
+  var SIZES=[9000,12000,18000,24000,30000,36000,48000,60000];
+  var sizesEl=document.getElementById('sizes');
+  SIZES.forEach(function(s){var i=document.createElement('i');i.textContent=(s/1000)+'k';sizesEl.appendChild(i)});
+  var area=document.getElementById('area'),ppl=document.getElementById('ppl'),elec=document.getElementById('elec');
+  var btuOut=document.getElementById('btuOut'),shown=12000,anim;
+  function fmt(n){return n.toLocaleString('pt-BR')}
+  function fill(r){r.style.setProperty('--fill',((r.value-r.min)/(r.max-r.min)*100)+'%')}
+  function calc(){
+    [area,ppl,elec].forEach(fill);
+    var a=+area.value,p=+ppl.value,e=+elec.value,sun=+document.querySelector('input[name=sun]:checked').value;
+    document.getElementById('areaOut').textContent=a+' m²';
+    document.getElementById('pplOut').textContent=p;
+    document.getElementById('elecOut').textContent=e;
+    var load=a*sun+Math.max(0,p-1)*600+e*600;
+    var idx=SIZES.findIndex(function(s){return s>=load});
+    var custom=idx===-1;
+    var target=custom?SIZES[SIZES.length-1]:SIZES[idx];
+    sizesEl.querySelectorAll('i').forEach(function(el,k){el.classList.toggle('on',!custom&&k===idx)});
+    document.getElementById('btuRaw').textContent='Carga estimada: '+fmt(Math.round(load))+' BTU/h';
+    var tip=document.getElementById('btuTip');
+    var sunTxt={600:'pouco sol',800:'sol à tarde',900:'sol o dia todo'}[sun];
+    if(custom){tip.textContent='Ambiente grande: o ideal é um projeto com mais de um aparelho, cassete, piso-teto ou VRF. Nossa engenharia dimensiona para você.'}
+    else tip.textContent='Um aparelho de '+fmt(target)+' BTUs atende bem esse ambiente. Prefira um modelo inverter se o uso for diário.';
+    var msg='Olá, Tclima! Fiz o cálculo no site: ambiente de '+a+' m², '+p+' pessoa(s), '+e+' eletrônico(s), '+sunTxt+'. '+(custom?'Deu acima de 60.000 BTUs, preciso de um projeto.':'Indicação: '+fmt(target)+' BTUs.')+' Pode me passar um orçamento com instalação?';
+    document.getElementById('btuWa').href=waLink(msg);
+    // contagem animada
+    cancelAnimationFrame(anim);
+    var from=shown,to=custom?60000:target,t0=performance.now();
+    if(reduce){shown=to;btuOut.textContent=(custom?'+':'')+fmt(to);return}
+    (function step(now){var k=Math.min(1,(now-t0)/450);k=1-Math.pow(1-k,3);shown=Math.round(from+(to-from)*k);btuOut.textContent=(custom&&k===1?'+':'')+fmt(shown);if(k<1)anim=requestAnimationFrame(step)})(t0);
+  }
+  document.getElementById('calcForm').addEventListener('input',calc);
+  calc();
+
+  /* copiar número */
+  var toast=document.getElementById('toast'),tt;
+  function say(m){toast.textContent=m;toast.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){toast.classList.remove('on')},2200)}
+  document.getElementById('copyBtn').addEventListener('click',function(){
+    var txt='(19) 99335-5533';
+    function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('phone'));var s=getSelection();s.removeAllRanges();s.addRange(r);say('Número selecionado. Copie com Ctrl+C')}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){say('Número copiado')},fallback)}else fallback();
+  });
+})();
+</script>
+</body>
+</html>
