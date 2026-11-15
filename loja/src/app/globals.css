@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* ── Mosaik · sistema de design ──────────────────────────────────────────
+   Paleta inspirada em argila, linho e pedra. Contraste AA garantido para
+   texto (ink/muted sobre paper). Raio mínimo: a marca é precisa, não fofa. */
+@theme {
+  --color-paper: #f4f1ea;
+  --color-paper-2: #ebe5da;
+  --color-paper-3: #e0d8ca;
+  --color-surface: #fbfaf7;
+  --color-ink: #191816;
+  --color-ink-2: #3a3833;
+  --color-muted: #615c53;
+  --color-line: #d9d2c4;
+  --color-line-2: #c8bfae;
+  --color-clay: #9a4b2e;
+  --color-clay-2: #7f3c23;
+  --color-moss: #4f5a3e;
+  --color-danger: #a23a2a;
+  --color-warn: #8a6115;
+
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, serif;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --animate-rise: rise 0.9s var(--ease-out-soft) both;
+  --animate-fade: fade 0.6s ease both;
+  --animate-drawer: drawer 0.45s var(--ease-out-soft) both;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes drawer {
+    from { transform: translateX(100%); }
+    to { transform: none; }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+  }
+  ::selection { background: var(--color-clay); color: #fff; }
+  :focus-visible { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+  input, select, textarea, button { font: inherit; }
+  [hidden] { display: none !important; }
+}
+
+@layer components {
+  .container-x { width: 100%; max-width: 1440px; margin-inline: auto; padding-inline: 16px; }
+  @media (min-width: 768px) { .container-x { padding-inline: 32px; } }
+  @media (min-width: 1280px) { .container-x { padding-inline: 48px; } }
+
+  .eyebrow { font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: var(--color-muted); }
+  .display { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.02em; line-height: 1.02; }
+
+  /* link com sublinhado que desenha no hover */
+  .link-draw { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size .35s var(--ease-out-soft); }
+  .link-draw:hover, .link-draw:focus-visible { background-size: 100% 1px; }
+
+  /* foto com zoom suave dentro da moldura */
+  .zoom-frame { overflow: hidden; }
+  .zoom-frame img { transition: transform 0.9s var(--ease-out-soft); }
+  .group:hover .zoom-frame img, .zoom-frame:hover img { transform: scale(1.035); }
+
+  .lift { transition: transform .35s var(--ease-out-soft); }
+  .lift:hover { transform: translateY(-2px); }
+
+  .field { width: 100%; min-height: 48px; background: var(--color-surface); border: 1px solid var(--color-line-2); border-radius: var(--radius-xs); padding: 0 14px; font-size: 16px; color: var(--color-ink); transition: border-color .2s, box-shadow .2s; }
+  textarea.field { padding: 12px 14px; min-height: 120px; }
+  .field:focus { outline: none; border-color: var(--color-ink); box-shadow: 0 0 0 1px var(--color-ink); }
+  .field[aria-invalid="true"] { border-color: var(--color-danger); }
+  .label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; color: var(--color-ink-2); }
+
+  .prose-store { color: var(--color-ink-2); line-height: 1.7; }
+  .prose-store h2 { font-family: var(--font-serif); font-size: 1.6rem; color: var(--color-ink); margin: 2.2rem 0 0.8rem; }
+  .prose-store h3 { font-weight: 600; color: var(--color-ink); margin: 1.6rem 0 0.4rem; }
+  .prose-store p, .prose-store ul { margin: 0 0 1rem; }
+  .prose-store ul { list-style: disc; padding-left: 1.2rem; }
+  .prose-store a { text-decoration: underline; text-underline-offset: 3px; }
+
+  .scrollbar-none { scrollbar-width: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
